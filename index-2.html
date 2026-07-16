@@ -1,0 +1,1788 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#111117" />
+  <title>碎片库</title>
+  <meta name="application-name" content="碎片库" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+
+  <style>
+    :root{
+      --bg:#111117;
+      --panel:#1a1922;
+      --panel-2:#22212c;
+      --panel-3:#292735;
+      --text:#f4f1fa;
+      --muted:#aaa5b7;
+      --line:#373442;
+      --accent:#cdb7ff;
+      --accent-soft:rgba(205,183,255,.13);
+      --accent-2:#9fe3d2;
+      --blue:#b8d9ff;
+      --danger:#ff9b9b;
+      --shadow:0 16px 40px rgba(0,0,0,.24);
+      color-scheme:dark;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 12% -8%, rgba(205,183,255,.12), transparent 28%),
+        radial-gradient(circle at 100% 14%, rgba(159,227,210,.08), transparent 24%),
+        var(--bg);
+      color:var(--text);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
+      "Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    }
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    .app{width:min(100%,900px);margin:0 auto;padding:22px 16px 100px}
+    header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:8px 2px 20px}
+    h1{font-size:30px;margin:0;letter-spacing:.04em}
+    .subtitle{color:var(--muted);margin:6px 0 0;font-size:14px}
+    .count{color:var(--muted);font-size:13px;white-space:nowrap}
+    .panel{
+      background:rgba(26,25,34,.92);
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+    }
+    .capture{padding:16px;margin-bottom:18px}
+    .capture textarea,.modal textarea{
+      width:100%;resize:vertical;outline:0;color:var(--text);
+      line-height:1.65;border:1px solid var(--line);border-radius:14px;
+      background:var(--panel-2);padding:12px;
+    }
+    .capture .main-input{
+      min-height:122px;border:0;background:transparent;font-size:17px;padding:4px 2px 12px;
+    }
+    textarea::placeholder,input::placeholder{color:#777182}
+    .note-input{min-height:88px;margin-top:10px}
+    .field-label{display:block;color:var(--muted);font-size:12px;margin:12px 2px 7px}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .grow{flex:1 1 210px}
+    input,select{
+      width:100%;background:var(--panel-2);color:var(--text);
+      border:1px solid var(--line);border-radius:13px;padding:11px 12px;outline:none
+    }
+    input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+    .chips{display:flex;gap:8px;overflow:auto;padding:2px 0 12px;scrollbar-width:none}
+    .chips::-webkit-scrollbar{display:none}
+    .chip{
+      flex:0 0 auto;border:1px solid var(--line);background:var(--panel-2);
+      color:var(--muted);border-radius:999px;padding:8px 12px
+    }
+    .chip.active{background:var(--accent);color:#17131f;border-color:transparent;font-weight:700}
+    .primary{
+      border:0;background:linear-gradient(135deg,var(--accent),#b5d7ff);
+      color:#17131f;border-radius:13px;padding:11px 17px;font-weight:800
+    }
+    .secondary{
+      border:1px solid var(--line);background:var(--panel-2);color:var(--text);
+      border-radius:13px;padding:10px 13px
+    }
+    .danger{color:var(--danger)}
+    .toolbar{padding:13px;margin-bottom:16px;display:grid;grid-template-columns:1fr auto;gap:10px}
+    .toolbar-bottom{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+    .surprise-banner{
+      display:none;align-items:center;gap:11px;margin-bottom:16px;padding:12px 14px;
+      border:1px solid rgba(205,183,255,.55);
+      background:linear-gradient(135deg,rgba(205,183,255,.13),rgba(184,217,255,.07));
+      border-radius:16px;box-shadow:var(--shadow);animation:noteIn .45s ease both
+    }
+    .surprise-banner.show{display:flex}
+    .surprise-banner .paper-icon{font-size:22px}
+    .surprise-banner .surprise-copy{flex:1;line-height:1.45}
+    .surprise-banner .surprise-copy strong{display:block;color:var(--accent);font-size:13px}
+    .surprise-banner .surprise-copy span{font-size:12px;color:var(--muted)}
+    @keyframes noteIn{
+      from{opacity:0;transform:translateY(-7px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .tag-index{padding:14px;margin-bottom:16px}
+    .tag-index-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .tag-index h2{font-size:14px;margin:0;color:var(--muted);font-weight:600}
+    .tag-cloud{display:flex;gap:8px;flex-wrap:wrap}
+    .tag-link{
+      border:0;background:rgba(159,227,210,.09);color:var(--accent-2);
+      border-radius:999px;padding:7px 10px;font-size:13px
+    }
+    .tag-link:hover,.tag-link.active{background:var(--accent-2);color:#10211c}
+    .tag-link .tag-count{opacity:.62;margin-left:4px;font-size:11px}
+    .active-filter{
+      display:none;align-items:center;gap:8px;margin-bottom:14px;padding:10px 12px;
+      border:1px solid rgba(205,183,255,.45);background:var(--accent-soft);
+      border-radius:14px;color:var(--accent)
+    }
+    .active-filter.show{display:flex}
+    .active-filter button{margin-left:auto;border:0;background:transparent;color:var(--text);padding:4px 8px}
+    .image-picker{
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px
+    }
+    .image-button{
+      display:inline-flex;align-items:center;gap:7px;border:1px dashed #595469;
+      background:var(--panel-2);border-radius:13px;padding:10px 13px;color:var(--text)
+    }
+    .image-button input{display:none}
+    .image-help{font-size:12px;color:var(--muted)}
+    .image-previews,.edit-image-previews{
+      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:11px
+    }
+    .preview-wrap{position:relative;aspect-ratio:1;border-radius:13px;overflow:hidden;background:var(--panel-2)}
+    .preview-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+    .remove-image{
+      position:absolute;top:5px;right:5px;border:0;border-radius:999px;
+      width:27px;height:27px;background:rgba(0,0,0,.72);color:white
+    }
+    .list{display:grid;gap:12px}
+    .empty{padding:42px 20px;text-align:center;color:var(--muted)}
+    .card{padding:15px 15px 13px;position:relative}
+    .card.pinned{border-color:rgba(205,183,255,.7)}
+    .card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .type{
+      display:inline-flex;align-items:center;background:var(--accent-soft);
+      color:var(--accent);border-radius:999px;padding:5px 9px;font-size:12px
+    }
+    .meta-pills{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+    .status-pill{
+      display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;
+      font-size:12px;background:rgba(184,217,255,.09);color:var(--blue)
+    }
+    .status-pill.sleeping{background:rgba(170,165,183,.09);color:var(--muted)}
+    .status-pill.used{background:rgba(159,227,210,.10);color:var(--accent-2)}
+    .relation-line{
+      display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:10px 0 0;
+      padding:9px 11px;border-radius:12px;background:rgba(184,217,255,.055);
+      color:var(--muted);font-size:12px
+    }
+    .relation-line button{
+      border:0;background:transparent;color:var(--blue);padding:0;text-align:left
+    }
+    .date{color:var(--muted);font-size:12px}
+    .time-meta{
+      display:flex;flex-direction:column;align-items:flex-end;gap:3px;
+      color:var(--muted);font-size:11px;line-height:1.35;text-align:right
+    }
+    .time-meta .created-time{color:#c8c2d2}
+    .time-meta .edited-time{color:#8f899a}
+    .content{white-space:pre-wrap;word-break:break-word;font-size:16px;line-height:1.72;margin:12px 0}
+    .inline-tag{
+      display:inline;border:0;background:transparent;color:var(--accent-2);
+      padding:0 1px;text-decoration:underline;text-decoration-color:rgba(159,227,210,.35);
+      text-underline-offset:3px
+    }
+    .card-images{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0
+    }
+    .card-images.one{grid-template-columns:1fr}
+    .card-images.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .card-image{
+      border:0;padding:0;background:var(--panel-2);border-radius:14px;overflow:hidden;
+      aspect-ratio:1
+    }
+    .card-images.one .card-image{aspect-ratio:auto;max-height:520px}
+    .card-image img{display:block;width:100%;height:100%;object-fit:cover}
+    .card-images.one .card-image img{max-height:520px;object-fit:contain;background:#0c0c10}
+    .note{
+      margin:12px 0 0;padding:11px 12px;border-left:3px solid var(--accent);
+      background:rgba(205,183,255,.07);border-radius:0 12px 12px 0;
+      color:#d9d4e2;line-height:1.65;white-space:pre-wrap
+    }
+    .note-label{display:block;color:var(--accent);font-size:11px;margin-bottom:4px}
+    .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+    .tag{
+      border:0;font-size:12px;color:var(--accent-2);background:rgba(159,227,210,.09);
+      padding:5px 8px;border-radius:999px
+    }
+    .source-row{margin-top:10px;font-size:13px;color:var(--muted)}
+    .source-name{color:#d9d4e2}
+    .source{display:inline-block;color:var(--blue);text-decoration:none;margin-left:6px}
+    .actions{display:flex;justify-content:flex-end;gap:6px;margin-top:10px;flex-wrap:wrap}
+    .comment-button{
+      border:1px solid rgba(205,183,255,.35)!important;
+      background:rgba(205,183,255,.08)!important;color:var(--accent)!important
+    }
+    .comment-dialog{
+      width:min(calc(100% - 28px),620px);overflow:visible;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(205,183,255,.13),transparent 35%),
+        var(--panel);
+    }
+    .comment-paper{padding:22px}
+    .comment-kicker{
+      color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase
+    }
+    .comment-context{
+      margin:12px 0;padding:11px 12px;background:var(--panel-2);border-radius:12px;
+      color:#c8c2d2;font-size:13px;line-height:1.55;max-height:120px;overflow:auto
+    }
+    .comment-text{
+      margin:18px 0 8px;font-size:18px;line-height:1.8;white-space:pre-wrap;
+      color:var(--text)
+    }
+    .comment-sign{color:var(--accent);font-size:12px;text-align:right;margin-top:12px}
+    .comment-time{color:var(--muted);font-size:11px;text-align:right;margin-top:4px}
+    .comment-close-row{display:flex;justify-content:flex-end;margin-top:18px}
+    .comment-count-badge{
+      display:inline-flex;min-width:18px;height:18px;padding:0 5px;align-items:center;
+      justify-content:center;border-radius:999px;background:var(--accent);color:#17131f;
+      font-size:10px;font-weight:800;margin-left:4px
+    }
+    .dashboard-dialog{width:min(calc(100% - 24px),760px)}
+    .dashboard{padding:20px}
+    .dashboard-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
+      margin-bottom:15px
+    }
+    .dashboard-head h2{margin:0;font-size:23px}
+    .dashboard-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
+    .dashboard-grid{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0
+    }
+    .stat-box{padding:13px;background:var(--panel-2);border-radius:14px}
+    .stat-box strong{display:block;font-size:21px;color:var(--accent)}
+    .stat-box span{font-size:11px;color:var(--muted)}
+    .summary-section{
+      margin-top:13px;padding:13px 14px;background:var(--panel-2);border-radius:15px
+    }
+    .summary-section h3{margin:0 0 8px;font-size:14px;color:var(--accent-2)}
+    .summary-section p{margin:0;line-height:1.7;color:#d8d3df}
+    .summary-list{display:grid;gap:7px;margin-top:8px}
+    .summary-item{
+      width:100%;border:1px solid var(--line);background:var(--panel-3);
+      color:var(--text);border-radius:11px;padding:9px 10px;text-align:left;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    }
+    .month-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .month-controls input{width:auto}
+    .chain-list{display:grid;gap:8px;margin-top:12px}
+    .chain-node{
+      width:100%;border:1px solid var(--line);background:var(--panel-2);
+      color:var(--text);border-radius:13px;padding:11px 12px;text-align:left
+    }
+    .chain-node .chain-meta{font-size:11px;color:var(--muted);margin-bottom:4px}
+    .chain-node.current{border-color:var(--accent);background:var(--accent-soft)}
+    .version-entry{
+      padding:12px 0;border-bottom:1px solid var(--line);line-height:1.65
+    }
+    .version-entry:last-child{border-bottom:0}
+    .version-entry strong{color:var(--accent)}
+    @media (max-width:650px){
+      .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .dashboard-head{flex-direction:column}
+    }
+    .icon-btn{border:0;background:transparent;color:var(--muted);padding:7px 8px;border-radius:9px}
+    .icon-btn:hover{background:var(--panel-2);color:var(--text)}
+    dialog{
+      width:min(calc(100% - 28px),680px);max-height:92vh;overflow:auto;
+      border:1px solid var(--line);border-radius:20px;background:var(--panel);
+      color:var(--text);padding:0;box-shadow:var(--shadow)
+    }
+    dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(4px)}
+    .modal{padding:18px}
+    .modal h2{margin:0 0 12px}
+    .modal textarea{min-height:130px}
+    .modal .edit-note{min-height:88px;margin-top:10px}
+    .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+    .lightbox{width:min(96vw,1100px);background:#09090c;border:0;padding:10px}
+    .lightbox img{display:block;max-width:100%;max-height:86vh;margin:auto;object-fit:contain}
+    .lightbox-close{
+      position:fixed;top:16px;right:16px;width:38px;height:38px;border:0;
+      border-radius:999px;background:rgba(0,0,0,.7);color:white;font-size:20px
+    }
+    .toast{
+      position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+      background:#f4f1fa;color:#17131f;padding:10px 14px;border-radius:999px;
+      opacity:0;pointer-events:none;transition:.2s;z-index:30;font-weight:700;font-size:13px
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .hint{color:var(--muted);font-size:12px;margin-top:10px}
+    .install-ready{
+      position:sticky;top:10px;z-index:20;margin-bottom:14px;padding:11px 13px;
+      display:flex;align-items:center;gap:10px;border-radius:15px;
+      border:1px solid rgba(159,227,210,.42);
+      background:rgba(17,17,23,.92);box-shadow:var(--shadow);backdrop-filter:blur(14px)
+    }
+    .install-ready strong{display:block;color:var(--accent-2);font-size:13px}
+    .install-ready span{color:var(--muted);font-size:12px}
+    .hidden{display:none!important}
+    @media (max-width:650px){
+      .app{padding:14px 12px 90px}
+      h1{font-size:27px}
+      .toolbar{grid-template-columns:1fr}
+      .toolbar-bottom{grid-column:auto}
+      .capture,.panel{border-radius:18px}
+      .image-previews,.edit-image-previews{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .card-images{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div>
+        <h1>碎片库</h1>
+        <p class="subtitle">半句话、一张图、一个没长完的念头。写下时间会自动留下。<span id="appVersionLabel"></span></p>
+      </div>
+      <div class="count" id="count">0 条碎片</div>
+    </header>
+
+    <div class="install-ready hidden" id="installReadyBanner">
+      <div style="flex:1">
+        <strong>现在可以把它装成 App 了</strong>
+        <span>装好后会有独立图标，也能离线打开。</span>
+      </div>
+      <button class="primary" id="installReadyBtn">安装</button>
+      <button class="icon-btn" id="hideInstallBannerBtn">×</button>
+    </div>
+
+    <div class="install-ready hidden" id="updateReadyBanner">
+      <div style="flex:1">
+        <strong>碎片库长出了新版本</strong>
+        <span id="updateReadyText">更新不会覆盖你存在手机里的碎片。</span>
+      </div>
+      <button class="primary" id="applyUpdateBtn">现在更新</button>
+      <button class="icon-btn" id="hideUpdateBannerBtn">晚点</button>
+    </div>
+
+    <section class="panel capture">
+      <div class="chips" id="typeChips"></div>
+      <label class="field-label">这条灵感现在怎么样</label>
+      <div class="chips" id="statusChips"></div>
+      <textarea id="contentInput" class="main-input"
+        placeholder="刚刚想到什么？正文里直接写 #oc相关，它会自动变成可以点开的标签。"></textarea>
+
+      <input id="tagsInput" placeholder="额外标签：发型、台词、赛博（可不填）" />
+
+      <label class="field-label" for="parentSelect">它从哪条旧灵感继续长出来？</label>
+      <select id="parentSelect">
+        <option value="">这是一个新的起点</option>
+      </select>
+
+      <label class="field-label" for="noteInput">备注</label>
+      <textarea id="noteInput" class="note-input"
+        placeholder="为什么保存它？喜欢哪里？以后准备怎么发展？"></textarea>
+
+      <div class="image-picker">
+        <label class="image-button">
+          ＋ 放图片
+          <input id="imageInput" type="file" accept="image/*" multiple />
+        </label>
+        <span class="image-help">每条最多 6 张；会自动压缩后存在本机。</span>
+      </div>
+      <div class="image-previews" id="imagePreviews"></div>
+
+      <label class="field-label">来源（保存别人的灵感时可以写）</label>
+      <div class="row">
+        <div class="grow"><input id="sourceNameInput" placeholder="作者 / 平台 / 对话对象（可不填）" /></div>
+        <div class="grow"><input id="urlInput" placeholder="原链接（可不填）" /></div>
+        <button class="primary" id="saveBtn">收进来</button>
+      </div>
+      <div class="hint">文字沿用第一版的本地记录；图片单独存在浏览器中。导出备份时会把图片一起带走。</div>
+    </section>
+
+    <section class="panel toolbar">
+      <input id="searchInput" placeholder="搜索正文、备注、标签、来源或链接……" />
+      <select id="filterType" aria-label="筛选分类"></select>
+      <div class="toolbar-bottom">
+        <button class="primary hidden" id="installAppBtn">安装碎片库 App</button>
+        <button class="secondary" id="randomBtn">随机捞一条</button>
+        <button class="secondary" id="monthlyBtn">月度回顾</button>
+        <button class="secondary" id="reassureBtn">我没有忘记什么</button>
+        <button class="secondary" id="versionsBtn">版本日记</button>
+        <button class="secondary" id="surpriseBtn">惊喜纸条</button>
+        <button class="secondary" id="exportCommentsBtn">导出待点评</button>
+        <button class="secondary" id="importCommentsBtn">导入点评包</button>
+        <input class="hidden" id="commentImportFile" type="file" accept="application/json" />
+        <button class="secondary" id="exportBtn">导出完整备份</button>
+        <button class="secondary" id="importBtn">导入备份</button>
+        <input class="hidden" id="importFile" type="file" accept="application/json" />
+        <select id="sortSelect" style="width:auto">
+          <option value="newest">最新在前</option>
+          <option value="oldest">最早在前</option>
+          <option value="updated">最近修改</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="surprise-banner" id="surpriseBanner">
+      <span class="paper-icon">✦</span>
+      <div class="surprise-copy">
+        <strong>这里好像夹着一张纸条</strong>
+        <span>不是每次打开都会遇见。</span>
+      </div>
+      <button class="primary" id="openSurpriseBtn">拆开看看</button>
+      <button class="icon-btn" id="dismissSurpriseBtn" title="先不看">×</button>
+    </div>
+
+    <div class="active-filter" id="activeFilter">
+      正在查看 <strong id="activeTagText"></strong>
+      <button id="clearTagFilter">× 清除</button>
+    </div>
+
+    <section class="panel tag-index" id="tagIndexPanel">
+      <div class="tag-index-head">
+        <h2>标签索引</h2>
+        <span class="count" id="tagCount"></span>
+      </div>
+      <div class="tag-cloud" id="tagCloud"></div>
+    </section>
+
+    <section class="list" id="list"></section>
+  </main>
+
+  <dialog id="editDialog">
+    <form method="dialog" class="modal" id="editForm">
+      <h2>修改碎片</h2>
+      <div class="chips" id="editTypeChips"></div>
+      <label class="field-label">当前状态</label>
+      <div class="chips" id="editStatusChips"></div>
+      <textarea id="editContent"></textarea>
+      <input id="editTags" placeholder="额外标签" style="margin-top:10px" />
+      <label class="field-label" for="editParentSelect">作为哪条灵感的后续</label>
+      <select id="editParentSelect">
+        <option value="">这是一个新的起点</option>
+      </select>
+      <textarea id="editNote" class="edit-note" placeholder="备注"></textarea>
+
+      <div class="image-picker">
+        <label class="image-button">
+          ＋ 添加图片
+          <input id="editImageInput" type="file" accept="image/*" multiple />
+        </label>
+      </div>
+      <div class="edit-image-previews" id="editImagePreviews"></div>
+
+      <div class="row" style="margin-top:10px">
+        <div class="grow"><input id="editSourceName" placeholder="作者 / 平台 / 对话对象" /></div>
+        <div class="grow"><input id="editUrl" placeholder="原链接" /></div>
+      </div>
+      <div class="modal-actions">
+        <button class="secondary" value="cancel">取消</button>
+        <button class="primary" id="confirmEdit" value="default">保存修改</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="monthlyDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>月度回顾</h2>
+          <p>不是考勤，也不是催进度，只是看看这个月脑子里来过什么。</p>
+        </div>
+        <div class="month-controls">
+          <input id="monthPicker" type="month" />
+          <button class="secondary" id="exportMonthBtn">导出给我深度总结</button>
+        </div>
+      </div>
+      <div id="monthlyContent"></div>
+      <div class="modal-actions">
+        <button class="primary" id="closeMonthlyBtn">合上这个月</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="reassureDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>我没有忘记什么</h2>
+          <p>它们都还在，只是有些暂时睡着了。</p>
+        </div>
+      </div>
+      <div id="reassureContent"></div>
+      <div class="modal-actions">
+        <button class="primary" id="closeReassureBtn">嗯，都在</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="chainDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>灵感生长链</h2>
+          <p>同一个念头经历过的补充、偏航和长大。</p>
+        </div>
+      </div>
+      <div class="chain-list" id="chainList"></div>
+      <div class="modal-actions">
+        <button class="primary" id="closeChainBtn">收起</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="versionsDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>版本日记</h2>
+          <p>这个小网站是怎么被我们一点点养大的。</p>
+        </div>
+      </div>
+      <div id="versionsContent"></div>
+      <div class="modal-actions">
+        <button class="primary" id="closeVersionsBtn">看完啦</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="lightbox" class="lightbox">
+    <button class="lightbox-close" id="lightboxClose">×</button>
+    <img id="lightboxImage" alt="查看大图" />
+  </dialog>
+
+  <dialog id="commentDialog" class="comment-dialog">
+    <div class="comment-paper">
+      <div class="comment-kicker">一张后来才出现的纸条</div>
+      <div class="comment-context" id="commentContext"></div>
+      <div class="comment-text" id="commentText"></div>
+      <div class="comment-sign">— 碎片库里的某个我</div>
+      <div class="comment-time" id="commentTime"></div>
+      <div class="comment-close-row">
+        <button class="primary" id="closeCommentBtn">收好纸条</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const TYPES = ["灵感","想做","想买","以后查","怕忘","不知道放哪"];
+    const STATUSES = ["正在发芽","暂时休眠","已经用上"];
+    const STORAGE_KEY = "fragment-vault-v1";
+    const DB_NAME = "fragment-vault-images";
+    const DB_VERSION = 1;
+    const STORE_NAME = "images";
+
+    let items = loadItems();
+    let selectedType = TYPES[0];
+    let editType = TYPES[0];
+    let selectedStatus = STATUSES[0];
+    let editStatus = STATUSES[0];
+    let editingId = null;
+    let activeTag = "";
+    let pendingImages = [];
+    let editExistingImageIds = [];
+    let editRemovedImageIds = [];
+    let editNewImages = [];
+    let renderVersion = 0;
+    let queuedSurprise = null;
+    let lastOpenedCommentKey = "";
+
+    const $ = id => document.getElementById(id);
+    const contentInput = $("contentInput");
+
+    function normalizeItem(x){
+      const now = Date.now();
+      return {
+        id:x.id || uid(),
+        content:String(x.content || ""),
+        type:TYPES.includes(x.type) ? x.type : "不知道放哪",
+        status:STATUSES.includes(x.status) ? x.status : "正在发芽",
+        parentId:String(x.parentId || ""),
+        tags:Array.isArray(x.tags) ? x.tags.map(String) : [],
+        note:String(x.note || ""),
+        sourceName:String(x.sourceName || ""),
+        url:String(x.url || ""),
+        imageIds:Array.isArray(x.imageIds) ? x.imageIds.map(String) : [],
+        aiComments:Array.isArray(x.aiComments) ? x.aiComments
+          .filter(c=>c && c.text)
+          .map(c=>({
+            id:String(c.id || uid()),
+            text:String(c.text),
+            createdAt:Number(c.createdAt) || Date.now()
+          })) : [],
+        pinned:Boolean(x.pinned),
+        createdAt:Number(x.createdAt) || now,
+        updatedAt:Number(x.updatedAt) || Number(x.createdAt) || now
+      };
+    }
+
+    function loadItems(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed.map(normalizeItem) : [];
+      }catch(e){
+        return [];
+      }
+    }
+
+    function persist(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      renderRelationSelects();
+      render();
+    }
+
+    function uid(){
+      return Date.now().toString(36) + Math.random().toString(36).slice(2,9);
+    }
+
+    function openDB(){
+      return new Promise((resolve,reject)=>{
+        const request = indexedDB.open(DB_NAME,DB_VERSION);
+        request.onupgradeneeded = ()=>{
+          const db = request.result;
+          if(!db.objectStoreNames.contains(STORE_NAME)){
+            db.createObjectStore(STORE_NAME,{keyPath:"id"});
+          }
+        };
+        request.onsuccess = ()=>resolve(request.result);
+        request.onerror = ()=>reject(request.error);
+      });
+    }
+
+    async function putImage(dataUrl,id=uid()){
+      const db = await openDB();
+      return new Promise((resolve,reject)=>{
+        const tx = db.transaction(STORE_NAME,"readwrite");
+        tx.objectStore(STORE_NAME).put({id,dataUrl,createdAt:Date.now()});
+        tx.oncomplete = ()=>{db.close();resolve(id)};
+        tx.onerror = ()=>{db.close();reject(tx.error)};
+      });
+    }
+
+    async function getImage(id){
+      const db = await openDB();
+      return new Promise((resolve,reject)=>{
+        const tx = db.transaction(STORE_NAME,"readonly");
+        const req = tx.objectStore(STORE_NAME).get(id);
+        req.onsuccess = ()=>resolve(req.result?.dataUrl || "");
+        req.onerror = ()=>reject(req.error);
+        tx.oncomplete = ()=>db.close();
+      });
+    }
+
+    async function getImages(ids){
+      return Promise.all((ids||[]).map(getImage));
+    }
+
+    async function deleteImage(id){
+      const db = await openDB();
+      return new Promise((resolve,reject)=>{
+        const tx = db.transaction(STORE_NAME,"readwrite");
+        tx.objectStore(STORE_NAME).delete(id);
+        tx.oncomplete = ()=>{db.close();resolve()};
+        tx.onerror = ()=>{db.close();reject(tx.error)};
+      });
+    }
+
+    function parseTags(value){
+      return [...new Set(
+        String(value||"").split(/[,，#\n]/).map(x=>x.trim()).filter(Boolean)
+      )];
+    }
+
+    function extractHashtags(text){
+      const tags = [];
+      const re = /#([\p{L}\p{N}_-]+)/gu;
+      let m;
+      while((m=re.exec(String(text||""))) !== null) tags.push(m[1]);
+      return [...new Set(tags)];
+    }
+
+    function collectTags(item){
+      return [...new Set([...(item.tags||[]),...extractHashtags(item.content)])];
+    }
+
+    function safeUrl(value){
+      const v = String(value||"").trim();
+      if(!v) return "";
+      try{
+        const candidate = /^https?:\/\//i.test(v) ? v : "https://" + v;
+        return new URL(candidate).href;
+      }catch(e){ return ""; }
+    }
+
+    function formatDate(ts){
+      return new Intl.DateTimeFormat("zh-CN",{
+        year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"
+      }).format(new Date(ts));
+    }
+
+    function wasEdited(item){
+      return Number(item.updatedAt || 0) - Number(item.createdAt || 0) > 1000;
+    }
+
+    function commentEntries(){
+      const rows=[];
+      items.forEach(item=>{
+        (item.aiComments||[]).forEach(comment=>{
+          rows.push({item,comment,key:`${item.id}:${comment.id}`});
+        });
+      });
+      return rows;
+    }
+
+    function chooseComment(){
+      const rows=commentEntries();
+      if(!rows.length) return null;
+      const fresh=rows.filter(x=>x.key!==lastOpenedCommentKey);
+      const pool=fresh.length?fresh:rows;
+      return pool[Math.floor(Math.random()*pool.length)];
+    }
+
+    function openComment(entry){
+      if(!entry) return;
+      queuedSurprise=null;
+      $("surpriseBanner").classList.remove("show");
+      lastOpenedCommentKey=entry.key;
+      $("commentContext").textContent=
+        entry.item.content?.trim() ||
+        entry.item.note?.trim() ||
+        "这是一条只留下了图片的碎片。";
+      $("commentText").textContent=entry.comment.text;
+      $("commentTime").textContent=`写于 ${formatDate(entry.comment.createdAt)}`;
+      $("commentDialog").showModal();
+    }
+
+    function maybeOfferSurprise(){
+      const rows=commentEntries();
+      if(!rows.length) return;
+      const last=Number(localStorage.getItem("fragment-vault-last-surprise")||0);
+      const enoughTime=Date.now()-last > 6*60*60*1000;
+      if(!enoughTime || Math.random()>=0.58) return;
+      queuedSurprise=chooseComment();
+      if(!queuedSurprise) return;
+      setTimeout(()=>{
+        $("surpriseBanner").classList.add("show");
+        localStorage.setItem("fragment-vault-last-surprise",String(Date.now()));
+      },700);
+    }
+
+    function escapeHTML(value=""){
+      return String(value).replace(/[&<>"']/g,ch=>({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[ch]));
+    }
+
+    function richText(text){
+      const source = String(text||"");
+      const re = /#([\p{L}\p{N}_-]+)/gu;
+      let html = "", last = 0, m;
+      while((m=re.exec(source)) !== null){
+        html += escapeHTML(source.slice(last,m.index));
+        html += `<button class="inline-tag" data-tag="${escapeHTML(m[1])}">#${escapeHTML(m[1])}</button>`;
+        last = m.index + m[0].length;
+      }
+      return html + escapeHTML(source.slice(last));
+    }
+
+    function makeTypeChips(container,current,onSelect){
+      container.innerHTML="";
+      TYPES.forEach(type=>{
+        const btn=document.createElement("button");
+        btn.type="button";
+        btn.className="chip"+(type===current?" active":"");
+        btn.textContent=type;
+        btn.onclick=()=>onSelect(type);
+        container.appendChild(btn);
+      });
+    }
+
+    function setupTypeSelectors(){
+      makeTypeChips($("typeChips"),selectedType,type=>{
+        selectedType=type; setupTypeSelectors();
+      });
+      makeTypeChips($("editTypeChips"),editType,type=>{
+        editType=type; setupTypeSelectors();
+      });
+      makeTypeChips($("statusChips"),selectedStatus,status=>{
+        selectedStatus=status; setupTypeSelectors();
+      });
+      makeTypeChips($("editStatusChips"),editStatus,status=>{
+        editStatus=status; setupTypeSelectors();
+      });
+      const current=$("filterType").value;
+      $("filterType").innerHTML='<option value="">全部分类</option>'+
+        TYPES.map(t=>`<option value="${t}">${t}</option>`).join("");
+      $("filterType").value=current;
+    }
+
+    function toast(message){
+      const el=$("toast");
+      el.textContent=message;
+      el.classList.add("show");
+      clearTimeout(toast.timer);
+      toast.timer=setTimeout(()=>el.classList.remove("show"),1800);
+    }
+
+    async function compressImage(file){
+      if(!file.type.startsWith("image/")) throw new Error("not image");
+      const dataUrl = await new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(reader.result);
+        reader.onerror=()=>reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+      const img = await new Promise((resolve,reject)=>{
+        const image=new Image();
+        image.onload=()=>resolve(image);
+        image.onerror=reject;
+        image.src=dataUrl;
+      });
+      const maxSide=1800;
+      let w=img.naturalWidth,h=img.naturalHeight;
+      const scale=Math.min(1,maxSide/Math.max(w,h));
+      w=Math.max(1,Math.round(w*scale));
+      h=Math.max(1,Math.round(h*scale));
+      const canvas=document.createElement("canvas");
+      canvas.width=w;canvas.height=h;
+      const ctx=canvas.getContext("2d");
+      ctx.drawImage(img,0,0,w,h);
+      return canvas.toDataURL("image/webp",0.86);
+    }
+
+    async function filesToCompressed(fileList,limit){
+      const files=[...fileList].slice(0,limit);
+      const result=[];
+      for(const file of files){
+        try{ result.push(await compressImage(file)); }
+        catch(e){ toast(`有一张图片没能读出来：${file.name}`); }
+      }
+      return result;
+    }
+
+    function renderPendingImages(){
+      $("imagePreviews").innerHTML=pendingImages.map((src,i)=>`
+        <div class="preview-wrap">
+          <img src="${src}" alt="待保存图片">
+          <button class="remove-image" data-pending-index="${i}" type="button">×</button>
+        </div>`).join("");
+    }
+
+    function itemPreview(item,length=46){
+      const raw=(item.content||item.note||item.sourceName||"只保存了图片的碎片")
+        .replace(/\s+/g," ").trim();
+      return raw.length>length ? raw.slice(0,length)+"…" : raw;
+    }
+
+    function renderRelationSelects(){
+      const options=items
+        .slice()
+        .sort((a,b)=>b.createdAt-a.createdAt)
+        .map(item=>`<option value="${escapeHTML(item.id)}">${escapeHTML(formatDate(item.createdAt))} · ${escapeHTML(itemPreview(item,42))}</option>`)
+        .join("");
+      const currentParent=$("parentSelect")?.value||"";
+      if($("parentSelect")){
+        $("parentSelect").innerHTML='<option value="">这是一个新的起点</option>'+options;
+        $("parentSelect").value=currentParent;
+      }
+      if($("editParentSelect")){
+        const editOptions=items
+          .filter(item=>item.id!==editingId)
+          .slice()
+          .sort((a,b)=>b.createdAt-a.createdAt)
+          .map(item=>`<option value="${escapeHTML(item.id)}">${escapeHTML(formatDate(item.createdAt))} · ${escapeHTML(itemPreview(item,42))}</option>`)
+          .join("");
+        const current=$("editParentSelect").value||"";
+        $("editParentSelect").innerHTML='<option value="">这是一个新的起点</option>'+editOptions;
+        $("editParentSelect").value=current;
+      }
+    }
+
+    function statusClass(status){
+      if(status==="暂时休眠") return "sleeping";
+      if(status==="已经用上") return "used";
+      return "";
+    }
+
+    function monthKey(ts){
+      const d=new Date(ts);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+    }
+
+    function monthLabel(key){
+      const [y,m]=key.split("-");
+      return `${y}年${Number(m)}月`;
+    }
+
+    function monthItems(key){
+      return items.filter(item=>monthKey(item.createdAt)===key);
+    }
+
+    function topCounts(values,limit=5){
+      const counts=new Map();
+      values.filter(Boolean).forEach(v=>counts.set(v,(counts.get(v)||0)+1));
+      return [...counts.entries()]
+        .sort((a,b)=>b[1]-a[1]||String(a[0]).localeCompare(String(b[0]),"zh-CN"))
+        .slice(0,limit);
+    }
+
+    function jumpToItem(id){
+      const item=items.find(x=>x.id===id);
+      if(!item) return;
+      ["monthlyDialog","reassureDialog","chainDialog"].forEach(dialogId=>{
+        const dialog=$(dialogId);
+        if(dialog?.open) dialog.close();
+      });
+      activeTag="";
+      $("searchInput").value="";
+      $("filterType").value="";
+      render().then(()=>setTimeout(()=>{
+        document.querySelector(`[data-id="${CSS.escape(id)}"]`)?.scrollIntoView({
+          behavior:"smooth",block:"center"
+        });
+      },30));
+    }
+
+    async function addItem(){
+      const content=contentInput.value.trim();
+      if(!content && !pendingImages.length){
+        toast("放一句话或一张图进来吧");
+        contentInput.focus();
+        return;
+      }
+      $("saveBtn").disabled=true;
+      $("saveBtn").textContent="保存中…";
+      try{
+        const imageIds=[];
+        for(const src of pendingImages) imageIds.push(await putImage(src));
+        const now=Date.now();
+        items.unshift(normalizeItem({
+          id:uid(),
+          content,
+          type:selectedType,
+          status:selectedStatus,
+          parentId:$("parentSelect").value || "",
+          tags:parseTags($("tagsInput").value),
+          note:$("noteInput").value.trim(),
+          sourceName:$("sourceNameInput").value.trim(),
+          url:safeUrl($("urlInput").value),
+          imageIds,
+          pinned:false,
+          createdAt:now,
+          updatedAt:now
+        }));
+        contentInput.value="";
+        $("tagsInput").value="";
+        $("parentSelect").value="";
+        $("noteInput").value="";
+        $("sourceNameInput").value="";
+        $("urlInput").value="";
+        pendingImages=[];
+        renderPendingImages();
+        persist();
+        toast("收好了");
+        contentInput.focus();
+      }catch(e){
+        toast("保存图片时出了点问题");
+      }finally{
+        $("saveBtn").disabled=false;
+        $("saveBtn").textContent="收进来";
+      }
+    }
+
+    function getVisibleItems(){
+      const q=$("searchInput").value.trim().toLowerCase();
+      const filter=$("filterType").value;
+      let result=items.filter(item=>{
+        const tags=collectTags(item);
+        const haystack=[
+          item.content,item.note,item.type,item.status,tags.join(" "),item.sourceName,item.url
+        ].join(" ").toLowerCase();
+        const tagMatch=!activeTag || tags.includes(activeTag);
+        return (!q||haystack.includes(q)) && (!filter||item.type===filter) && tagMatch;
+      });
+      const sort=$("sortSelect").value;
+      result.sort((a,b)=>{
+        if(a.pinned!==b.pinned) return a.pinned?-1:1;
+        if(sort==="oldest") return a.createdAt-b.createdAt;
+        if(sort==="updated") return b.updatedAt-a.updatedAt;
+        return b.createdAt-a.createdAt;
+      });
+      return result;
+    }
+
+    function renderTagIndex(){
+      const counts=new Map();
+      items.forEach(item=>collectTags(item).forEach(tag=>counts.set(tag,(counts.get(tag)||0)+1)));
+      const sorted=[...counts.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"zh-CN"));
+      $("tagCount").textContent=sorted.length?`${sorted.length} 个标签`:"";
+      $("tagCloud").innerHTML=sorted.length
+        ? sorted.map(([tag,count])=>`
+          <button class="tag-link ${tag===activeTag?"active":""}" data-tag="${escapeHTML(tag)}">
+            #${escapeHTML(tag)}<span class="tag-count">${count}</span>
+          </button>`).join("")
+        : `<span class="hint">正文里写下 #标签，它就会出现在这里。</span>`;
+      $("activeFilter").classList.toggle("show",Boolean(activeTag));
+      $("activeTagText").textContent=activeTag?`#${activeTag}`:"";
+    }
+
+    async function render(){
+      const version=++renderVersion;
+      const visible=getVisibleItems();
+      $("count").textContent=`${items.length} 条碎片`;
+      renderTagIndex();
+
+      if(!visible.length){
+        $("list").innerHTML=`<div class="panel empty">${
+          items.length?"这里暂时没有符合条件的碎片。":"还空着。半句话或一张图都可以先放进来。"
+        }</div>`;
+        return;
+      }
+
+      const imageSets=await Promise.all(visible.map(item=>getImages(item.imageIds||[]).catch(()=>[])));
+      if(version!==renderVersion) return;
+
+      $("list").innerHTML=visible.map((item,index)=>{
+        const tags=collectTags(item).map(tag=>
+          `<button class="tag" data-tag="${escapeHTML(tag)}">#${escapeHTML(tag)}</button>`
+        ).join("");
+        const validImages=imageSets[index].filter(Boolean);
+        const imageClass=validImages.length===1?"one":validImages.length===2?"two":"";
+        const images=validImages.length?`
+          <div class="card-images ${imageClass}">
+            ${validImages.map(src=>`
+              <button class="card-image" data-lightbox-src="${src}">
+                <img src="${src}" alt="保存的灵感图片" loading="lazy">
+              </button>`).join("")}
+          </div>`:"";
+        const note=item.note?`
+          <div class="note"><span class="note-label">备注</span>${escapeHTML(item.note)}</div>`:"";
+        const parent=items.find(x=>x.id===item.parentId);
+        const childCount=items.filter(x=>x.parentId===item.id).length;
+        const relation=(parent||childCount)?`
+          <div class="relation-line">
+            ${parent?`从 <button data-jump-id="${escapeHTML(parent.id)}">${escapeHTML(itemPreview(parent,34))}</button> 继续长出来`:""}
+            ${parent&&childCount?" · ":""}
+            ${childCount?`后来又长出 ${childCount} 条`:""}
+          </div>`:"";
+        const source=(item.sourceName||item.url)?`
+          <div class="source-row">
+            ${item.sourceName?`来源：<span class="source-name">${escapeHTML(item.sourceName)}</span>`:""}
+            ${item.url?`<a class="source" href="${escapeHTML(item.url)}" target="_blank" rel="noopener">打开原链接</a>`:""}
+          </div>`:"";
+        return `
+          <article class="panel card ${item.pinned?"pinned":""}" data-id="${item.id}">
+            <div class="card-top">
+              <div class="meta-pills">
+                <span class="type">${escapeHTML(item.type)}</span>
+                <span class="status-pill ${statusClass(item.status)}">${escapeHTML(item.status)}</span>
+              </div>
+              <div class="time-meta">
+                <span class="created-time">写下于 ${formatDate(item.createdAt)}</span>
+                ${wasEdited(item) ? `<span class="edited-time">修改于 ${formatDate(item.updatedAt)}</span>` : ""}
+              </div>
+            </div>
+            ${item.content?`<div class="content">${richText(item.content)}</div>`:""}
+            ${images}
+            ${note}
+            ${relation}
+            ${tags?`<div class="tags">${tags}</div>`:""}
+            ${source}
+            <div class="actions">
+              ${(parent||childCount)?`<button class="icon-btn" data-action="chain">生长链</button>`:""}
+              ${(item.aiComments||[]).length ? `
+                <button class="icon-btn comment-button" data-action="comment">
+                  拆纸条<span class="comment-count-badge">${item.aiComments.length}</span>
+                </button>` : ""}
+              <button class="icon-btn" data-action="pin">${item.pinned?"取消置顶":"置顶"}</button>
+              <button class="icon-btn" data-action="edit">编辑</button>
+              <button class="icon-btn danger" data-action="delete">删除</button>
+            </div>
+          </article>`;
+      }).join("");
+    }
+
+    function setTagFilter(tag){
+      activeTag=tag;
+      $("searchInput").value="";
+      $("filterType").value="";
+      render();
+      window.scrollTo({top:$("activeFilter").offsetTop-12,behavior:"smooth"});
+    }
+
+    async function openEdit(item){
+      editingId=item.id;
+      editType=item.type;
+      editStatus=item.status||"正在发芽";
+      editExistingImageIds=[...(item.imageIds||[])];
+      editRemovedImageIds=[];
+      editNewImages=[];
+      $("editContent").value=item.content;
+      $("editTags").value=(item.tags||[]).join("，");
+      renderRelationSelects();
+      $("editParentSelect").value=item.parentId||"";
+      $("editNote").value=item.note||"";
+      $("editSourceName").value=item.sourceName||"";
+      $("editUrl").value=item.url||"";
+      setupTypeSelectors();
+      await renderEditImages();
+      $("editDialog").showModal();
+    }
+
+    async function renderEditImages(){
+      const existing=await Promise.all(editExistingImageIds.map(async id=>({
+        id,src:await getImage(id).catch(()=>"")
+      })));
+      const existingHTML=existing.filter(x=>x.src).map(x=>`
+        <div class="preview-wrap">
+          <img src="${x.src}" alt="已有图片">
+          <button class="remove-image" data-existing-id="${x.id}" type="button">×</button>
+        </div>`).join("");
+      const newHTML=editNewImages.map((src,i)=>`
+        <div class="preview-wrap">
+          <img src="${src}" alt="新图片">
+          <button class="remove-image" data-edit-new-index="${i}" type="button">×</button>
+        </div>`).join("");
+      $("editImagePreviews").innerHTML=existingHTML+newHTML;
+    }
+
+    async function saveEdit(){
+      const item=items.find(x=>x.id===editingId);
+      if(!item) return;
+      const content=$("editContent").value.trim();
+      if(!content && !editExistingImageIds.length && !editNewImages.length){
+        toast("至少留下一句话或一张图");
+        return;
+      }
+      $("confirmEdit").disabled=true;
+      $("confirmEdit").textContent="保存中…";
+      try{
+        const newIds=[];
+        for(const src of editNewImages) newIds.push(await putImage(src));
+        for(const id of editRemovedImageIds) await deleteImage(id).catch(()=>{});
+        item.content=content;
+        item.type=editType;
+        item.status=editStatus;
+        item.parentId=$("editParentSelect").value || "";
+        item.tags=parseTags($("editTags").value);
+        item.note=$("editNote").value.trim();
+        item.sourceName=$("editSourceName").value.trim();
+        item.url=safeUrl($("editUrl").value);
+        item.imageIds=[...editExistingImageIds,...newIds];
+        item.updatedAt=Date.now();
+        persist();
+        toast("改好了");
+        $("editDialog").close();
+      }catch(e){
+        toast("保存修改时出了点问题");
+      }finally{
+        $("confirmEdit").disabled=false;
+        $("confirmEdit").textContent="保存修改";
+      }
+    }
+
+    function renderMonthlySummary(){
+      const key=$("monthPicker").value || monthKey(Date.now());
+      const rows=monthItems(key).sort((a,b)=>a.createdAt-b.createdAt);
+      if(!rows.length){
+        $("monthlyContent").innerHTML=`
+          <div class="empty">这个月还没有碎片。空白也不是丢失，只是还没写进来。</div>`;
+        return;
+      }
+
+      const activeDays=new Set(rows.map(item=>new Date(item.createdAt).toDateString())).size;
+      const imageCount=rows.reduce((sum,item)=>sum+(item.imageIds||[]).length,0);
+      const editedCount=rows.filter(wasEdited).length;
+      const tags=topCounts(rows.flatMap(collectTags),6);
+      const types=topCounts(rows.map(x=>x.type),4);
+      const statuses=topCounts(rows.map(x=>x.status),3);
+      const sprouting=rows.filter(x=>x.status==="正在发芽");
+      const used=rows.filter(x=>x.status==="已经用上");
+      const chains=rows.filter(x=>x.parentId).length;
+      const first=rows[0],last=rows[rows.length-1];
+
+      let weather="";
+      if(rows.length>=20) weather="这个月的脑内天气很密，念头来得频繁，而且不止一个方向。";
+      else if(rows.length>=8) weather="这个月有一阵一阵的灵感风，数量不夸张，但一直没有彻底安静。";
+      else weather="这个月的碎片不多，更像几次突然亮起的小灯。";
+      if(chains>=3) weather+=" 很多内容不是凭空出现，而是在旧想法上继续长。";
+      if(used.length) weather+=` 其中有 ${used.length} 条已经真的被你用上了。`;
+
+      const topTagText=tags.length
+        ? tags.map(([tag,count])=>`#${escapeHTML(tag)}（${count}）`).join("、")
+        : "这个月还没有明显重复的标签";
+      const typeText=types.map(([name,count])=>`${escapeHTML(name)} ${count} 条`).join("，");
+      const statusText=statuses.map(([name,count])=>`${escapeHTML(name)} ${count} 条`).join("，");
+      const growingList=sprouting.slice(-6).reverse().map(item=>`
+        <button class="summary-item" data-jump-id="${escapeHTML(item.id)}">${escapeHTML(itemPreview(item,70))}</button>
+      `).join("");
+
+      $("monthlyContent").innerHTML=`
+        <div class="dashboard-grid">
+          <div class="stat-box"><strong>${rows.length}</strong><span>条新碎片</span></div>
+          <div class="stat-box"><strong>${activeDays}</strong><span>天留下痕迹</span></div>
+          <div class="stat-box"><strong>${imageCount}</strong><span>张保存图片</span></div>
+          <div class="stat-box"><strong>${editedCount}</strong><span>条后来改过</span></div>
+          <div class="stat-box"><strong>${chains}</strong><span>条接在旧灵感后</span></div>
+          <div class="stat-box"><strong>${used.length}</strong><span>条已经用上</span></div>
+        </div>
+        <div class="summary-section">
+          <h3>${escapeHTML(monthLabel(key))}的脑内天气</h3>
+          <p>${escapeHTML(weather)}</p>
+        </div>
+        <div class="summary-section">
+          <h3>这个月反复出现的东西</h3>
+          <p>${topTagText}</p>
+        </div>
+        <div class="summary-section">
+          <h3>碎片分布</h3>
+          <p>${typeText || "暂无分类"}。状态是：${statusText || "暂无状态"}。</p>
+        </div>
+        <div class="summary-section">
+          <h3>月初与月末</h3>
+          <p>最早写下：“${escapeHTML(itemPreview(first,72))}”<br>
+          最后写下：“${escapeHTML(itemPreview(last,72))}”</p>
+        </div>
+        <div class="summary-section">
+          <h3>还在发芽</h3>
+          ${growingList?`<div class="summary-list">${growingList}</div>`:
+            `<p>这个月没有标成“正在发芽”的内容。可能是已经用上，也可能只是暂时休眠。</p>`}
+        </div>`;
+    }
+
+    function openMonthly(){
+      const now=new Date();
+      $("monthPicker").value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+      renderMonthlySummary();
+      $("monthlyDialog").showModal();
+    }
+
+    function renderReassurance(){
+      const now=Date.now();
+      const todayKey=new Date().toDateString();
+      const today=items.filter(x=>new Date(x.createdAt).toDateString()===todayKey);
+      const recent=items.slice().sort((a,b)=>b.updatedAt-a.updatedAt).slice(0,5);
+      const unclassified=items.filter(x=>x.type==="不知道放哪");
+      const sleeping=items.filter(x=>x.status==="暂时休眠");
+      const longQuiet=items
+        .filter(x=>now-x.updatedAt>45*24*60*60*1000 && x.status!=="已经用上")
+        .sort((a,b)=>a.updatedAt-b.updatedAt)
+        .slice(0,6);
+
+      const makeList=rows=>rows.map(item=>`
+        <button class="summary-item" data-jump-id="${escapeHTML(item.id)}">${escapeHTML(itemPreview(item,72))}</button>
+      `).join("");
+
+      $("reassureContent").innerHTML=`
+        <div class="summary-section">
+          <h3>先确认一件事</h3>
+          <p>你已经留下了 ${items.length} 条碎片。它们没有因为没分类、没完成、很久没打开，就从这里消失。</p>
+        </div>
+        <div class="dashboard-grid">
+          <div class="stat-box"><strong>${today.length}</strong><span>今天写下</span></div>
+          <div class="stat-box"><strong>${unclassified.length}</strong><span>还不知道放哪</span></div>
+          <div class="stat-box"><strong>${sleeping.length}</strong><span>暂时休眠</span></div>
+        </div>
+        <div class="summary-section">
+          <h3>最近碰过的</h3>
+          ${recent.length?`<div class="summary-list">${makeList(recent)}</div>`:"<p>还没有记录。</p>"}
+        </div>
+        <div class="summary-section">
+          <h3>很久没碰，但仍然在</h3>
+          ${longQuiet.length?`<div class="summary-list">${makeList(longQuiet)}</div>`:
+            "<p>暂时没有沉睡很久的未完成碎片。</p>"}
+        </div>`;
+    }
+
+    function connectedChain(startId){
+      const start=items.find(x=>x.id===startId);
+      if(!start) return [];
+      let root=start;
+      const seenUp=new Set([root.id]);
+      while(root.parentId){
+        const parent=items.find(x=>x.id===root.parentId);
+        if(!parent||seenUp.has(parent.id)) break;
+        root=parent; seenUp.add(root.id);
+      }
+      const result=[];
+      const walk=(node,depth)=>{
+        if(result.some(x=>x.item.id===node.id)) return;
+        result.push({item:node,depth});
+        items
+          .filter(x=>x.parentId===node.id)
+          .sort((a,b)=>a.createdAt-b.createdAt)
+          .forEach(child=>walk(child,depth+1));
+      };
+      walk(root,0);
+      return result;
+    }
+
+    function openChain(item){
+      const rows=connectedChain(item.id);
+      $("chainList").innerHTML=rows.map(({item:node,depth})=>`
+        <button class="chain-node ${node.id===item.id?"current":""}"
+          data-jump-id="${escapeHTML(node.id)}" style="margin-left:${Math.min(depth,4)*14}px">
+          <div class="chain-meta">${"↳ ".repeat(depth)}${escapeHTML(node.status)} · ${escapeHTML(formatDate(node.createdAt))}</div>
+          <div>${escapeHTML(itemPreview(node,90))}</div>
+        </button>`).join("");
+      $("chainDialog").showModal();
+    }
+
+    function renderVersions(){
+      $("versionsContent").innerHTML=`
+        <div class="version-entry"><strong>v1 · 碎片先活下来</strong><br>快速记录、搜索、标签、置顶、导入导出，还有第一颗意外长出来的“随机捞一条”。</div>
+        <div class="version-entry"><strong>v2 · 标签与图片</strong><br>正文里的 #标签 可以点开；加入图片、备注、来源和原链接。</div>
+        <div class="version-entry"><strong>v3 · 时间没有被覆盖</strong><br>“写下于”和“修改于”分开保存，原始时间一直留着。</div>
+        <div class="version-entry"><strong>v4 · 惊喜点评盒</strong><br>我的独家点评被做成偶尔才会出现的纸条，而不是常驻的模板栏。</div>
+        <div class="version-entry"><strong>v5 · 看见它怎么长大</strong><br>月度回顾、灵感生长链、发芽/休眠/用上状态，以及“我没有忘记什么”。全是文字，没有偷偷生成月报图片。</div>`;
+    }
+
+    function exportMonthForSummary(){
+      const key=$("monthPicker").value || monthKey(Date.now());
+      const rows=monthItems(key).map(item=>({
+        id:item.id,
+        content:item.content,
+        note:item.note,
+        type:item.type,
+        status:item.status,
+        tags:collectTags(item),
+        sourceName:item.sourceName,
+        createdAt:item.createdAt,
+        updatedAt:item.updatedAt,
+        parentId:item.parentId
+      }));
+      if(!rows.length){toast("这个月还没有可以总结的碎片");return;}
+      const payload={
+        app:"碎片库-月度深度总结素材",
+        version:1,
+        month:key,
+        instruction:"请结合本月全部碎片，写一份不说教、不做绩效评估的文字回顾：反复出现的主题、正在生长的线索、被忽略但值得捞回的细节、可能属于荣鸢的创作倾向，并明确区分原文事实与AI观察。",
+        items:rows
+      };
+      const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+      const a=document.createElement("a");
+      a.href=URL.createObjectURL(blob);
+      a.download=`碎片库-${key}-月度总结素材.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast("这个月已经打包好，可以发给我了");
+    }
+
+    function exportForComments(){
+      const pending=items
+        .filter(item=>(item.content?.trim()||item.note?.trim()) && !(item.aiComments||[]).length)
+        .map(item=>({
+          id:item.id,
+          content:item.content,
+          note:item.note,
+          type:item.type,
+          tags:collectTags(item),
+          sourceName:item.sourceName,
+          createdAt:item.createdAt
+        }));
+      if(!pending.length){
+        toast("暂时没有还没被点评的文字碎片");
+        return;
+      }
+      const payload={
+        app:"碎片库-待点评",
+        version:1,
+        exportedAt:new Date().toISOString(),
+        instruction:"请为每个 item 写 0~2 条真诚、具体、偶尔带一点意外联想的独家点评。返回 app=碎片库-点评包，comments 数组元素包含 itemId、text、createdAt。",
+        items:pending
+      };
+      const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+      const a=document.createElement("a");
+      a.href=URL.createObjectURL(blob);
+      a.download=`碎片库-待点评-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast(`打包了 ${pending.length} 条，拿来给我就好`);
+    }
+
+    async function importCommentPack(file){
+      try{
+        const parsed=JSON.parse(await file.text());
+        const rows=Array.isArray(parsed)?parsed:
+          Array.isArray(parsed.comments)?parsed.comments:[];
+        if(!rows.length) throw new Error("empty");
+        let added=0;
+        for(const row of rows){
+          const itemId=String(row.itemId||row.id||"");
+          const text=String(row.text||row.comment||"").trim();
+          if(!itemId||!text) continue;
+          const item=items.find(x=>x.id===itemId);
+          if(!item) continue;
+          item.aiComments=item.aiComments||[];
+          const duplicate=item.aiComments.some(c=>c.text===text);
+          if(duplicate) continue;
+          item.aiComments.push({
+            id:String(row.commentId||uid()),
+            text,
+            createdAt:Number(row.createdAt)||Date.now()
+          });
+          added++;
+        }
+        if(!added) throw new Error("no-match");
+        persist();
+        toast(`悄悄夹进去了 ${added} 张纸条`);
+        setTimeout(maybeOfferSurprise,500);
+      }catch(e){
+        toast("这个点评包没有匹配到碎片");
+      }
+    }
+
+    async function exportData(){
+      $("exportBtn").disabled=true;
+      $("exportBtn").textContent="打包中…";
+      try{
+        const exportItems=[];
+        for(const item of items){
+          const images=(await getImages(item.imageIds||[]).catch(()=>[])).filter(Boolean);
+          const copy={...item,images};
+          delete copy.imageIds;
+          exportItems.push(copy);
+        }
+        const payload={
+          app:"碎片库",
+          version:2,
+          exportedAt:new Date().toISOString(),
+          items:exportItems
+        };
+        const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+        const a=document.createElement("a");
+        a.href=URL.createObjectURL(blob);
+        a.download=`碎片库完整备份-${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        toast("文字和图片都打包好了");
+      }catch(e){
+        toast("导出时出了点问题");
+      }finally{
+        $("exportBtn").disabled=false;
+        $("exportBtn").textContent="导出完整备份";
+      }
+    }
+
+    async function importData(file){
+      try{
+        const text=await file.text();
+        const parsed=JSON.parse(text);
+        const incoming=Array.isArray(parsed)?parsed:parsed.items;
+        if(!Array.isArray(incoming)) throw new Error();
+        const normalized=[];
+        for(const raw of incoming){
+          if(!raw || (!raw.content && !(raw.images||[]).length)) continue;
+          const imageIds=[];
+          if(Array.isArray(raw.images)){
+            for(const src of raw.images){
+              if(typeof src==="string" && src.startsWith("data:image/")){
+                imageIds.push(await putImage(src));
+              }
+            }
+          }else if(Array.isArray(raw.imageIds)){
+            imageIds.push(...raw.imageIds);
+          }
+          normalized.push(normalizeItem({...raw,imageIds,id:raw.id||uid()}));
+        }
+        const byId=new Map(items.map(x=>[x.id,x]));
+        normalized.forEach(x=>byId.set(x.id,x));
+        items=[...byId.values()];
+        persist();
+        toast(`导入了 ${normalized.length} 条碎片`);
+      }catch(e){
+        toast("这个备份文件好像不对");
+      }
+    }
+
+    $("saveBtn").onclick=addItem;
+    contentInput.addEventListener("keydown",e=>{
+      if((e.ctrlKey||e.metaKey)&&e.key==="Enter") addItem();
+    });
+
+    $("imageInput").addEventListener("change",async e=>{
+      const room=6-pendingImages.length;
+      if(room<=0){toast("每条最多放 6 张图");e.target.value="";return;}
+      toast("正在处理图片…");
+      const added=await filesToCompressed(e.target.files,room);
+      pendingImages.push(...added);
+      renderPendingImages();
+      toast(`放进来 ${added.length} 张图`);
+      e.target.value="";
+    });
+
+    $("imagePreviews").addEventListener("click",e=>{
+      const btn=e.target.closest("[data-pending-index]");
+      if(!btn) return;
+      pendingImages.splice(Number(btn.dataset.pendingIndex),1);
+      renderPendingImages();
+    });
+
+    ["searchInput","filterType","sortSelect"].forEach(id=>{
+      $(id).addEventListener(id==="searchInput"?"input":"change",render);
+    });
+
+    $("tagCloud").addEventListener("click",e=>{
+      const btn=e.target.closest("[data-tag]");
+      if(btn) setTagFilter(btn.dataset.tag);
+    });
+
+    $("clearTagFilter").onclick=()=>{activeTag="";render()};
+
+    $("list").addEventListener("click",async e=>{
+      const jump=e.target.closest("[data-jump-id]");
+      if(jump){jumpToItem(jump.dataset.jumpId);return;}
+      const tag=e.target.closest("[data-tag]");
+      if(tag){setTagFilter(tag.dataset.tag);return;}
+
+      const image=e.target.closest("[data-lightbox-src]");
+      if(image){
+        $("lightboxImage").src=image.dataset.lightboxSrc;
+        $("lightbox").showModal();
+        return;
+      }
+
+      const btn=e.target.closest("button[data-action]");
+      if(!btn) return;
+      const card=btn.closest("[data-id]");
+      const item=items.find(x=>x.id===card.dataset.id);
+      if(!item) return;
+
+      if(btn.dataset.action==="pin"){
+        item.pinned=!item.pinned;
+        item.updatedAt=Date.now();
+        persist();
+      }
+      if(btn.dataset.action==="edit") await openEdit(item);
+      if(btn.dataset.action==="chain") openChain(item);
+      if(btn.dataset.action==="comment"){
+        const comments=item.aiComments||[];
+        if(comments.length){
+          const comment=comments[Math.floor(Math.random()*comments.length)];
+          openComment({item,comment,key:`${item.id}:${comment.id}`});
+        }
+      }
+      if(btn.dataset.action==="delete"){
+        if(confirm("真的删掉这条碎片吗？")){
+          for(const id of item.imageIds||[]) await deleteImage(id).catch(()=>{});
+          items=items.filter(x=>x.id!==item.id);
+          items.forEach(x=>{if(x.parentId===item.id)x.parentId=""});
+          persist();
+          toast("删掉了");
+        }
+      }
+    });
+
+    $("editImageInput").addEventListener("change",async e=>{
+      const room=6-editExistingImageIds.length-editNewImages.length;
+      if(room<=0){toast("每条最多放 6 张图");e.target.value="";return;}
+      const added=await filesToCompressed(e.target.files,room);
+      editNewImages.push(...added);
+      await renderEditImages();
+      e.target.value="";
+    });
+
+    $("editImagePreviews").addEventListener("click",async e=>{
+      const existing=e.target.closest("[data-existing-id]");
+      if(existing){
+        const id=existing.dataset.existingId;
+        editExistingImageIds=editExistingImageIds.filter(x=>x!==id);
+        editRemovedImageIds.push(id);
+        await renderEditImages();
+        return;
+      }
+      const newer=e.target.closest("[data-edit-new-index]");
+      if(newer){
+        editNewImages.splice(Number(newer.dataset.editNewIndex),1);
+        await renderEditImages();
+      }
+    });
+
+    $("confirmEdit").addEventListener("click",e=>{
+      e.preventDefault();
+      saveEdit();
+    });
+
+    $("randomBtn").onclick=()=>{
+      if(!items.length){toast("还没有可以捞的碎片");return;}
+      const pool=items.filter(x=>!x.pinned);
+      const item=(pool.length?pool:items)[Math.floor(Math.random()*(pool.length||items.length))];
+      activeTag="";
+      $("searchInput").value=item.content.slice(0,36) || item.note.slice(0,36);
+      $("filterType").value="";
+      render().then(()=>setTimeout(()=>{
+        document.querySelector(`[data-id="${item.id}"]`)?.scrollIntoView({behavior:"smooth",block:"center"});
+      },0));
+    };
+
+    $("monthlyBtn").onclick=openMonthly;
+    $("monthPicker").addEventListener("change",renderMonthlySummary);
+    $("exportMonthBtn").onclick=exportMonthForSummary;
+    $("closeMonthlyBtn").onclick=()=>$("monthlyDialog").close();
+
+    $("reassureBtn").onclick=()=>{
+      renderReassurance();
+      $("reassureDialog").showModal();
+    };
+    $("closeReassureBtn").onclick=()=>$("reassureDialog").close();
+
+    $("versionsBtn").onclick=()=>{
+      renderVersions();
+      $("versionsDialog").showModal();
+    };
+    $("closeVersionsBtn").onclick=()=>$("versionsDialog").close();
+    $("closeChainBtn").onclick=()=>$("chainDialog").close();
+
+    ["monthlyContent","reassureContent","chainList"].forEach(id=>{
+      $(id).addEventListener("click",e=>{
+        const jump=e.target.closest("[data-jump-id]");
+        if(jump) jumpToItem(jump.dataset.jumpId);
+      });
+    });
+
+    $("surpriseBtn").onclick=()=>{
+      const entry=chooseComment();
+      if(!entry){
+        toast("点评盒还是空的，先导出待点评包给我");
+        return;
+      }
+      openComment(entry);
+    };
+
+    $("openSurpriseBtn").onclick=()=>openComment(queuedSurprise||chooseComment());
+    $("dismissSurpriseBtn").onclick=()=>{
+      queuedSurprise=null;
+      $("surpriseBanner").classList.remove("show");
+    };
+    $("closeCommentBtn").onclick=()=>$("commentDialog").close();
+
+    $("exportCommentsBtn").onclick=exportForComments;
+    $("importCommentsBtn").onclick=()=>$("commentImportFile").click();
+    $("commentImportFile").addEventListener("change",e=>{
+      const file=e.target.files?.[0];
+      if(file) importCommentPack(file);
+      e.target.value="";
+    });
+
+    $("exportBtn").onclick=exportData;
+    $("importBtn").onclick=()=>$("importFile").click();
+    $("importFile").addEventListener("change",e=>{
+      const file=e.target.files?.[0];
+      if(file) importData(file);
+      e.target.value="";
+    });
+
+    $("lightboxClose").onclick=()=>$("lightbox").close();
+    $("lightbox").addEventListener("click",e=>{
+      if(e.target===$("lightbox")) $("lightbox").close();
+    });
+
+
+    let deferredInstallPrompt = null;
+
+    function isStandaloneMode(){
+      return window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true;
+    }
+
+    function showInstallControls(){
+      if(isStandaloneMode()) return;
+      $("installAppBtn").classList.remove("hidden");
+      $("installReadyBanner").classList.remove("hidden");
+    }
+
+    async function requestAppInstall(){
+      if(!deferredInstallPrompt){
+        toast("浏览器菜单里也可以选择“安装应用”或“添加到主屏幕”");
+        return;
+      }
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      $("installAppBtn").classList.add("hidden");
+      $("installReadyBanner").classList.add("hidden");
+    }
+
+    window.addEventListener("beforeinstallprompt",event=>{
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      showInstallControls();
+    });
+
+    window.addEventListener("appinstalled",()=>{
+      deferredInstallPrompt = null;
+      $("installAppBtn").classList.add("hidden");
+      $("installReadyBanner").classList.add("hidden");
+      toast("碎片库已经住进手机里啦");
+    });
+
+    $("installAppBtn").onclick=requestAppInstall;
+    $("installReadyBtn").onclick=requestAppInstall;
+    $("hideInstallBannerBtn").onclick=()=>$("installReadyBanner").classList.add("hidden");
+
+    let waitingServiceWorker = null;
+    let updateReloading = false;
+
+    function showUpdateReady(worker){
+      waitingServiceWorker = worker;
+      $("updateReadyBanner").classList.remove("hidden");
+    }
+
+    async function registerAppWorker(){
+      if(!("serviceWorker" in navigator) || location.protocol === "file:") return;
+
+      try{
+        const registration = await navigator.serviceWorker.register("./sw.js");
+
+        if(registration.waiting && navigator.serviceWorker.controller){
+          showUpdateReady(registration.waiting);
+        }
+
+        registration.addEventListener("updatefound",()=>{
+          const worker = registration.installing;
+          if(!worker) return;
+          worker.addEventListener("statechange",()=>{
+            if(worker.state === "installed" && navigator.serviceWorker.controller){
+              showUpdateReady(worker);
+            }
+          });
+        });
+
+        window.setInterval(()=>registration.update().catch(()=>{}),60*60*1000);
+        registration.update().catch(()=>{});
+      }catch(e){
+        console.warn("Service worker registration failed",e);
+      }
+    }
+
+    navigator.serviceWorker?.addEventListener("controllerchange",()=>{
+      if(updateReloading) return;
+      updateReloading = true;
+      window.location.reload();
+    });
+
+    $("applyUpdateBtn").onclick=()=>{
+      if(waitingServiceWorker){
+        waitingServiceWorker.postMessage({type:"SKIP_WAITING"});
+      }else{
+        window.location.reload();
+      }
+    };
+    $("hideUpdateBannerBtn").onclick=()=>$("updateReadyBanner").classList.add("hidden");
+
+    async function loadVersionLabel(){
+      try{
+        const response=await fetch(`./version.json?t=${Date.now()}`,{cache:"no-store"});
+        if(!response.ok) return;
+        const version=await response.json();
+        $("appVersionLabel").textContent=` · v${version.version}`;
+      }catch(e){}
+    }
+
+    window.addEventListener("load",()=>{
+      registerAppWorker();
+      loadVersionLabel();
+    });
+
+    setupTypeSelectors();
+    renderRelationSelects();
+    renderPendingImages();
+    render().then(()=>maybeOfferSurprise());
+  </script>
+</body>
+</html>
