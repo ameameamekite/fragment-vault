@@ -328,7 +328,7 @@ jobs:
       - name: 安装 Android 35
         shell: bash
         run: |
-          yes | sdkmanager --licenses >/dev/null
+          yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: 设置 Gradle
