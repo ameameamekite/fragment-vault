@@ -1,4 +1,4 @@
-const CACHE_NAME = "fragment-vault-v8.0.0";
+const CACHE_NAME = "fragment-vault-v9.2.0";
 const APP_SHELL = [
   "./",
   "./index.html",

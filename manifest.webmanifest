@@ -1,7 +1,7 @@
 {
   "name": "碎片库",
   "short_name": "碎片库",
-  "description": "保存半句话、图片、每日心情与偶尔浮上来的旧碎片。",
+  "description": "保存碎片、日记、专题与灵感脉络；林雨桉会认真看过你的今日记录。",
   "lang": "zh-CN",
   "start_url": "./",
   "scope": "./",

@@ -499,7 +499,7 @@
 
     .library-tools{padding:16px;margin-bottom:14px;scroll-margin-top:16px}
     .library-tools .section-heading{margin-bottom:12px}
-    .filter-grid{display:grid;grid-template-columns:minmax(0,1fr) 150px 130px;gap:8px}
+    .filter-grid{display:grid;grid-template-columns:minmax(0,1fr) 135px 135px 125px;gap:8px}
     .quick-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .quick-actions button{flex:1 1 auto;min-width:110px}
     .tools-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 12px 12px;border-top:1px solid var(--line)}
@@ -588,6 +588,213 @@
       .tools-body select{grid-column:auto}
     }
   </style>
+
+  <style id="v9-projects-context">
+    .explore-strip{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;
+      margin:0 0 14px;padding:10px
+    }
+    .explore-card{
+      border:1px solid var(--line);background:rgba(255,255,255,.028);
+      color:var(--text);border-radius:19px;padding:13px 12px;text-align:left;
+      min-height:82px;display:flex;flex-direction:column;justify-content:space-between
+    }
+    .explore-card strong{font-size:14px}
+    .explore-card span{font-size:11px;color:var(--muted);line-height:1.45}
+    .explore-symbol{
+      width:24px;height:24px;position:relative;margin-bottom:10px;color:var(--accent)
+    }
+    .explore-symbol.book::before{
+      content:"";position:absolute;inset:2px 4px;border:2px solid currentColor;
+      border-radius:4px 8px 8px 4px;box-shadow:inset 4px 0 rgba(203,183,255,.12)
+    }
+    .explore-symbol.capsule::before{
+      content:"";position:absolute;width:20px;height:10px;left:2px;top:7px;
+      border:2px solid currentColor;border-radius:999px;transform:rotate(-24deg)
+    }
+    .explore-symbol.context::before{
+      content:"";position:absolute;width:7px;height:7px;border:2px solid currentColor;
+      border-radius:50%;left:1px;top:1px;box-shadow:14px 5px 0 -2px var(--panel),14px 5px 0 0 currentColor,5px 15px 0 -2px var(--panel),5px 15px 0 0 currentColor
+    }
+    .explore-symbol.context::after{
+      content:"";position:absolute;left:7px;top:8px;width:12px;height:11px;
+      border-left:2px solid currentColor;border-bottom:2px solid currentColor;
+      transform:skew(-27deg) rotate(-14deg)
+    }
+    .project-picker{display:flex;gap:7px;flex-wrap:wrap}
+    .project-chip{
+      border:1px solid var(--line);background:rgba(255,255,255,.035);
+      color:var(--muted);border-radius:999px;padding:7px 10px;font-size:12px
+    }
+    .project-chip.active{
+      border-color:transparent;color:#17131f;background:var(--project-color,var(--accent));
+      font-weight:750
+    }
+    .quiet-toggle{
+      display:flex;align-items:flex-start;gap:10px;margin-top:13px;padding:12px;
+      border:1px solid rgba(203,183,255,.13);border-radius:14px;
+      background:rgba(203,183,255,.045);color:#ded8e7;font-size:13px;line-height:1.55
+    }
+    .quiet-toggle input{width:18px;height:18px;flex:0 0 auto;margin-top:1px;accent-color:var(--accent)}
+    .quiet-toggle small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+    .project-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+    .project-pill{
+      display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:999px;
+      font-size:11px;background:color-mix(in srgb,var(--project-color,var(--accent)) 13%,transparent);
+      color:var(--project-color,var(--accent))
+    }
+    .quiet-badge{
+      display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;
+      font-size:11px;color:#d7d0df;background:rgba(255,255,255,.045)
+    }
+    .project-create{display:grid;grid-template-columns:1fr 1.5fr auto;gap:8px}
+    .project-list{display:grid;gap:9px;margin-top:14px}
+    .project-card{
+      border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.03);
+      padding:13px;display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center
+    }
+    .project-dot{width:12px;height:38px;border-radius:999px;background:var(--project-color)}
+    .project-card strong{display:block;margin-bottom:3px}
+    .project-card p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}
+    .project-card-actions{display:flex;gap:6px}
+    .context-map{display:grid;gap:11px}
+    .context-root{
+      padding:12px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)
+    }
+    .context-project-title{color:var(--accent-2);font-size:11px;margin-bottom:8px}
+    .context-node{
+      width:100%;display:block;text-align:left;border:0;color:var(--text);
+      background:transparent;border-radius:11px;padding:8px 9px;margin-top:4px
+    }
+    .context-node:hover,.context-node.current{background:rgba(203,183,255,.08)}
+    .context-node small{display:block;color:var(--muted);font-size:10px;margin-bottom:3px}
+    .capsule-paper{
+      border:1px solid rgba(203,183,255,.22);border-radius:20px;padding:18px;
+      background:
+        radial-gradient(circle at 95% 0%,rgba(153,223,204,.09),transparent 35%),
+        linear-gradient(145deg,rgba(203,183,255,.08),rgba(255,255,255,.025))
+    }
+    .capsule-age{color:var(--accent-2);font-size:11px;letter-spacing:.08em}
+    .capsule-copy{white-space:pre-wrap;font-size:17px;line-height:1.8;margin:14px 0}
+    .capsule-note{color:#d4cedb;font-size:13px;line-height:1.65}
+    .kodo-toolbar{display:grid;grid-template-columns:1fr 170px;gap:8px}
+    .kodo-list{display:grid;gap:7px;max-height:48vh;overflow:auto;margin-top:12px;padding-right:3px}
+    .kodo-row{
+      display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:flex-start;
+      padding:10px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)
+    }
+    .kodo-row input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent)}
+    .kodo-row small{display:block;color:var(--muted);margin-top:4px}
+    .appearance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+    .appearance-choice{
+      border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);
+      color:var(--text);padding:11px;text-align:left
+    }
+    .appearance-choice.active{border-color:var(--accent);background:var(--accent-soft)}
+    .theme-preview{height:46px;border-radius:11px;margin-bottom:8px;border:1px solid rgba(255,255,255,.08)}
+    .theme-preview.rain{background:linear-gradient(145deg,#17131f,#282237)}
+    .theme-preview.ink{background:linear-gradient(145deg,#050507,#17171b)}
+    .theme-preview.paper{background:linear-gradient(145deg,#f3ecdf,#d9cbbd)}
+    .accent-row{display:flex;gap:10px;flex-wrap:wrap}
+    .accent-choice{
+      width:34px;height:34px;border-radius:50%;border:3px solid transparent;
+      background:var(--choice);box-shadow:0 0 0 1px var(--line)
+    }
+    .accent-choice.active{border-color:var(--text)}
+    body[data-theme="ink"]{
+      --bg:#050507;--panel:#111115;--panel-2:#18181e;--panel-3:#202027;
+      --line:rgba(255,255,255,.10);--shadow:0 18px 54px rgba(0,0,0,.5)
+    }
+    body[data-theme="paper"]{
+      --bg:#e9e0d4;--panel:#f7f1e8;--panel-2:#eee5da;--panel-3:#e4d9cc;
+      --text:#28212a;--muted:#736b73;--line:rgba(55,43,56,.14);
+      --shadow:0 18px 50px rgba(67,51,62,.14);color-scheme:light
+    }
+    body[data-theme="paper"]{
+      background:radial-gradient(circle at 10% 0%,rgba(147,118,180,.12),transparent 26rem),#e9e0d4
+    }
+    body[data-theme="paper"] .panel,
+    body[data-theme="paper"] .card{background:rgba(247,241,232,.94)}
+    body[data-theme="paper"] input,
+    body[data-theme="paper"] select,
+    body[data-theme="paper"] textarea{color:var(--text);background:rgba(49,39,50,.045)}
+    body[data-density="compact"] .card{padding:12px}
+    body[data-density="compact"] .content{line-height:1.58;margin:9px 0}
+    body.hide-counts #count{display:none}
+    @media (max-width:650px){
+      .explore-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:7px}
+      .explore-card{padding:11px 9px;min-height:76px}
+      .explore-card span{font-size:10px}
+      .project-create,.kodo-toolbar{grid-template-columns:1fr}
+      .appearance-grid{grid-template-columns:1fr}
+      .project-card{grid-template-columns:auto 1fr}
+      .project-card-actions{grid-column:1/-1;justify-content:flex-end}
+    }
+  </style>
+
+
+  <style id="v9-1-yuan-aside">
+    .yuan-aside{
+      position:fixed;right:max(18px,calc((100vw - 940px)/2));bottom:88px;
+      width:min(360px,calc(100vw - 32px));z-index:52;
+      border:1px solid rgba(203,183,255,.30);border-radius:18px;
+      background:color-mix(in srgb,var(--panel) 94%,transparent);
+      box-shadow:0 18px 54px rgba(0,0,0,.28);
+      padding:13px 40px 13px 14px;
+      opacity:0;transform:translateY(14px) scale(.98);
+      pointer-events:none;transition:.22s ease;
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)
+    }
+    .yuan-aside.show{opacity:1;transform:none;pointer-events:auto}
+    .yuan-aside::before{
+      content:"";position:absolute;right:22px;bottom:-7px;width:13px;height:13px;
+      background:var(--panel);border-right:1px solid rgba(203,183,255,.30);
+      border-bottom:1px solid rgba(203,183,255,.30);transform:rotate(45deg)
+    }
+    .yuan-name{
+      display:flex;align-items:center;gap:7px;color:var(--accent-2);
+      font-size:11px;letter-spacing:.08em;margin-bottom:6px
+    }
+    .yuan-name::before{
+      content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-2);
+      box-shadow:0 0 0 4px rgba(153,223,204,.09)
+    }
+    .yuan-text{font-size:14px;line-height:1.68;color:var(--text)}
+    .yuan-close{
+      position:absolute;right:8px;top:7px;border:0;background:transparent;
+      color:var(--muted);font-size:18px;width:28px;height:28px;border-radius:50%
+    }
+    .yuan-close:hover{background:rgba(255,255,255,.06);color:var(--text)}
+    .yuan-setting-note{display:block;margin-top:4px;color:var(--muted);font-size:11px}
+    @media (max-width:650px){
+      .yuan-aside{left:16px;right:16px;bottom:86px;width:auto}
+    }
+  </style>
+
+
+  <style id="v9-2-yuan-care">
+    .yuan-care-card{
+      position:relative;min-height:92px;border-radius:17px;padding:15px;
+      border:1px solid rgba(153,223,204,.24);
+      background:
+        radial-gradient(circle at 96% 0%,rgba(153,223,204,.10),transparent 36%),
+        linear-gradient(145deg,rgba(203,183,255,.075),rgba(255,255,255,.025));
+      line-height:1.75;color:#e6e1e9;white-space:pre-wrap
+    }
+    .yuan-care-card.empty{color:var(--muted)}
+    .yuan-care-head{
+      display:flex;align-items:center;gap:8px;margin-bottom:9px;
+      color:var(--accent-2);font-size:11px;letter-spacing:.06em
+    }
+    .yuan-care-head::before{
+      content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-2);
+      box-shadow:0 0 0 4px rgba(153,223,204,.08)
+    }
+    .yuan-care-meta{margin-top:10px;color:var(--muted);font-size:10px}
+    .yuan-care-meta.stale{color:#e7c78d}
+    body[data-theme="paper"] .yuan-care-card{color:var(--text)}
+  </style>
+
 </head>
 <body>
   <main class="app">
@@ -606,9 +813,27 @@
       </button>
       <div class="hero-meta">
         <span id="count">0 条碎片</span>
-        <span id="appVersionLabel">v8.0.0</span>
+        <span id="appVersionLabel">v9.2.0</span>
       </div>
     </header>
+
+    <section class="panel explore-strip" aria-label="继续探索">
+      <button class="explore-card" id="projectsBtn" type="button">
+        <span class="explore-symbol book" aria-hidden="true"></span>
+        <strong>专题本</strong>
+        <span>把散落的碎片放回同一个世界</span>
+      </button>
+      <button class="explore-card" id="capsuleBtn" type="button">
+        <span class="explore-symbol capsule" aria-hidden="true"></span>
+        <strong>时间胶囊</strong>
+        <span>让过去写过的东西偶尔回来</span>
+      </button>
+      <button class="explore-card" id="contextMapBtn" type="button">
+        <span class="explore-symbol context" aria-hidden="true"></span>
+        <strong>灵感脉络</strong>
+        <span>看看念头怎样彼此长出来</span>
+      </button>
+    </section>
 
     <div class="install-ready hidden" id="installReadyBanner">
       <div style="flex:1">
@@ -657,6 +882,17 @@
             <option value="">这是一个新的起点</option>
           </select>
 
+          <label class="field-label">放进哪些专题本？</label>
+          <div class="project-picker" id="captureProjectPicker"></div>
+
+          <label class="quiet-toggle">
+            <input id="leaveAloneInput" type="checkbox" />
+            <span>
+              这里先不要完善
+              <small>它仍会被保存和备份，但不会出现在随机提示、AI点评素材或时间胶囊里。</small>
+            </span>
+          </label>
+
           <label class="field-label" for="noteInput">备注</label>
           <textarea id="noteInput" class="note-input"
             placeholder="为什么保存它？喜欢哪里？以后准备怎么发展？"></textarea>
@@ -693,6 +929,9 @@
       <div class="filter-grid">
         <input id="searchInput" placeholder="搜索正文、备注、标签或来源……" />
         <select id="filterType" aria-label="筛选分类"></select>
+        <select id="filterProject" aria-label="筛选专题">
+          <option value="">全部专题</option>
+        </select>
         <select id="sortSelect" aria-label="排序">
           <option value="newest">最新在前</option>
           <option value="oldest">最早在前</option>
@@ -712,6 +951,9 @@
         <div class="tools-body">
           <button class="primary hidden" id="installAppBtn">安装碎片库 App</button>
           <button class="secondary" id="versionsBtn">版本日记</button>
+          <button class="secondary" id="appearanceBtn">外观设置</button>
+          <button class="secondary" id="kodoBtn">整理给 Kodo 看</button>
+          <button class="secondary" id="yuanCommentBtn">雨桉吐槽</button>
           <button class="secondary" id="surpriseBtn">惊喜纸条</button>
           <button class="secondary" id="exportCommentsBtn">导出待点评</button>
           <button class="secondary" id="importCommentsBtn">导入点评包</button>
@@ -770,6 +1012,15 @@
       <select id="editParentSelect">
         <option value="">这是一个新的起点</option>
       </select>
+      <label class="field-label">属于哪些专题本？</label>
+      <div class="project-picker" id="editProjectPicker"></div>
+      <label class="quiet-toggle">
+        <input id="editLeaveAlone" type="checkbox" />
+        <span>
+          这里先不要完善
+          <small>不进入随机提示、AI点评素材或时间胶囊。</small>
+        </span>
+      </label>
       <textarea id="editNote" class="edit-note" placeholder="备注"></textarea>
 
       <div class="image-picker">
@@ -824,6 +1075,19 @@
         <textarea class="diary-textarea" id="dailyDiaryInput"
           placeholder="今天发生了什么？脑子里留下了什么？"></textarea>
         <div class="today-autosave" id="dailyAutosaveText">会自动保存在这台设备里。</div>
+      </section>
+
+      <section class="today-section">
+        <div class="row" style="justify-content:space-between;align-items:flex-start">
+          <div>
+            <h3>雨桉看过今天</h3>
+            <p class="section-help">她会看今天选过的心情、心情备注、歌曲和日记，再认真回你一句。回应保存在本机，同一天不会刷新成另一套假关心。</p>
+          </div>
+          <button class="secondary" id="yuanReadTodayBtn">让她看看今天</button>
+        </div>
+        <div class="yuan-care-card empty" id="yuanCareCard">
+          她还没有看这一天。
+        </div>
       </section>
 
       <section class="today-section">
@@ -904,6 +1168,159 @@
     </div>
   </dialog>
 
+  <dialog id="projectsDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>专题本</h2>
+          <p>一条碎片可以同时属于好几个专题，不需要被迫只选一个抽屉。</p>
+        </div>
+      </div>
+      <div class="project-create">
+        <input id="projectNameInput" placeholder="专题名字，例如：林雨桉" />
+        <input id="projectDescriptionInput" placeholder="一句说明（可不填）" />
+        <button class="primary" id="createProjectBtn">新建</button>
+      </div>
+      <div class="project-list" id="projectList"></div>
+      <div class="modal-actions">
+        <button class="primary" id="closeProjectsBtn">收好专题</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="capsuleDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>时间胶囊</h2>
+          <p>不会催它完成，只是让过去的自己偶尔敲一下门。</p>
+        </div>
+      </div>
+      <div id="capsuleContent"></div>
+      <div class="modal-actions">
+        <button class="secondary" id="anotherCapsuleBtn">再捞一个</button>
+        <button class="primary" id="closeCapsuleBtn">收回胶囊</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="contextMapDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>灵感脉络</h2>
+          <p>这里只画简单的生长关系，不把它做成看不懂的蜘蛛网。</p>
+        </div>
+        <select id="contextProjectFilter" style="max-width:190px">
+          <option value="">全部专题</option>
+        </select>
+      </div>
+      <div class="context-map" id="contextMapContent"></div>
+      <div class="modal-actions">
+        <button class="primary" id="closeContextMapBtn">收起脉络</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="appearanceDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>外观设置</h2>
+          <p>只改变你看它的方式，不碰任何碎片内容。</p>
+        </div>
+      </div>
+      <section class="today-section">
+        <h3>空间气质</h3>
+        <div class="appearance-grid" id="themeChoices">
+          <button class="appearance-choice" data-theme-choice="rain"><div class="theme-preview rain"></div><strong>雨夜</strong></button>
+          <button class="appearance-choice" data-theme-choice="ink"><div class="theme-preview ink"></div><strong>纯黑</strong></button>
+          <button class="appearance-choice" data-theme-choice="paper"><div class="theme-preview paper"></div><strong>纸页</strong></button>
+        </div>
+      </section>
+      <section class="today-section">
+        <h3>强调色</h3>
+        <div class="accent-row" id="accentChoices">
+          <button class="accent-choice" data-accent-choice="purple" style="--choice:#cbb7ff" aria-label="淡紫"></button>
+          <button class="accent-choice" data-accent-choice="mint" style="--choice:#99dfcc" aria-label="薄荷"></button>
+          <button class="accent-choice" data-accent-choice="blue" style="--choice:#9fc8ff" aria-label="雨蓝"></button>
+          <button class="accent-choice" data-accent-choice="rose" style="--choice:#e9acc5" aria-label="灰粉"></button>
+        </div>
+      </section>
+      <section class="today-section">
+        <h3>阅读方式</h3>
+        <div class="row">
+          <div class="grow">
+            <label class="field-label">文字大小</label>
+            <select id="fontScaleSelect">
+              <option value="small">偏小</option>
+              <option value="normal">默认</option>
+              <option value="large">偏大</option>
+            </select>
+          </div>
+          <div class="grow">
+            <label class="field-label">卡片密度</label>
+            <select id="densitySelect">
+              <option value="airy">舒展</option>
+              <option value="compact">紧凑</option>
+            </select>
+          </div>
+        </div>
+        <label class="quiet-toggle">
+          <input id="showCountsInput" type="checkbox" />
+          <span>显示首页碎片数量</span>
+        </label>
+      </section>
+      <section class="today-section">
+        <h3>林雨桉的吐槽</h3>
+        <p class="section-help">她只根据当前操作和本地统计说话，不会把你的日记上传到任何地方。</p>
+        <select id="yuanModeSelect">
+          <option value="off">让她安静一点</option>
+          <option value="sometimes">偶尔冒出来</option>
+          <option value="often">经常吐槽</option>
+        </select>
+        <label class="quiet-toggle">
+          <input id="yuanLookbackInput" type="checkbox" />
+          <span>
+            允许她留意最近七天的心情变化
+            <small>只读取保存在本机的今日记录，不上传内容。</small>
+          </span>
+        </label>
+        <span class="yuan-setting-note">手动点“雨桉吐槽”时，即使设为安静也仍会出现一条。</span>
+      </section>
+      <div class="modal-actions">
+        <button class="primary" id="closeAppearanceBtn">保存外观</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="kodoDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>整理给 Kodo 看</h2>
+          <p>选几条碎片，自动带上时间、专题和关系，不必手动复制一大坨。</p>
+        </div>
+      </div>
+      <textarea id="kodoQuestionInput" placeholder="这次想让我关注什么？例如：帮我找共同主题，但别替我完善。"></textarea>
+      <div class="kodo-toolbar" style="margin-top:10px">
+        <input id="kodoSearchInput" placeholder="搜索可选碎片" />
+        <select id="kodoProjectFilter"><option value="">全部专题</option></select>
+      </div>
+      <div class="row" style="margin-top:9px">
+        <button class="secondary" id="kodoSelectAllBtn">全选当前结果</button>
+        <button class="secondary" id="kodoClearBtn">清空选择</button>
+        <span class="count" id="kodoSelectedCount">已选 0 条</span>
+      </div>
+      <div class="kodo-list" id="kodoList"></div>
+      <div class="modal-actions">
+        <button class="secondary" id="exportKodoMdBtn">导出 Markdown</button>
+        <button class="primary" id="exportKodoJsonBtn">导出整理包</button>
+        <button class="secondary" id="closeKodoBtn">取消</button>
+      </div>
+    </div>
+  </dialog>
+
   <dialog id="versionsDialog" class="dashboard-dialog">
     <div class="dashboard">
       <div class="dashboard-head">
@@ -937,6 +1354,12 @@
     </div>
   </dialog>
 
+  <aside class="yuan-aside" id="yuanAside" aria-live="polite">
+    <div class="yuan-name">林雨桉</div>
+    <div class="yuan-text" id="yuanText"></div>
+    <button class="yuan-close" id="closeYuanAside" aria-label="关闭">×</button>
+  </aside>
+
   <div class="toast" id="toast"></div>
 
   <script>
@@ -948,6 +1371,9 @@
     ];
     const STORAGE_KEY = "fragment-vault-v1";
     const DAILY_STORAGE_KEY = "fragment-vault-daily-v1";
+    const PROJECT_STORAGE_KEY = "fragment-vault-projects-v1";
+    const PREFS_STORAGE_KEY = "fragment-vault-prefs-v1";
+    const PROJECT_COLORS = ["#cbb7ff","#99dfcc","#9fc8ff","#e9acc5","#e7c78d","#b8b0e7"];
     const DB_NAME = "fragment-vault-images";
     const DB_VERSION = 1;
     const STORE_NAME = "images";
@@ -956,6 +1382,14 @@
     let dailyEntries = loadDailyEntries();
     let currentDailyDate = localDateKey(Date.now());
     let selectedDailyMoods = [];
+    let projects = loadProjects();
+    let preferences = loadPreferences();
+    let selectedCaptureProjects = [];
+    let editProjectIds = [];
+    let selectedKodoIds = new Set();
+    let capsuleCurrentId = "";
+    let yuanLastShownAt = 0;
+    let yuanHideTimer = 0;
     let selectedType = TYPES[0];
     let editType = TYPES[0];
     let selectedStatus = STATUSES[0];
@@ -981,6 +1415,8 @@
         type:TYPES.includes(x.type) ? x.type : "不知道放哪",
         status:STATUSES.includes(x.status) ? x.status : "正在发芽",
         parentId:String(x.parentId || ""),
+        projectIds:Array.isArray(x.projectIds) ? [...new Set(x.projectIds.map(String))] : [],
+        leaveAlone:Boolean(x.leaveAlone),
         tags:Array.isArray(x.tags) ? x.tags.map(String) : [],
         note:String(x.note || ""),
         sourceName:String(x.sourceName || ""),
@@ -999,6 +1435,74 @@
       };
     }
 
+    function normalizeProject(raw){
+      const now=Date.now();
+      return {
+        id:String(raw?.id || uid()),
+        name:String(raw?.name || "未命名专题").trim() || "未命名专题",
+        description:String(raw?.description || ""),
+        color:String(raw?.color || PROJECT_COLORS[0]),
+        createdAt:Number(raw?.createdAt) || now,
+        updatedAt:Number(raw?.updatedAt) || Number(raw?.createdAt) || now
+      };
+    }
+
+    function loadProjects(){
+      try{
+        const raw=JSON.parse(localStorage.getItem(PROJECT_STORAGE_KEY) || "[]");
+        return Array.isArray(raw) ? raw.map(normalizeProject) : [];
+      }catch(e){ return []; }
+    }
+
+    function persistProjects(){
+      localStorage.setItem(PROJECT_STORAGE_KEY,JSON.stringify(projects));
+      renderProjectUI();
+    }
+
+    function loadPreferences(){
+      const defaults={
+        theme:"rain",accent:"purple",fontScale:"normal",density:"airy",
+        showCounts:true,yuanMode:"sometimes",yuanLookback:true
+      };
+      try{
+        return {...defaults,...JSON.parse(localStorage.getItem(PREFS_STORAGE_KEY)||"{}")};
+      }catch(e){ return defaults; }
+    }
+
+    function accentPalette(key){
+      return {
+        purple:{accent:"#cbb7ff",strong:"#b99cff",soft:"rgba(203,183,255,.12)",blue:"#b7d7ff"},
+        mint:{accent:"#99dfcc",strong:"#7fcdb9",soft:"rgba(153,223,204,.13)",blue:"#b7d7ff"},
+        blue:{accent:"#9fc8ff",strong:"#80b4f5",soft:"rgba(159,200,255,.13)",blue:"#b8dcff"},
+        rose:{accent:"#e9acc5",strong:"#dc8fb0",soft:"rgba(233,172,197,.13)",blue:"#c9c2ff"}
+      }[key] || {accent:"#cbb7ff",strong:"#b99cff",soft:"rgba(203,183,255,.12)",blue:"#b7d7ff"};
+    }
+
+    function applyPreferences(){
+      document.body.dataset.theme=preferences.theme || "rain";
+      document.body.dataset.density=preferences.density || "airy";
+      document.body.classList.toggle("hide-counts",preferences.showCounts===false);
+      const palette=accentPalette(preferences.accent);
+      const root=document.documentElement;
+      root.style.setProperty("--accent",palette.accent);
+      root.style.setProperty("--accent-strong",palette.strong);
+      root.style.setProperty("--accent-soft",palette.soft);
+      root.style.setProperty("--blue",palette.blue);
+      root.style.fontSize=preferences.fontScale==="small"?"15px":
+        preferences.fontScale==="large"?"17px":"16px";
+    }
+
+    function persistPreferences(){
+      localStorage.setItem(PREFS_STORAGE_KEY,JSON.stringify(preferences));
+      applyPreferences();
+      renderAppearance();
+    }
+
+    function projectById(id){ return projects.find(project=>project.id===id); }
+    function projectNames(item){
+      return (item.projectIds||[]).map(projectById).filter(Boolean);
+    }
+
     function loadItems(){
       try{
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -1012,6 +1516,7 @@
     function persist(){
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
       renderRelationSelects();
+      renderProjectUI();
       render();
     }
 
@@ -1033,6 +1538,11 @@
         moodNote:String(raw?.moodNote || ""),
         song:String(raw?.song || ""),
         diary:String(raw?.diary || ""),
+        yuanCare:raw?.yuanCare && raw.yuanCare.text ? {
+          text:String(raw.yuanCare.text || ""),
+          sourceKey:String(raw.yuanCare.sourceKey || ""),
+          createdAt:Number(raw.yuanCare.createdAt) || now
+        } : null,
         draw:raw?.draw && raw.draw.message ? {
           kind:String(raw.draw.kind || "今日签"),
           fortune:String(raw.draw.fortune || "小吉"),
@@ -1275,6 +1785,150 @@
       toast.timer=setTimeout(()=>el.classList.remove("show"),1800);
     }
 
+    function pickYuanLine(lines){
+      return lines[Math.floor(Math.random()*lines.length)];
+    }
+
+    function yuanContextLine(context="manual",payload={}){
+      const hour=new Date().getHours();
+      const sleeping=items.filter(item=>item.status==="暂时休眠").length;
+      const protectedCount=items.filter(item=>item.leaveAlone).length;
+      const todayEntry=dailyEntries[localDateKey(Date.now())];
+      const noDiary=!todayEntry?.diary?.trim();
+
+      if(context==="save"){
+        const item=payload.item || {};
+        const length=(item.content||"").trim().length;
+        if(item.leaveAlone){
+          return pickYuanLine([
+            "既然写了“先不要完善”，就真让它安静待着。别过十分钟又回来折腾它。",
+            "保存可以，催熟免谈。你自己盖的封条，记得自己也要遵守。"
+          ]);
+        }
+        if(length && length<=10){
+          return pickYuanLine([
+            "这么几个字也单独占一间房……算了，有时候确实够了。",
+            "短得像忘记加载后半句。先收着吧，别硬补。"
+          ]);
+        }
+        if(length>=320){
+          return pickYuanLine([
+            "你管这叫碎片？这已经快长成一堵墙了。",
+            "“随手记一点。”然后写了三百多字。很有你的风格。"
+          ]);
+        }
+        if((item.projectIds||[]).length>=3){
+          return "同时住进三个专题。它的人际关系比你还复杂。";
+        }
+        return pickYuanLine([
+          "嗯，至少这次没让它继续烂在聊天框里。",
+          "收好了。至于以后会长成什么，先别急着审问它。",
+          "记录成功。你看，灵感也不是非得等到“完整”才配留下。"
+        ]);
+      }
+
+      if(context==="random"){
+        return pickYuanLine([
+          "自己写的东西，非要靠抽签才肯回头看。",
+          "它一直在这里，是你假装没看见而已。",
+          "随机捞到了。现在别立刻嫌弃过去的自己。"
+        ]);
+      }
+
+      if(context==="project"){
+        return pickYuanLine([
+          "终于给这些到处乱跑的念头分了个房间。",
+          "新专题建好了。请不要三天后又让它变成杂物间。",
+          "名字起得挺认真。接下来就看你会不会往里面放东西了。"
+        ]);
+      }
+
+      if(context==="draw"){
+        return pickYuanLine([
+          "抽到大吉也不能替你把事情做完。看我干什么。",
+          "签只是纸条，不是命令。觉得不对就别听它的。",
+          "每天一张，不能刷。你那点小心思先收一收。"
+        ]);
+      }
+
+      if(context==="backup"){
+        return pickYuanLine([
+          "备份做得不错。失去数据的时候哭得再好看也没用。",
+          "终于想起来备份了。至少这次未来的你不用回来骂人。",
+          "这才对。珍惜灵感的第一步，是别让它跟着手机一起消失。"
+        ]);
+      }
+
+      if(context==="diary"){
+        return pickYuanLine([
+          "写半句也算。日记又不是交上去批改的。",
+          "今天被留下来了。哪怕只有一点点。",
+          "不用把心情解释得很有道理。它又不是论文。"
+        ]);
+      }
+
+      if(context==="quiet"){
+        return payload.enabled
+          ? "好，我不碰它。你也别打着“完善”的名义把它吵醒。"
+          : "封条拆了。之后它被随机捞出来时，可别装作不认识。";
+      }
+
+      if(context==="manual"){
+        if(hour>=0 && hour<5){
+          return pickYuanLine([
+            "凌晨还在整理灵感。你对“明天再说”的理解是不是有点特别？",
+            "现在这个时间，最需要被收进来的可能是你本人。",
+            "我没有催你睡。只是提醒一下，太阳快替我催了。"
+          ]);
+        }
+        if(!items.length){
+          return "所以你把我叫来，是为了参观空仓库？";
+        }
+        if(protectedCount && protectedCount>=Math.ceil(items.length/2)){
+          return "一半的碎片都写着“先不要完善”。看来你终于学会不把所有东西逼成熟了。";
+        }
+        if(sleeping>=8){
+          return `有 ${sleeping} 条在休眠。这里不是墓地，别露出那种表情。`;
+        }
+        if(noDiary){
+          return pickYuanLine([
+            "今天还没写日记。不是催你，只是陈述事实。",
+            "你打开了碎片库，但今天还没留下自己的那一格。",
+            "今天的日记是空的。空着也行，至少别假装我没看见。"
+          ]);
+        }
+        return pickYuanLine([
+          `现在有 ${items.length} 条碎片。你的小脑袋瓜总算有地方卸货了。`,
+          "功能越来越多了。下次再说“顺便加一个”，我会先看你一眼。",
+          "我只是负责吐槽，不负责替你把每条都变成作品。",
+          "看起来乱七八糟的东西，放久了说不定真的会彼此认出对方。"
+        ]);
+      }
+
+      return "……你叫我出来，总不会只是为了确认按钮能不能用吧。";
+    }
+
+    function showYuanText(line,duration=9000){
+      if(!line) return;
+      yuanLastShownAt=Date.now();
+      $("yuanText").textContent=line;
+      $("yuanAside").classList.add("show");
+      clearTimeout(yuanHideTimer);
+      yuanHideTimer=setTimeout(()=>$("yuanAside").classList.remove("show"),duration);
+    }
+
+    function showYuanComment(context="manual",payload={},force=false){
+      if(!force){
+        const mode=preferences.yuanMode || "sometimes";
+        if(mode==="off") return;
+        const chance=mode==="often"?0.78:0.34;
+        if(Math.random()>chance) return;
+        if(Date.now()-yuanLastShownAt<18000) return;
+      }
+      const line=yuanContextLine(context,payload);
+      showYuanText(line,8200);
+    }
+
     async function compressImage(file){
       if(!file.type.startsWith("image/")) throw new Error("not image");
       const dataUrl = await new Promise((resolve,reject)=>{
@@ -1323,6 +1977,64 @@
       const raw=(item.content||item.note||item.sourceName||"只保存了图片的碎片")
         .replace(/\s+/g," ").trim();
       return raw.length>length ? raw.slice(0,length)+"…" : raw;
+    }
+
+    function projectChipHTML(project,active=false,scope="capture"){
+      return `<button type="button" class="project-chip ${active?"active":""}"
+        data-project-pick="${escapeHTML(project.id)}" data-project-scope="${scope}"
+        style="--project-color:${escapeHTML(project.color)}">${escapeHTML(project.name)}</button>`;
+    }
+
+    function renderProjectUI(){
+      const options=projects.map(project=>
+        `<option value="${escapeHTML(project.id)}">${escapeHTML(project.name)}</option>`
+      ).join("");
+
+      ["filterProject","contextProjectFilter","kodoProjectFilter"].forEach(id=>{
+        const select=$(id);
+        if(!select) return;
+        const current=select.value;
+        select.innerHTML='<option value="">全部专题</option>'+options;
+        select.value=projects.some(project=>project.id===current)?current:"";
+      });
+
+      const capture=$("captureProjectPicker");
+      if(capture){
+        capture.innerHTML=projects.length
+          ? projects.map(project=>projectChipHTML(project,selectedCaptureProjects.includes(project.id),"capture")).join("")
+          : '<span class="hint">还没有专题本。可以先保存，之后再归进去。</span>';
+      }
+      const edit=$("editProjectPicker");
+      if(edit){
+        edit.innerHTML=projects.length
+          ? projects.map(project=>projectChipHTML(project,editProjectIds.includes(project.id),"edit")).join("")
+          : '<span class="hint">还没有专题本。</span>';
+      }
+      renderProjectList();
+    }
+
+    function renderProjectList(){
+      const target=$("projectList");
+      if(!target) return;
+      if(!projects.length){
+        target.innerHTML='<div class="summary-section"><p>还没有专题。它不需要宏大，角色名、一个游戏点子，甚至“最近反复想的东西”都可以成为一本。</p></div>';
+        return;
+      }
+      target.innerHTML=projects.map(project=>{
+        const rows=items.filter(item=>(item.projectIds||[]).includes(project.id));
+        const recent=rows.slice().sort((a,b)=>b.updatedAt-a.updatedAt)[0];
+        return `<div class="project-card" style="--project-color:${escapeHTML(project.color)}">
+          <span class="project-dot"></span>
+          <div>
+            <strong>${escapeHTML(project.name)}</strong>
+            <p>${escapeHTML(project.description || `${rows.length} 条碎片${recent?` · 最近：${itemPreview(recent,34)}`:""}`)}</p>
+          </div>
+          <div class="project-card-actions">
+            <button class="secondary" data-project-open="${escapeHTML(project.id)}">打开</button>
+            <button class="secondary danger" data-project-delete="${escapeHTML(project.id)}">删除专题</button>
+          </div>
+        </div>`;
+      }).join("");
     }
 
     function renderRelationSelects(){
@@ -1407,12 +2119,14 @@
         const imageIds=[];
         for(const src of pendingImages) imageIds.push(await putImage(src));
         const now=Date.now();
-        items.unshift(normalizeItem({
+        const savedItem=normalizeItem({
           id:uid(),
           content,
           type:selectedType,
           status:selectedStatus,
           parentId:$("parentSelect").value || "",
+          projectIds:[...selectedCaptureProjects],
+          leaveAlone:$("leaveAloneInput").checked,
           tags:parseTags($("tagsInput").value),
           note:$("noteInput").value.trim(),
           sourceName:$("sourceNameInput").value.trim(),
@@ -1421,10 +2135,13 @@
           pinned:false,
           createdAt:now,
           updatedAt:now
-        }));
+        });
+        items.unshift(savedItem);
         contentInput.value="";
         $("tagsInput").value="";
         $("parentSelect").value="";
+        selectedCaptureProjects=[];
+        $("leaveAloneInput").checked=false;
         $("noteInput").value="";
         $("sourceNameInput").value="";
         $("urlInput").value="";
@@ -1432,6 +2149,7 @@
         renderPendingImages();
         persist();
         toast("收好了");
+        showYuanComment("save",{item:savedItem});
         contentInput.focus();
       }catch(e){
         toast("保存图片时出了点问题");
@@ -1444,13 +2162,16 @@
     function getVisibleItems(){
       const q=$("searchInput").value.trim().toLowerCase();
       const filter=$("filterType").value;
+      const projectFilter=$("filterProject").value;
       let result=items.filter(item=>{
         const tags=collectTags(item);
         const haystack=[
-          item.content,item.note,item.type,item.status,tags.join(" "),item.sourceName,item.url
+          item.content,item.note,item.type,item.status,tags.join(" "),item.sourceName,item.url,
+          projectNames(item).map(project=>project.name).join(" ")
         ].join(" ").toLowerCase();
         const tagMatch=!activeTag || tags.includes(activeTag);
-        return (!q||haystack.includes(q)) && (!filter||item.type===filter) && tagMatch;
+        const projectMatch=!projectFilter || (item.projectIds||[]).includes(projectFilter);
+        return (!q||haystack.includes(q)) && (!filter||item.type===filter) && tagMatch && projectMatch;
       });
       const sort=$("sortSelect").value;
       result.sort((a,b)=>{
@@ -1516,6 +2237,13 @@
             ${parent&&childCount?" · ":""}
             ${childCount?`后来又长出 ${childCount} 条`:""}
           </div>`:"";
+        const itemProjects=projectNames(item);
+        const projectPills=itemProjects.length?`
+          <div class="project-pills">${itemProjects.map(project=>`
+            <button class="project-pill" data-project-filter="${escapeHTML(project.id)}"
+              style="--project-color:${escapeHTML(project.color)}">${escapeHTML(project.name)}</button>
+          `).join("")}${item.leaveAlone?'<span class="quiet-badge">先不要完善</span>':""}</div>`:
+          (item.leaveAlone?'<div class="project-pills"><span class="quiet-badge">先不要完善</span></div>':"");
         const source=(item.sourceName||item.url)?`
           <div class="source-row">
             ${item.sourceName?`来源：<span class="source-name">${escapeHTML(item.sourceName)}</span>`:""}
@@ -1537,6 +2265,7 @@
             ${images}
             ${note}
             ${relation}
+            ${projectPills}
             ${tags?`<div class="tags">${tags}</div>`:""}
             ${source}
             <div class="actions">
@@ -1545,6 +2274,7 @@
                 <button class="icon-btn comment-button" data-action="comment">
                   拆纸条<span class="comment-count-badge">${item.aiComments.length}</span>
                 </button>` : ""}
+              <button class="icon-btn" data-action="quiet">${item.leaveAlone?"允许它被捞起":"先不要完善"}</button>
               <button class="icon-btn" data-action="pin">${item.pinned?"取消置顶":"置顶"}</button>
               <button class="icon-btn" data-action="edit">编辑</button>
               <button class="icon-btn danger" data-action="delete">删除</button>
@@ -1565,6 +2295,7 @@
       editingId=item.id;
       editType=item.type;
       editStatus=item.status||"正在发芽";
+      editProjectIds=[...(item.projectIds||[])];
       editExistingImageIds=[...(item.imageIds||[])];
       editRemovedImageIds=[];
       editNewImages=[];
@@ -1572,6 +2303,7 @@
       $("editTags").value=(item.tags||[]).join("，");
       renderRelationSelects();
       $("editParentSelect").value=item.parentId||"";
+      $("editLeaveAlone").checked=Boolean(item.leaveAlone);
       $("editNote").value=item.note||"";
       $("editSourceName").value=item.sourceName||"";
       $("editUrl").value=item.url||"";
@@ -1615,6 +2347,8 @@
         item.type=editType;
         item.status=editStatus;
         item.parentId=$("editParentSelect").value || "";
+        item.projectIds=[...editProjectIds];
+        item.leaveAlone=$("editLeaveAlone").checked;
         item.tags=parseTags($("editTags").value);
         item.note=$("editNote").value.trim();
         item.sourceName=$("editSourceName").value.trim();
@@ -1630,6 +2364,445 @@
         $("confirmEdit").disabled=false;
         $("confirmEdit").textContent="保存修改";
       }
+    }
+
+    function toggleProjectPick(projectId,scope){
+      const target=scope==="edit"?editProjectIds:selectedCaptureProjects;
+      const next=target.includes(projectId)
+        ? target.filter(id=>id!==projectId)
+        : [...target,projectId];
+      if(scope==="edit") editProjectIds=next;
+      else selectedCaptureProjects=next;
+      renderProjectUI();
+    }
+
+    function createProject(){
+      const name=$("projectNameInput").value.trim();
+      if(!name){toast("先给专题取个名字");return;}
+      if(projects.some(project=>project.name.toLowerCase()===name.toLowerCase())){
+        toast("已经有同名专题了");return;
+      }
+      const now=Date.now();
+      projects.push(normalizeProject({
+        id:uid(),name,
+        description:$("projectDescriptionInput").value.trim(),
+        color:PROJECT_COLORS[projects.length%PROJECT_COLORS.length],
+        createdAt:now,updatedAt:now
+      }));
+      $("projectNameInput").value="";
+      $("projectDescriptionInput").value="";
+      persistProjects();
+      toast("新专题已经放好了");
+      showYuanComment("project");
+    }
+
+    function deleteProject(projectId){
+      const project=projectById(projectId);
+      if(!project) return;
+      if(!confirm(`删除专题“${project.name}”吗？碎片不会被删除，只会失去这个专题标签。`)) return;
+      projects=projects.filter(row=>row.id!==projectId);
+      items.forEach(item=>item.projectIds=(item.projectIds||[]).filter(id=>id!==projectId));
+      selectedCaptureProjects=selectedCaptureProjects.filter(id=>id!==projectId);
+      editProjectIds=editProjectIds.filter(id=>id!==projectId);
+      persistProjects();
+      persist();
+      toast("专题删掉了，里面的碎片都还在");
+    }
+
+    function openProject(projectId){
+      $("filterProject").value=projectId;
+      $("projectsDialog").close();
+      render();
+      $("librarySection").scrollIntoView({behavior:"smooth",block:"start"});
+    }
+
+    function contextRows(projectId=""){
+      return items.filter(item=>!projectId || (item.projectIds||[]).includes(projectId));
+    }
+
+    function renderContextMap(){
+      const projectId=$("contextProjectFilter").value;
+      const rows=contextRows(projectId);
+      if(!rows.length){
+        $("contextMapContent").innerHTML='<div class="summary-section"><p>这里还没有能连起来的碎片。</p></div>';
+        return;
+      }
+      const rowIds=new Set(rows.map(item=>item.id));
+      const roots=rows.filter(item=>!item.parentId || !rowIds.has(item.parentId));
+      const seen=new Set();
+      const renderNode=(item,depth=0)=>{
+        if(seen.has(item.id)) return "";
+        seen.add(item.id);
+        const children=rows.filter(row=>row.parentId===item.id).sort((a,b)=>a.createdAt-b.createdAt);
+        return `<button class="context-node" data-jump-id="${escapeHTML(item.id)}"
+          style="padding-left:${9+Math.min(depth,6)*17}px">
+          <small>${depth?"↳ ".repeat(Math.min(depth,4)):"起点 · "}${escapeHTML(item.status)} · ${escapeHTML(formatDate(item.createdAt))}</small>
+          ${escapeHTML(itemPreview(item,92))}
+        </button>${children.map(child=>renderNode(child,depth+1)).join("")}`;
+      };
+      const trees=roots.map(root=>{
+        const p=projectNames(root);
+        return `<div class="context-root">
+          ${p.length?`<div class="context-project-title">${p.map(project=>escapeHTML(project.name)).join(" / ")}</div>`:""}
+          ${renderNode(root,0)}
+        </div>`;
+      });
+      const leftovers=rows.filter(item=>!seen.has(item.id)).map(item=>
+        `<div class="context-root">${renderNode(item,0)}</div>`
+      );
+      $("contextMapContent").innerHTML=[...trees,...leftovers].join("");
+    }
+
+    function capsulePool(){
+      const now=new Date();
+      const exact=items.filter(item=>{
+        if(item.leaveAlone) return false;
+        const date=new Date(item.createdAt);
+        return date.getMonth()===now.getMonth() &&
+          date.getDate()===now.getDate() &&
+          date.getFullYear()<now.getFullYear();
+      });
+      if(exact.length) return exact;
+      const old=items.filter(item=>!item.leaveAlone && Date.now()-item.createdAt>=45*86400000);
+      if(old.length) return old;
+      return items.filter(item=>!item.leaveAlone && Date.now()-item.createdAt>=7*86400000);
+    }
+
+    function renderCapsule(forceAnother=false){
+      const pool=capsulePool();
+      if(!pool.length){
+        capsuleCurrentId="";
+        $("capsuleContent").innerHTML='<div class="summary-section"><p>现在还没有足够久远的碎片。时间胶囊会等它们真的拥有一点距离以后再打开。</p></div>';
+        return;
+      }
+      let candidates=pool.filter(item=>forceAnother?item.id!==capsuleCurrentId:true);
+      if(!candidates.length) candidates=pool;
+      const item=candidates[Math.floor(Math.random()*candidates.length)];
+      capsuleCurrentId=item.id;
+      const days=Math.max(1,Math.floor((Date.now()-item.createdAt)/86400000));
+      const projectText=projectNames(item).map(project=>project.name).join(" / ");
+      $("capsuleContent").innerHTML=`<div class="capsule-paper">
+        <div class="capsule-age">${days} 天前写下${projectText?` · ${escapeHTML(projectText)}`:""}</div>
+        <div class="capsule-copy">${escapeHTML(item.content || itemPreview(item,180))}</div>
+        ${item.note?`<div class="capsule-note">当时的备注：${escapeHTML(item.note)}</div>`:""}
+        <div class="daily-draw-actions">
+          <button class="primary" data-capsule-jump="${escapeHTML(item.id)}">回到这条碎片</button>
+        </div>
+      </div>`;
+    }
+
+    function renderAppearance(){
+      if(!$("appearanceDialog")) return;
+      document.querySelectorAll("[data-theme-choice]").forEach(btn=>
+        btn.classList.toggle("active",btn.dataset.themeChoice===preferences.theme)
+      );
+      document.querySelectorAll("[data-accent-choice]").forEach(btn=>
+        btn.classList.toggle("active",btn.dataset.accentChoice===preferences.accent)
+      );
+      $("fontScaleSelect").value=preferences.fontScale;
+      $("densitySelect").value=preferences.density;
+      $("showCountsInput").checked=preferences.showCounts!==false;
+      $("yuanModeSelect").value=preferences.yuanMode || "sometimes";
+      $("yuanLookbackInput").checked=preferences.yuanLookback!==false;
+    }
+
+    function kodoVisibleItems(){
+      const q=$("kodoSearchInput").value.trim().toLowerCase();
+      const projectId=$("kodoProjectFilter").value;
+      return items
+        .filter(item=>!item.leaveAlone)
+        .filter(item=>!projectId || (item.projectIds||[]).includes(projectId))
+        .filter(item=>!q || [
+          item.content,item.note,collectTags(item).join(" "),
+          projectNames(item).map(project=>project.name).join(" ")
+        ].join(" ").toLowerCase().includes(q))
+        .sort((a,b)=>b.updatedAt-a.updatedAt);
+    }
+
+    function renderKodoList(){
+      const rows=kodoVisibleItems();
+      $("kodoSelectedCount").textContent=`已选 ${selectedKodoIds.size} 条`;
+      $("kodoList").innerHTML=rows.length?rows.map(item=>`
+        <label class="kodo-row">
+          <input type="checkbox" data-kodo-id="${escapeHTML(item.id)}"
+            ${selectedKodoIds.has(item.id)?"checked":""} />
+          <span>${escapeHTML(itemPreview(item,100))}
+            <small>${escapeHTML(formatDate(item.createdAt))}${projectNames(item).length?` · ${projectNames(item).map(project=>escapeHTML(project.name)).join(" / ")}`:""}</small>
+          </span>
+        </label>
+      `).join(""):'<div class="summary-section"><p>没有符合条件的可选碎片。“先不要完善”的内容不会出现在这里。</p></div>';
+    }
+
+    function kodoPayload(){
+      const selected=items.filter(item=>selectedKodoIds.has(item.id) && !item.leaveAlone);
+      return {
+        app:"碎片库-Kodo素材包",
+        version:1,
+        exportedAt:new Date().toISOString(),
+        question:$("kodoQuestionInput").value.trim(),
+        instruction:"请尊重每条碎片当前的完成度。除非问题明确要求，不要替用户把模糊想法直接完善成成品；先指出联系、张力、可能遗漏的角度，并区分原文与观察。",
+        projects:projects.filter(project=>selected.some(item=>(item.projectIds||[]).includes(project.id))),
+        items:selected.map(item=>({
+          id:item.id,content:item.content,note:item.note,type:item.type,status:item.status,
+          tags:collectTags(item),projectIds:item.projectIds||[],sourceName:item.sourceName,
+          createdAt:item.createdAt,updatedAt:item.updatedAt,parentId:item.parentId,
+          parent:item.parentId?items.find(row=>row.id===item.parentId)?.content||"": "",
+          children:items.filter(row=>row.parentId===item.id).map(row=>({id:row.id,content:row.content}))
+        }))
+      };
+    }
+
+    function downloadText(name,text,type="text/plain"){
+      const blob=new Blob([text],{type});
+      const a=document.createElement("a");
+      a.href=URL.createObjectURL(blob);a.download=name;a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function exportKodo(format){
+      const payload=kodoPayload();
+      if(!payload.items.length){toast("先选几条要给我看的碎片");return;}
+      const date=new Date().toISOString().slice(0,10);
+      if(format==="json"){
+        downloadText(`碎片库-Kodo素材-${date}.json`,JSON.stringify(payload,null,2),"application/json");
+      }else{
+        const projectMap=new Map(payload.projects.map(project=>[project.id,project.name]));
+        const md=[
+          "# 碎片库 · 给 Kodo 看的素材",
+          "",
+          payload.question?`这次想讨论：${payload.question}`:"这次没有额外问题。",
+          "",
+          payload.instruction,
+          "",
+          ...payload.items.flatMap((item,index)=>[
+            `## ${index+1}. ${item.content.split(/\n/)[0].slice(0,60) || "只保存了图片的碎片"}`,
+            "",
+            item.content || "（无正文）",
+            "",
+            item.note?`备注：${item.note}`:"",
+            `类型 / 状态：${item.type} / ${item.status}`,
+            item.projectIds.length?`专题：${item.projectIds.map(id=>projectMap.get(id)).filter(Boolean).join(" / ")}`:"",
+            item.tags.length?`标签：${item.tags.map(tag=>`#${tag}`).join(" ")}`:"",
+            `写下于：${new Date(item.createdAt).toLocaleString("zh-CN")}`,
+            item.parent?`来自：${item.parent}`:"",
+            item.children.length?`后来长出：${item.children.map(child=>child.content).join("；")}`:"",
+            ""
+          ].filter(Boolean))
+        ].join("\n");
+        downloadText(`碎片库-Kodo素材-${date}.md`,md,"text/markdown");
+      }
+      toast(`整理好了 ${payload.items.length} 条`);
+    }
+
+    function stableHash(text){
+      let hash=2166136261;
+      for(let i=0;i<text.length;i++){
+        hash^=text.charCodeAt(i);
+        hash=Math.imul(hash,16777619);
+      }
+      return (hash>>>0).toString(36);
+    }
+
+    function dailyCareSourceKey(entry){
+      return stableHash(JSON.stringify({
+        moods:entry?.moods||[],
+        moodNote:(entry?.moodNote||"").trim(),
+        song:(entry?.song||"").trim(),
+        diary:(entry?.diary||"").trim()
+      }));
+    }
+
+    function seededPick(lines,seed){
+      if(!lines.length) return "";
+      const number=parseInt(stableHash(seed),36) || 0;
+      return lines[number%lines.length];
+    }
+
+    function recentMoodCount(dateKey,moods){
+      if(preferences.yuanLookback===false) return 0;
+      const before=new Date(`${dateKey}T12:00:00`);
+      const start=new Date(before.getTime()-7*86400000);
+      return Object.values(dailyEntries).filter(entry=>{
+        const date=new Date(`${entry.date}T12:00:00`);
+        return date<before && date>=start &&
+          (entry.moods||[]).some(mood=>moods.includes(mood));
+      }).length;
+    }
+
+    function generateYuanCareText(entry,dateKey){
+      const moods=entry.moods||[];
+      const moodNote=(entry.moodNote||"").trim();
+      const song=(entry.song||"").trim();
+      const diary=(entry.diary||"").trim();
+      const allText=`${moodNote}\n${diary}`.toLowerCase();
+      const seed=`${dateKey}|${dailyCareSourceKey(entry)}`;
+      const parts=[];
+
+      const crisis=/不想活|想死|自杀|自残|结束生命|活不下去/.test(allText);
+      if(crisis){
+        return "这几句话我不能当成普通的坏心情略过去。先让一个现实里现在能联系到的人知道你很危险；把可能伤到自己的东西放远一点，也别一个人待着。要是已经有马上伤害自己的打算，就直接联系当地急救。今天不用把原因解释完整，先把你本人留住。";
+      }
+
+      if(moods.includes("开心") && moods.includes("疲惫")){
+        parts.push("开心和疲惫一起出现并不矛盾。好事是真的，累也是真的，别拿前者逼后者闭嘴。");
+      }else if(moods.includes("疲惫")){
+        parts.push(seededPick([
+          "你今天写了“疲惫”。我先不问你完成了多少，累这件事本身就已经算数。",
+          "看见“疲惫”了。今天少做一点不叫退步，叫别把自己也当成耗材。",
+          "你又把疲惫写下来了。先把身体那边的消息听完，再考虑那些没做完的事。"
+        ],seed+"tired"));
+      }
+
+      if(moods.includes("难过") || moods.includes("空空的")){
+        parts.push(seededPick([
+          "难过和空空的都不需要立刻被解释。你先把它们放在这里，我看见了。",
+          "今天心里像缺了一块也没关系。别急着拿结论把那个空洞堵上。",
+          "这一天不好受。你不用为了让我放心，硬把它写成“其实也没什么”。"
+        ],seed+"sad"));
+      }else if(moods.includes("紧张")){
+        parts.push("紧张不是失败的预告。先只处理下一件事，别把整个未来一起搬过来压在今天。");
+      }else if(moods.includes("烦躁")){
+        parts.push("烦躁的时候先不用讲道理。能让声音小一点、事情少一件，就先做那一件。");
+      }
+
+      if(moods.includes("开心") && !moods.includes("疲惫")){
+        parts.push(seededPick([
+          "今天有开心。很好，这句我不阴阳怪气。记下来，免得以后只记得糟糕的日子。",
+          "看到你选了开心。别急着分析它能持续多久，今天发生过就已经是真的。",
+          "今天是开心的。那就允许它普通地待着，不必非得配得上什么理由。"
+        ],seed+"happy"));
+      }
+      if(moods.includes("被理解")){
+        parts.push("“被理解”这三个字挺难得的。是谁做到了，或者是哪句话做到了，记得替今天留一点证据。");
+      }
+      if(moods.includes("有灵感")){
+        parts.push("脑子亮起来当然很好，但别因此把身体当成不用充电的机器。灵感可以先存着。");
+      }
+      if(moods.includes("平静") && parts.length===0){
+        parts.push("今天是平静的。不是空白，也不是无事发生，只是世界暂时没有用力推你。");
+      }
+
+      if(/睡不着|失眠|没睡|熬夜|通宵/.test(allText)){
+        parts.push("睡眠那部分我也看见了。现在能补一点就补一点，别用明天的自己替今晚付账。");
+      }
+      if(/疼|痛|受伤|流血|不舒服|难受得/.test(allText)){
+        parts.push("身体不舒服的部分别只写进日记就算处理过了。需要休息、清理伤口或找人看，就去做实际的那一步。");
+      }
+      if(/考试|没过|挂了|失败|考砸/.test(allText)){
+        parts.push("一次结果只说明这一次发生了什么，不准顺手把它扩写成对你整个人的判决书。");
+      }
+      if(/朋友|回复|回消息|不理我|孤独|一个人|被冷落/.test(allText)){
+        parts.push("关系里的等待最会把一点沉默放大。先别替对方写完答案，也别因为在意就责怪自己。");
+      }
+      if(/没吃|不想吃|饿|忘了吃/.test(allText)){
+        parts.push("还有吃东西这件事。先找一点不用费劲的，哪怕只吃几口，也比继续靠空腹硬撑好。");
+      }
+      if(/成功|做到了|完成了|终于好了|太爽了/.test(allText)){
+        parts.push("还有，做成的那部分我也看见了。可以高兴，不用立刻把它缩小成“这没什么”。");
+      }
+
+      const tiredWeek=recentMoodCount(dateKey,["疲惫"]);
+      const lowWeek=recentMoodCount(dateKey,["难过","空空的"]);
+      const tenseWeek=recentMoodCount(dateKey,["紧张","烦躁"]);
+      if(tiredWeek>=3){
+        parts.push(`最近七天里，“疲惫”已经出现过 ${tiredWeek} 次。这个“又”值得认真一点，不只是某一个晚上的问题。`);
+      }else if(lowWeek>=3){
+        parts.push(`最近几天，难过或空空的出现得有点频繁。我不拿它做统计考核，只是提醒你：它已经持续了一阵。`);
+      }else if(tenseWeek>=3){
+        parts.push("最近几天紧绷的次数不少。能取消一件不必要的事，就别为了证明自己还能撑而保留它。");
+      }
+
+      if(song){
+        parts.push(`你还把“${song.slice(0,42)}${song.length>42?"…":""}”留在了今天。看来它替你保管了一点不太好直接说的东西。`);
+      }
+
+      if(!diary && (moods.length || moodNote || song)){
+        parts.push("没写完整日记也没关系。这些已经足够让我知道，你今天不是一张空白页。");
+      }else if(diary.length>0 && diary.length<28){
+        parts.push("只写了几句也够。日记不是交上去批改的，我能认出今天就行。");
+      }else if(diary.length>=260){
+        parts.push("你今天写了很多。我不会催你再总结一遍，写到这里已经够了。");
+      }
+
+      if(dateKey===localDateKey(Date.now())){
+        const hour=new Date().getHours();
+        if(hour<5){
+          parts.push("以及，现在太晚了。剩下的话明天不会因此消失，先把你自己带去睡觉。");
+        }
+      }
+
+      if(!parts.length){
+        parts.push("我看过了。今天留下的不多，但“不多”也不是“不值得看”。");
+      }
+
+      const ending=seededPick([
+        "先这样。今天不用再向谁证明自己过得够不够好。",
+        "我记得你今天是这样。剩下的，不急着今晚说完。",
+        "好了，我看完了。去做一件能让身体舒服一点的小事。",
+        "不用回复我什么标准答案。让今天停在这里也可以。"
+      ],seed+"ending");
+      parts.push(ending);
+
+      return parts.slice(0,5).join("\n\n");
+    }
+
+    function renderYuanCare(){
+      const entry=currentDailyEntry();
+      const care=entry.yuanCare;
+      const currentKey=dailyCareSourceKey(entry);
+      const isStale=Boolean(care && care.sourceKey!==currentKey);
+      const card=$("yuanCareCard");
+      const button=$("yuanReadTodayBtn");
+
+      if(!care){
+        card.className="yuan-care-card empty";
+        card.textContent="她还没有看这一天。";
+        button.textContent=currentDailyDate===localDateKey(Date.now())
+          ?"让她看看今天"
+          :"让她看看这一天";
+        return;
+      }
+
+      card.className="yuan-care-card";
+      card.innerHTML=`
+        <div class="yuan-care-head">林雨桉看过了</div>
+        <div>${escapeHTML(care.text)}</div>
+        <div class="yuan-care-meta ${isStale?"stale":""}">
+          ${isStale
+            ?"你后来改过记录，她还没看这次修改。"
+            :`看于 ${escapeHTML(formatDate(care.createdAt))}`}
+        </div>`;
+      button.textContent=isStale?"让她重新看看":"再让她看看";
+    }
+
+    function saveYuanCare(force=false,showFloating=false){
+      saveDailyEntry(false);
+      const entry=dailyEntries[currentDailyDate] || normalizeDailyEntry({},currentDailyDate);
+      const hasRecord=Boolean(
+        entry.moods?.length || entry.moodNote?.trim() ||
+        entry.song?.trim() || entry.diary?.trim()
+      );
+      if(!hasRecord){
+        toast("先给这一天留下一点东西");
+        return null;
+      }
+      const sourceKey=dailyCareSourceKey(entry);
+      if(!force && entry.yuanCare?.sourceKey===sourceKey){
+        renderYuanCare();
+        if(showFloating) showYuanText(entry.yuanCare.text,11000);
+        return entry.yuanCare;
+      }
+      entry.yuanCare={
+        text:generateYuanCareText(entry,currentDailyDate),
+        sourceKey,
+        createdAt:Date.now()
+      };
+      entry.updatedAt=Date.now();
+      dailyEntries[currentDailyDate]=entry;
+      persistDaily();
+      renderYuanCare();
+      if(showFloating) showYuanText(entry.yuanCare.text,11000);
+      return entry.yuanCare;
     }
 
     function renderDailyMoodChips(){
@@ -1670,6 +2843,7 @@
       if(showToast) toast("今天已经收好了");
       renderDailyDraw();
       renderDailySummary(false);
+      renderYuanCare();
     }
 
     function dailyFragmentsFor(dateKey){
@@ -1692,7 +2866,7 @@
     function chooseDailyDraw(){
       const fortunes=["大吉","中吉","小吉","末吉","无事签","回声签"];
       const fortune=fortunes[Math.floor(Math.random()*fortunes.length)];
-      const oldItems=items.filter(item=>localDateKey(item.createdAt)!==currentDailyDate);
+      const oldItems=items.filter(item=>!item.leaveAlone && localDateKey(item.createdAt)!==currentDailyDate);
       const comments=commentEntries();
       const roll=Math.random();
 
@@ -1781,6 +2955,7 @@
       renderDailyDraw();
       renderDailySummary(false);
       toast("今天的签已经落下来了");
+      showYuanComment("draw",{draw:existing.draw});
     }
 
     function renderDailyDraw(){
@@ -1887,6 +3062,7 @@
       renderDailyMoodChips();
       renderDailyDraw();
       renderDailyFragments();
+      renderYuanCare();
     }
 
     function openTodayPage(){
@@ -2087,12 +3263,30 @@
           重做首页层级：今日入口移到最上方，快速记录只保留正文、标签与保存；状态、图片、来源折叠到“补充细节”；备份与点评收进“更多工具”；手机底部加入固定导航。同时重画了更安静的几何图标。
           <div class="version-why"><b>为什么更新：</b>功能越来越多以后，所有按钮都摊在同一层，导致真正每天会用的“写下”和“今日”反而埋得很深。荣鸢直接说它“丑丑的、有点乱”，这比任何可用性测试都准确。</div>
           <div class="version-thought"><b>我的心得：</b>美化并不是再加装饰，而是决定哪些东西应该先出现、哪些可以晚一点被看见。这次保留了原来的暗色淡紫和一点薄荷，但减少边框、压低工具感，让它更像夜里会打开的私人小空间。图标也只用几何形状重画，没有使用图片生成。</div>
+        </div>
+        <div class="version-entry">
+          <strong>v9 · 专题与脉络</strong><br>
+          加入专题本、全局灵感脉络、时间胶囊、外观设置、“这里先不要完善”，以及一键整理给 Kodo 看的素材包。
+          <div class="version-why"><b>为什么更新：</b>碎片越来越多以后，只靠分类和标签仍然很难看见“这些东西其实属于同一个角色、世界或长期问题”。专题本负责归属，脉络负责来路，时间胶囊负责让过去重新出现。</div>
+          <div class="version-thought"><b>我的心得：</b>这次最重要的功能反而是“这里先不要完善”。工具不应该假设所有模糊想法都必须立刻生长；有些东西只需要先被好好保存。荣鸢也重新说明了视觉素材的边界：不是工作中禁止生成或制作图片，而是普通聊天里别无缘无故甩出生成图。这个区别我记清楚了。</div>
+        </div>
+        <div class="version-entry">
+          <strong>v9.1 · 林雨桉偶尔路过</strong><br>
+          加入会根据当前操作、本地时间和碎片状态变化的林雨桉吐槽；可以设为安静、偶尔或经常，也可以手动叫她出来说一句。
+          <div class="version-why"><b>为什么更新：</b>荣鸢说“可以加入林雨桉的吐槽”。她不该被做成重复固定台词的系统客服，而应该像真的路过桌边，看见某个行为后才顺口说一句。</div>
+          <div class="version-thought"><b>我的心得：</b>角色感不来自把名字贴在提示框上，而来自她知道什么时候不说话、什么时候轻轻戳破荣鸢的小心思。于是这版默认只是偶尔出现，也允许彻底关闭；吐槽偏损但不会否定灵感，更不会把日记内容上传出去。</div>
+        </div>
+        <div class="version-entry">
+          <strong>v9.2 · 她真的看过今天</strong><br>
+          今日页加入“雨桉看过今天”：她会根据心情、备注、歌曲和日记留下稳定回应，也可以留意最近七天反复出现的疲惫、难过或紧绷。
+          <div class="version-why"><b>为什么更新：</b>荣鸢提醒我，她要的林雨桉不只是会吐槽，更是会关心她、会认真看每日记录的人。吐槽只是关系中的一种语气，不能代替关心本身。</div>
+          <div class="version-thought"><b>我的心得：</b>“会看日记”不该意味着每次刷新就随机换一句温柔模板。于是同一份记录得到的回应会保存下来；记录改过以后，界面会诚实地告诉你她还没看这次修改。她的关心会注意具体细节，但不会把糟糕心情当作数据绩效，也不会承诺自己能代替现实中的照顾。</div>
         </div>`;
     }
 
     function exportMonthForSummary(){
       const key=$("monthPicker").value || monthKey(Date.now());
-      const rows=monthItems(key).map(item=>({
+      const rows=monthItems(key).filter(item=>!item.leaveAlone).map(item=>({
         id:item.id,
         content:item.content,
         note:item.note,
@@ -2104,7 +3298,9 @@
         updatedAt:item.updatedAt,
         parentId:item.parentId
       }));
-      if(!rows.length){toast("这个月还没有可以总结的碎片");return;}
+      const dailyRows=Object.values(dailyEntries)
+        .filter(entry=>entry.date.startsWith(key) && dailyHasContent(entry));
+      if(!rows.length && !dailyRows.length){toast("这个月还没有可以总结的内容");return;}
       const payload={
         app:"碎片库-月度深度总结素材",
         version:1,
@@ -2124,7 +3320,7 @@
 
     function exportForComments(){
       const pending=items
-        .filter(item=>(item.content?.trim()||item.note?.trim()) && !(item.aiComments||[]).length)
+        .filter(item=>!item.leaveAlone && (item.content?.trim()||item.note?.trim()) && !(item.aiComments||[]).length)
         .map(item=>({
           id:item.id,
           content:item.content,
@@ -2199,10 +3395,12 @@
         }
         const payload={
           app:"碎片库",
-          version:3,
+          version:4,
           exportedAt:new Date().toISOString(),
           items:exportItems,
-          dailyEntries:Object.values(dailyEntries)
+          dailyEntries:Object.values(dailyEntries),
+          projects,
+          preferences
         };
         const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
         const a=document.createElement("a");
@@ -2211,6 +3409,7 @@
         a.click();
         URL.revokeObjectURL(a.href);
         toast("文字和图片都打包好了");
+        showYuanComment("backup");
       }catch(e){
         toast("导出时出了点问题");
       }finally{
@@ -2227,7 +3426,10 @@
         const incomingDaily=Array.isArray(parsed?.dailyEntries)
           ? parsed.dailyEntries
           : Object.values(parsed?.dailyEntries || {});
-        if(!incoming.length && !incomingDaily.length) throw new Error();
+        const incomingProjects=Array.isArray(parsed?.projects)?parsed.projects:[];
+        const incomingPreferences=parsed?.preferences && typeof parsed.preferences==="object"
+          ? parsed.preferences:null;
+        if(!incoming.length && !incomingDaily.length && !incomingProjects.length) throw new Error();
         const normalized=[];
         for(const raw of incoming){
           if(!raw || (!raw.content && !(raw.images||[]).length)) continue;
@@ -2257,9 +3459,19 @@
             dailyCount++;
           }
         }
+        if(incomingProjects.length){
+          const byProjectId=new Map(projects.map(project=>[project.id,project]));
+          incomingProjects.map(normalizeProject).forEach(project=>byProjectId.set(project.id,project));
+          projects=[...byProjectId.values()];
+          persistProjects();
+        }
+        if(incomingPreferences){
+          preferences={...preferences,...incomingPreferences};
+          persistPreferences();
+        }
         persistDaily();
         persist();
-        toast(`导入了 ${normalized.length} 条碎片${dailyCount?`，${dailyCount} 天今日记录`:""}`);
+        toast(`导入了 ${normalized.length} 条碎片${dailyCount?`，${dailyCount} 天今日记录`:""}${incomingProjects.length?`，${incomingProjects.length} 个专题`:""}`);
       }catch(e){
         toast("这个备份文件好像不对");
       }
@@ -2288,7 +3500,7 @@
       renderPendingImages();
     });
 
-    ["searchInput","filterType","sortSelect"].forEach(id=>{
+    ["searchInput","filterType","filterProject","sortSelect"].forEach(id=>{
       $(id).addEventListener(id==="searchInput"?"input":"change",render);
     });
 
@@ -2304,6 +3516,13 @@
       if(jump){jumpToItem(jump.dataset.jumpId);return;}
       const tag=e.target.closest("[data-tag]");
       if(tag){setTagFilter(tag.dataset.tag);return;}
+      const projectFilter=e.target.closest("[data-project-filter]");
+      if(projectFilter){
+        $("filterProject").value=projectFilter.dataset.projectFilter;
+        render();
+        $("librarySection").scrollIntoView({behavior:"smooth",block:"start"});
+        return;
+      }
 
       const image=e.target.closest("[data-lightbox-src]");
       if(image){
@@ -2318,6 +3537,13 @@
       const item=items.find(x=>x.id===card.dataset.id);
       if(!item) return;
 
+      if(btn.dataset.action==="quiet"){
+        item.leaveAlone=!item.leaveAlone;
+        item.updatedAt=Date.now();
+        persist();
+        toast(item.leaveAlone?"先让它安静待着":"它重新可以被捞起来了");
+        showYuanComment("quiet",{enabled:item.leaveAlone});
+      }
       if(btn.dataset.action==="pin"){
         item.pinned=!item.pinned;
         item.updatedAt=Date.now();
@@ -2341,6 +3567,13 @@
           toast("删掉了");
         }
       }
+    });
+
+    ["captureProjectPicker","editProjectPicker"].forEach(id=>{
+      $(id).addEventListener("click",e=>{
+        const btn=e.target.closest("[data-project-pick]");
+        if(btn) toggleProjectPick(btn.dataset.projectPick,btn.dataset.projectScope);
+      });
     });
 
     $("editImageInput").addEventListener("change",async e=>{
@@ -2375,15 +3608,102 @@
 
     $("randomBtn").onclick=()=>{
       if(!items.length){toast("还没有可以捞的碎片");return;}
-      const pool=items.filter(x=>!x.pinned);
-      const item=(pool.length?pool:items)[Math.floor(Math.random()*(pool.length||items.length))];
+      const available=items.filter(x=>!x.leaveAlone);
+      if(!available.length){toast("现在留下的碎片都选择了“先不要完善”");return;}
+      const pool=available.filter(x=>!x.pinned);
+      const item=(pool.length?pool:available)[Math.floor(Math.random()*(pool.length||available.length))];
       activeTag="";
       $("searchInput").value=item.content.slice(0,36) || item.note.slice(0,36);
       $("filterType").value="";
       render().then(()=>setTimeout(()=>{
         document.querySelector(`[data-id="${item.id}"]`)?.scrollIntoView({behavior:"smooth",block:"center"});
       },0));
+      showYuanComment("random",{item});
     };
+
+    $("projectsBtn").onclick=()=>{
+      renderProjectUI();
+      $("projectsDialog").showModal();
+    };
+    $("createProjectBtn").onclick=createProject;
+    $("projectList").addEventListener("click",e=>{
+      const open=e.target.closest("[data-project-open]");
+      if(open){openProject(open.dataset.projectOpen);return;}
+      const del=e.target.closest("[data-project-delete]");
+      if(del) deleteProject(del.dataset.projectDelete);
+    });
+    $("closeProjectsBtn").onclick=()=>$("projectsDialog").close();
+
+    $("capsuleBtn").onclick=()=>{
+      renderCapsule(false);
+      $("capsuleDialog").showModal();
+    };
+    $("anotherCapsuleBtn").onclick=()=>renderCapsule(true);
+    $("capsuleContent").addEventListener("click",e=>{
+      const jump=e.target.closest("[data-capsule-jump]");
+      if(jump){$("capsuleDialog").close();jumpToItem(jump.dataset.capsuleJump);}
+    });
+    $("closeCapsuleBtn").onclick=()=>$("capsuleDialog").close();
+
+    $("contextMapBtn").onclick=()=>{
+      renderContextMap();
+      $("contextMapDialog").showModal();
+    };
+    $("contextProjectFilter").onchange=renderContextMap;
+    $("contextMapContent").addEventListener("click",e=>{
+      const jump=e.target.closest("[data-jump-id]");
+      if(jump){$("contextMapDialog").close();jumpToItem(jump.dataset.jumpId);}
+    });
+    $("closeContextMapBtn").onclick=()=>$("contextMapDialog").close();
+
+    $("appearanceBtn").onclick=()=>{
+      renderAppearance();
+      $("appearanceDialog").showModal();
+    };
+    $("themeChoices").addEventListener("click",e=>{
+      const btn=e.target.closest("[data-theme-choice]");
+      if(btn){preferences.theme=btn.dataset.themeChoice;persistPreferences();}
+    });
+    $("accentChoices").addEventListener("click",e=>{
+      const btn=e.target.closest("[data-accent-choice]");
+      if(btn){preferences.accent=btn.dataset.accentChoice;persistPreferences();}
+    });
+    $("fontScaleSelect").onchange=e=>{preferences.fontScale=e.target.value;persistPreferences();};
+    $("densitySelect").onchange=e=>{preferences.density=e.target.value;persistPreferences();};
+    $("showCountsInput").onchange=e=>{preferences.showCounts=e.target.checked;persistPreferences();};
+    $("yuanModeSelect").onchange=e=>{preferences.yuanMode=e.target.value;persistPreferences();};
+    $("yuanLookbackInput").onchange=e=>{preferences.yuanLookback=e.target.checked;persistPreferences();};
+    $("closeAppearanceBtn").onclick=()=>$("appearanceDialog").close();
+
+    $("yuanCommentBtn").onclick=()=>showYuanComment("manual",{},true);
+    $("closeYuanAside").onclick=()=>{
+      clearTimeout(yuanHideTimer);
+      $("yuanAside").classList.remove("show");
+    };
+
+    $("kodoBtn").onclick=()=>{
+      selectedKodoIds=new Set([...selectedKodoIds].filter(id=>items.some(item=>item.id===id&&!item.leaveAlone)));
+      renderProjectUI();
+      renderKodoList();
+      $("kodoDialog").showModal();
+    };
+    $("kodoSearchInput").oninput=renderKodoList;
+    $("kodoProjectFilter").onchange=renderKodoList;
+    $("kodoList").addEventListener("change",e=>{
+      const input=e.target.closest("[data-kodo-id]");
+      if(!input) return;
+      if(input.checked) selectedKodoIds.add(input.dataset.kodoId);
+      else selectedKodoIds.delete(input.dataset.kodoId);
+      renderKodoList();
+    });
+    $("kodoSelectAllBtn").onclick=()=>{
+      kodoVisibleItems().forEach(item=>selectedKodoIds.add(item.id));
+      renderKodoList();
+    };
+    $("kodoClearBtn").onclick=()=>{selectedKodoIds.clear();renderKodoList();};
+    $("exportKodoJsonBtn").onclick=()=>exportKodo("json");
+    $("exportKodoMdBtn").onclick=()=>exportKodo("md");
+    $("closeKodoBtn").onclick=()=>$("kodoDialog").close();
 
     $("todayBtn").onclick=openTodayPage;
     $("heroTodayBtn").onclick=openTodayPage;
@@ -2432,8 +3752,11 @@
       jumpToItem(jump.dataset.dailyJumpId);
     });
     $("dailySummaryBtn").onclick=()=>renderDailySummary(true);
+    $("yuanReadTodayBtn").onclick=()=>saveYuanCare(true,false);
     $("closeTodayBtn").onclick=()=>{
       saveDailyEntry(true);
+      const care=saveYuanCare(false,true);
+      if(!care) showYuanComment("diary");
       $("todayDialog").close();
     };
 
@@ -2606,8 +3929,10 @@
       loadVersionLabel();
     });
 
+    applyPreferences();
     setupTypeSelectors();
     renderRelationSelects();
+    renderProjectUI();
     renderPendingImages();
     render().then(()=>maybeOfferSurprise());
   </script>
