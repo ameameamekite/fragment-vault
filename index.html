@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#111117" />
+  <meta name="theme-color" content="#121018" />
   <title>碎片库</title>
   <meta name="application-name" content="碎片库" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -384,15 +384,230 @@
       .card-images{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
   </style>
+
+  <style id="v8-visual-refresh">
+    :root{
+      --bg:#100f16;
+      --panel:#191720;
+      --panel-2:#211e2a;
+      --panel-3:#292534;
+      --text:#f5f1fa;
+      --muted:#a7a0b2;
+      --line:rgba(221,210,238,.12);
+      --accent:#cbb7ff;
+      --accent-strong:#b99cff;
+      --accent-soft:rgba(203,183,255,.12);
+      --accent-2:#99dfcc;
+      --blue:#b7d7ff;
+      --danger:#ff9f9f;
+      --shadow:0 18px 54px rgba(0,0,0,.28);
+      --soft-shadow:0 10px 30px rgba(0,0,0,.16);
+      --radius-xl:28px;
+      --radius-lg:20px;
+      --radius-md:15px;
+    }
+    body{
+      background:
+        radial-gradient(circle at 8% -2%,rgba(203,183,255,.13),transparent 24rem),
+        radial-gradient(circle at 102% 12%,rgba(153,223,204,.075),transparent 22rem),
+        linear-gradient(180deg,#121019 0%,#0f0e14 100%);
+      letter-spacing:.005em;
+    }
+    body::before{
+      content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.16;
+      background-image:linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+      background-size:34px 34px;
+      mask-image:linear-gradient(to bottom,black,transparent 76%);
+    }
+    .app{width:min(100%,820px);padding:18px 16px 124px}
+    .panel{
+      background:linear-gradient(180deg,rgba(28,25,38,.96),rgba(23,21,31,.96));
+      border:1px solid var(--line);border-radius:var(--radius-xl);
+      box-shadow:var(--soft-shadow);backdrop-filter:blur(18px)
+    }
+    .hero{
+      position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;
+      align-items:center;gap:16px;padding:20px;margin:4px 0 16px;
+    }
+    .hero::after{
+      content:"";position:absolute;right:-48px;top:-74px;width:190px;height:190px;border-radius:50%;
+      background:radial-gradient(circle,rgba(203,183,255,.16),transparent 68%);pointer-events:none
+    }
+    .brand-lockup{display:flex;align-items:center;gap:14px;min-width:0}
+    .brand-glyph{
+      position:relative;width:54px;height:54px;flex:0 0 54px;border-radius:18px;
+      background:linear-gradient(145deg,#282337,#17151f);
+      border:1px solid rgba(221,210,238,.13);box-shadow:inset 0 1px rgba(255,255,255,.06),0 10px 24px rgba(0,0,0,.2)
+    }
+    .brand-glyph::before,.brand-glyph::after{
+      content:"";position:absolute;width:22px;height:22px;border:5px solid var(--accent);
+      transform:rotate(45deg);border-radius:5px
+    }
+    .brand-glyph::before{left:13px;top:9px;border-right-color:transparent;border-bottom-color:transparent}
+    .brand-glyph::after{right:13px;bottom:9px;border-left-color:var(--blue);border-top-color:transparent;border-right-color:var(--blue);border-bottom-color:var(--blue)}
+    .brand-spark{position:absolute;width:8px;height:8px;right:8px;top:8px;background:var(--accent-2);transform:rotate(45deg);border-radius:2px}
+    .eyebrow{color:var(--accent-2);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:750;margin-bottom:4px}
+    .hero h1{font-size:31px;line-height:1.08;margin:0;letter-spacing:.04em}
+    .hero .subtitle{font-size:13px;line-height:1.55;margin:7px 0 0;max-width:470px}
+    .hero-today{
+      position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:3px;
+      min-width:112px;border:0;border-radius:18px;padding:12px 14px;
+      background:linear-gradient(140deg,var(--accent),#b8d9ff);color:#17131f;box-shadow:0 12px 30px rgba(185,156,255,.18)
+    }
+    .hero-today span{font-size:11px;opacity:.72}
+    .hero-today strong{font-size:15px}
+    .hero-meta{grid-column:1/-1;display:flex;gap:9px;align-items:center;color:var(--muted);font-size:11px;padding-top:4px}
+    .hero-meta span{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.035)}
+
+    .capture{padding:18px;margin-bottom:14px;scroll-margin-top:16px}
+    .section-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .section-heading h2{font-size:18px;margin:0}
+    .section-heading p{font-size:12px;color:var(--muted);line-height:1.55;margin:4px 0 0}
+    .section-kicker{display:inline-flex;color:var(--accent-2);font-size:10px;letter-spacing:.12em;margin-bottom:4px;font-weight:750}
+    .capture .chips{margin-bottom:3px}
+    .capture .main-input{
+      min-height:150px;margin-top:4px;padding:14px 2px 16px;font-size:17px;line-height:1.8
+    }
+    .quick-capture-row{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:stretch}
+    .quick-capture-row .primary{min-width:104px}
+    .advanced-box,.tools-drawer,.tag-fold{
+      margin-top:12px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025);overflow:hidden
+    }
+    .advanced-box summary,.tools-drawer summary,.tag-fold summary{
+      list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;color:#ded8e7;font-size:13px
+    }
+    .advanced-box summary::-webkit-details-marker,.tools-drawer summary::-webkit-details-marker,.tag-fold summary::-webkit-details-marker{display:none}
+    .advanced-box summary::after,.tools-drawer summary::after,.tag-fold summary::after{content:"＋";color:var(--muted);font-size:18px;line-height:1}
+    .advanced-box[open] summary::after,.tools-drawer[open] summary::after,.tag-fold[open] summary::after{content:"−"}
+    .advanced-box summary small,.tools-drawer summary small{color:var(--muted);font-size:11px;margin-left:auto}
+    .advanced-body{padding:0 14px 15px;border-top:1px solid var(--line)}
+    .advanced-body .field-label:first-child{margin-top:14px}
+    .capture-save-note{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;margin-top:11px}
+    .capture-save-note::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 4px rgba(153,223,204,.08)}
+
+    input,select,.capture textarea,.modal textarea,.today-section textarea{
+      border-color:rgba(221,210,238,.105);background:rgba(255,255,255,.035)
+    }
+    input:focus,select:focus,textarea:focus{
+      border-color:rgba(203,183,255,.74);box-shadow:0 0 0 4px rgba(203,183,255,.08)
+    }
+    .chip{border-color:transparent;background:rgba(255,255,255,.045);padding:8px 13px}
+    .chip.active{box-shadow:0 7px 18px rgba(185,156,255,.12)}
+    .primary{border-radius:14px;box-shadow:0 8px 22px rgba(185,156,255,.12)}
+    .secondary{border-color:var(--line);background:rgba(255,255,255,.035);border-radius:14px}
+    .secondary:active,.primary:active,.chip:active{transform:translateY(1px)}
+
+    .library-tools{padding:16px;margin-bottom:14px;scroll-margin-top:16px}
+    .library-tools .section-heading{margin-bottom:12px}
+    .filter-grid{display:grid;grid-template-columns:minmax(0,1fr) 150px 130px;gap:8px}
+    .quick-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .quick-actions button{flex:1 1 auto;min-width:110px}
+    .tools-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 12px 12px;border-top:1px solid var(--line)}
+    .tools-body button,.tools-body select{width:100%;margin-top:10px}
+    .tools-body select{grid-column:1/-1}
+
+    .surprise-banner{border-radius:20px}
+    .tag-fold{padding:0;margin:0 0 14px}
+    .tag-fold summary{padding:14px 16px}
+    .tag-fold .tag-index-head{margin:0;display:flex;align-items:center;justify-content:space-between;flex:1}
+    .tag-fold .tag-cloud{padding:0 14px 15px;border-top:1px solid var(--line);padding-top:13px}
+    .tag-link{background:rgba(153,223,204,.07);padding:7px 11px}
+
+    .list{gap:10px;scroll-margin-top:16px}
+    .card{
+      padding:16px 16px 14px;border-radius:22px;box-shadow:none;
+      background:linear-gradient(180deg,rgba(29,26,39,.94),rgba(24,22,32,.96));
+      border-color:rgba(221,210,238,.095)
+    }
+    .card::before{
+      content:"";position:absolute;left:0;top:20px;bottom:20px;width:3px;border-radius:0 4px 4px 0;
+      background:linear-gradient(var(--accent),var(--blue));opacity:.55
+    }
+    .content{font-size:15.5px;line-height:1.8;margin:13px 0}
+    .note{background:rgba(203,183,255,.055);border-left-width:2px}
+    .actions .secondary{background:transparent;border-color:transparent;color:var(--muted);padding:7px 9px}
+    .actions .secondary:hover{background:rgba(255,255,255,.045);color:var(--text)}
+    .type,.status-pill{padding:5px 9px}
+
+    dialog{border-radius:26px;border-color:rgba(221,210,238,.13);background:#181620}
+    dialog::backdrop{background:rgba(6,5,9,.77);backdrop-filter:blur(8px)}
+    .today-section,.summary-section,.stat-box{background:rgba(255,255,255,.035);border:1px solid rgba(221,210,238,.07)}
+    .daily-draw-card{border-color:rgba(203,183,255,.26)}
+
+    .bottom-dock{
+      display:none;position:fixed;z-index:40;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);
+      width:min(calc(100% - 24px),520px);padding:7px;border-radius:22px;
+      border:1px solid rgba(221,210,238,.14);background:rgba(23,21,31,.88);backdrop-filter:blur(22px);
+      box-shadow:0 18px 46px rgba(0,0,0,.38)
+    }
+    .dock-button{
+      flex:1;border:0;background:transparent;color:var(--muted);border-radius:16px;padding:8px 6px 7px;
+      display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px
+    }
+    .dock-button .dock-icon{position:relative;width:22px;height:22px;display:block}
+    .dock-button.active,.dock-button:active{background:rgba(203,183,255,.12);color:var(--accent)}
+    .dock-icon.today::before{content:"";position:absolute;inset:3px;border:2px solid currentColor;border-radius:7px}
+    .dock-icon.today::after{content:"";position:absolute;width:7px;height:2px;background:currentColor;left:8px;top:10px;border-radius:2px;box-shadow:0 4px currentColor}
+    .dock-icon.write::before{content:"";position:absolute;width:14px;height:4px;background:currentColor;border-radius:4px;transform:rotate(-42deg);left:3px;top:8px}
+    .dock-icon.write::after{content:"";position:absolute;width:5px;height:5px;border:2px solid currentColor;border-left:0;border-top:0;right:2px;top:3px;transform:rotate(-42deg)}
+    .dock-icon.library::before{content:"";position:absolute;left:3px;right:3px;top:4px;height:3px;border-radius:3px;background:currentColor;box-shadow:0 6px currentColor,0 12px currentColor}
+    .dock-icon.more::before{content:"";position:absolute;width:4px;height:4px;border-radius:50%;background:currentColor;left:3px;top:9px;box-shadow:6px 0 currentColor,12px 0 currentColor}
+
+    .toast{bottom:96px}
+
+    @media (max-width:650px){
+      .app{padding:12px 12px 118px}
+      .hero{padding:16px;border-radius:24px;grid-template-columns:1fr auto}
+      .brand-glyph{width:48px;height:48px;flex-basis:48px;border-radius:16px}
+      .brand-glyph::before,.brand-glyph::after{width:19px;height:19px;border-width:4px}
+      .brand-glyph::before{left:12px;top:8px}.brand-glyph::after{right:12px;bottom:8px}
+      .hero h1{font-size:28px}
+      .hero .subtitle{font-size:12px}
+      .hero-today{min-width:91px;padding:11px 12px}
+      .hero-today strong{font-size:14px}
+      .capture,.library-tools{border-radius:24px;padding:15px}
+      .quick-capture-row{grid-template-columns:1fr}
+      .quick-capture-row .primary{width:100%;padding:13px 16px}
+      .filter-grid{grid-template-columns:1fr 1fr}
+      .filter-grid #searchInput{grid-column:1/-1}
+      .quick-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+      .quick-actions button{min-width:0}
+      .tools-body{grid-template-columns:1fr 1fr}
+      .bottom-dock{display:flex}
+      .today-dialog{width:100%;max-height:96vh;margin:auto 0 0;border-radius:28px 28px 0 0}
+      .dashboard{padding:18px 15px calc(18px + env(safe-area-inset-bottom))}
+      .tag-cloud{max-height:190px;overflow:auto}
+      .card{border-radius:20px}
+      .actions{justify-content:flex-start}
+    }
+    @media (max-width:380px){
+      .hero-today{display:none}
+      .filter-grid{grid-template-columns:1fr}
+      .filter-grid #searchInput{grid-column:auto}
+      .tools-body{grid-template-columns:1fr}
+      .tools-body select{grid-column:auto}
+    }
+  </style>
 </head>
 <body>
   <main class="app">
-    <header>
-      <div>
-        <h1>碎片库</h1>
-        <p class="subtitle">半句话、一张图、一个没长完的念头。写下时间会自动留下。<span id="appVersionLabel"></span></p>
+    <header class="hero panel">
+      <div class="brand-lockup">
+        <span class="brand-glyph" aria-hidden="true"><span class="brand-spark"></span></span>
+        <div>
+          <div class="eyebrow">PRIVATE FRAGMENT VAULT</div>
+          <h1>碎片库</h1>
+          <p class="subtitle">半句话、一张图、一个没长完的念头。先放下来，再慢慢长。</p>
+        </div>
       </div>
-      <div class="count" id="count">0 条碎片</div>
+      <button class="hero-today" id="heroTodayBtn" type="button">
+        <span>回到今天</span>
+        <strong>写点什么</strong>
+      </button>
+      <div class="hero-meta">
+        <span id="count">0 条碎片</span>
+        <span id="appVersionLabel">v8.0.0</span>
+      </div>
     </header>
 
     <div class="install-ready hidden" id="installReadyBanner">
@@ -413,65 +628,99 @@
       <button class="icon-btn" id="hideUpdateBannerBtn">晚点</button>
     </div>
 
-    <section class="panel capture">
-      <div class="chips" id="typeChips"></div>
-      <label class="field-label">这条灵感现在怎么样</label>
-      <div class="chips" id="statusChips"></div>
-      <textarea id="contentInput" class="main-input"
-        placeholder="刚刚想到什么？正文里直接写 #oc相关，它会自动变成可以点开的标签。"></textarea>
-
-      <input id="tagsInput" placeholder="额外标签：发型、台词、赛博（可不填）" />
-
-      <label class="field-label" for="parentSelect">它从哪条旧灵感继续长出来？</label>
-      <select id="parentSelect">
-        <option value="">这是一个新的起点</option>
-      </select>
-
-      <label class="field-label" for="noteInput">备注</label>
-      <textarea id="noteInput" class="note-input"
-        placeholder="为什么保存它？喜欢哪里？以后准备怎么发展？"></textarea>
-
-      <div class="image-picker">
-        <label class="image-button">
-          ＋ 放图片
-          <input id="imageInput" type="file" accept="image/*" multiple />
-        </label>
-        <span class="image-help">每条最多 6 张；会自动压缩后存在本机。</span>
+    <section class="panel capture" id="capturePanel">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">CAPTURE</span>
+          <h2>收下一片</h2>
+          <p>先写最重要的那一句，其他细节随时可以以后再补。</p>
+        </div>
       </div>
-      <div class="image-previews" id="imagePreviews"></div>
 
-      <label class="field-label">来源（保存别人的灵感时可以写）</label>
-      <div class="row">
-        <div class="grow"><input id="sourceNameInput" placeholder="作者 / 平台 / 对话对象（可不填）" /></div>
-        <div class="grow"><input id="urlInput" placeholder="原链接（可不填）" /></div>
+      <div class="chips" id="typeChips"></div>
+      <textarea id="contentInput" class="main-input"
+        placeholder="刚刚想到什么？正文里写 #oc相关，它会自动变成可以点开的标签。"></textarea>
+
+      <div class="quick-capture-row">
+        <input id="tagsInput" placeholder="标签（可不填）" />
         <button class="primary" id="saveBtn">收进来</button>
       </div>
-      <div class="hint">文字沿用第一版的本地记录；图片单独存在浏览器中。导出备份时会把图片一起带走。</div>
+
+      <details class="advanced-box" id="captureAdvanced">
+        <summary><span>补充细节</span><small>状态、关系、图片、来源</small></summary>
+        <div class="advanced-body">
+          <label class="field-label">这条灵感现在怎么样</label>
+          <div class="chips" id="statusChips"></div>
+
+          <label class="field-label" for="parentSelect">它从哪条旧灵感继续长出来？</label>
+          <select id="parentSelect">
+            <option value="">这是一个新的起点</option>
+          </select>
+
+          <label class="field-label" for="noteInput">备注</label>
+          <textarea id="noteInput" class="note-input"
+            placeholder="为什么保存它？喜欢哪里？以后准备怎么发展？"></textarea>
+
+          <div class="image-picker">
+            <label class="image-button">
+              ＋ 放图片
+              <input id="imageInput" type="file" accept="image/*" multiple />
+            </label>
+            <span class="image-help">每条最多 6 张；会自动压缩后存在本机。</span>
+          </div>
+          <div class="image-previews" id="imagePreviews"></div>
+
+          <label class="field-label">来源（保存别人的灵感时可以写）</label>
+          <div class="row">
+            <div class="grow"><input id="sourceNameInput" placeholder="作者 / 平台 / 对话对象（可不填）" /></div>
+            <div class="grow"><input id="urlInput" placeholder="原链接（可不填）" /></div>
+          </div>
+          <div class="hint">文字和图片都只存在这台设备；完整备份会把它们一起带走。</div>
+        </div>
+      </details>
+      <div class="capture-save-note">写下的原始时间会一直保留。</div>
     </section>
 
-    <section class="panel toolbar">
-      <input id="searchInput" placeholder="搜索正文、备注、标签、来源或链接……" />
-      <select id="filterType" aria-label="筛选分类"></select>
-      <div class="toolbar-bottom">
-        <button class="primary hidden" id="installAppBtn">安装碎片库 App</button>
-        <button class="secondary" id="randomBtn">随机捞一条</button>
-        <button class="primary" id="todayBtn">今日</button>
-        <button class="secondary" id="monthlyBtn">月度回顾</button>
-        <button class="secondary" id="reassureBtn">我没有忘记什么</button>
-        <button class="secondary" id="versionsBtn">版本日记</button>
-        <button class="secondary" id="surpriseBtn">惊喜纸条</button>
-        <button class="secondary" id="exportCommentsBtn">导出待点评</button>
-        <button class="secondary" id="importCommentsBtn">导入点评包</button>
-        <input class="hidden" id="commentImportFile" type="file" accept="application/json" />
-        <button class="secondary" id="exportBtn">导出完整备份</button>
-        <button class="secondary" id="importBtn">导入备份</button>
-        <input class="hidden" id="importFile" type="file" accept="application/json" />
-        <select id="sortSelect" style="width:auto">
+    <section class="panel library-tools" id="librarySection">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">LIBRARY</span>
+          <h2>翻一翻</h2>
+          <p>搜索、筛选，或者让旧碎片自己浮上来。</p>
+        </div>
+      </div>
+
+      <div class="filter-grid">
+        <input id="searchInput" placeholder="搜索正文、备注、标签或来源……" />
+        <select id="filterType" aria-label="筛选分类"></select>
+        <select id="sortSelect" aria-label="排序">
           <option value="newest">最新在前</option>
           <option value="oldest">最早在前</option>
           <option value="updated">最近修改</option>
         </select>
       </div>
+
+      <div class="quick-actions">
+        <button class="secondary" id="randomBtn">随机捞一条</button>
+        <button class="primary" id="todayBtn">今日</button>
+        <button class="secondary" id="monthlyBtn">月度回顾</button>
+        <button class="secondary" id="reassureBtn">我没有忘记什么</button>
+      </div>
+
+      <details class="tools-drawer" id="moreTools">
+        <summary><span>更多工具</span><small>点评、版本与备份</small></summary>
+        <div class="tools-body">
+          <button class="primary hidden" id="installAppBtn">安装碎片库 App</button>
+          <button class="secondary" id="versionsBtn">版本日记</button>
+          <button class="secondary" id="surpriseBtn">惊喜纸条</button>
+          <button class="secondary" id="exportCommentsBtn">导出待点评</button>
+          <button class="secondary" id="importCommentsBtn">导入点评包</button>
+          <input class="hidden" id="commentImportFile" type="file" accept="application/json" />
+          <button class="secondary" id="exportBtn">导出完整备份</button>
+          <button class="secondary" id="importBtn">导入备份</button>
+          <input class="hidden" id="importFile" type="file" accept="application/json" />
+        </div>
+      </details>
     </section>
 
     <div class="surprise-banner" id="surpriseBanner">
@@ -489,16 +738,25 @@
       <button id="clearTagFilter">× 清除</button>
     </div>
 
-    <section class="panel tag-index" id="tagIndexPanel">
-      <div class="tag-index-head">
-        <h2>标签索引</h2>
-        <span class="count" id="tagCount"></span>
-      </div>
+    <details class="panel tag-index tag-fold" id="tagIndexPanel">
+      <summary>
+        <span class="tag-index-head">
+          <h2>标签索引</h2>
+          <span class="count" id="tagCount"></span>
+        </span>
+      </summary>
       <div class="tag-cloud" id="tagCloud"></div>
-    </section>
+    </details>
 
     <section class="list" id="list"></section>
   </main>
+
+  <nav class="bottom-dock" aria-label="主要导航">
+    <button class="dock-button" id="dockToday" type="button"><span class="dock-icon today"></span><span>今日</span></button>
+    <button class="dock-button" id="dockCapture" type="button"><span class="dock-icon write"></span><span>收集</span></button>
+    <button class="dock-button" id="dockLibrary" type="button"><span class="dock-icon library"></span><span>碎片</span></button>
+    <button class="dock-button" id="dockMore" type="button"><span class="dock-icon more"></span><span>更多</span></button>
+  </nav>
 
   <dialog id="editDialog">
     <form method="dialog" class="modal" id="editForm">
@@ -1823,6 +2081,12 @@
           修复 APK 一直停留在旧页面的问题：新版 Service Worker 现在会自动接管，不再等待被原生外壳隐藏的更新按钮。
           <div class="version-why"><b>为什么更新：</b>网页已经部署成功，但 APK 的原生代码隐藏了更新提示，而旧更新机制必须点击提示才能生效，两套逻辑互相卡住。</div>
           <div class="version-thought"><b>我的心得：</b>这次不是缓存玄学，而是我把两个分别合理的设计拼在一起后制造了死锁。最该做的不是继续让荣鸢反复清缓存，而是把冲突找出来并承认前面的判断不够准确。以后 APK 模式默认自动更新，网页模式才保留手动提示。</div>
+        </div>
+        <div class="version-entry">
+          <strong>v8 · 把东西放回它该在的位置</strong><br>
+          重做首页层级：今日入口移到最上方，快速记录只保留正文、标签与保存；状态、图片、来源折叠到“补充细节”；备份与点评收进“更多工具”；手机底部加入固定导航。同时重画了更安静的几何图标。
+          <div class="version-why"><b>为什么更新：</b>功能越来越多以后，所有按钮都摊在同一层，导致真正每天会用的“写下”和“今日”反而埋得很深。荣鸢直接说它“丑丑的、有点乱”，这比任何可用性测试都准确。</div>
+          <div class="version-thought"><b>我的心得：</b>美化并不是再加装饰，而是决定哪些东西应该先出现、哪些可以晚一点被看见。这次保留了原来的暗色淡紫和一点薄荷，但减少边框、压低工具感，让它更像夜里会打开的私人小空间。图标也只用几何形状重画，没有使用图片生成。</div>
         </div>`;
     }
 
@@ -2122,6 +2386,20 @@
     };
 
     $("todayBtn").onclick=openTodayPage;
+    $("heroTodayBtn").onclick=openTodayPage;
+    $("dockToday").onclick=openTodayPage;
+    $("dockCapture").onclick=()=>{
+      $("capturePanel").scrollIntoView({behavior:"smooth",block:"start"});
+      setTimeout(()=>$("contentInput").focus({preventScroll:true}),420);
+    };
+    $("dockLibrary").onclick=()=>{
+      $("librarySection").scrollIntoView({behavior:"smooth",block:"start"});
+      setTimeout(()=>$("searchInput").focus({preventScroll:true}),420);
+    };
+    $("dockMore").onclick=()=>{
+      $("moreTools").open=true;
+      $("librarySection").scrollIntoView({behavior:"smooth",block:"start"});
+    };
     $("dailyDatePicker").addEventListener("change",e=>{
       renderTodayPage(e.target.value || localDateKey(Date.now()));
     });
