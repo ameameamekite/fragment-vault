@@ -1,14 +1,14 @@
 {
   "name": "碎片库",
   "short_name": "碎片库",
-  "description": "保存碎片、日记、专题与灵感脉络；林雨桉会认真看过你的今日记录。",
+  "description": "一片会慢慢长出楼层、偶尔收到林雨桉回帖与小惊喜的私密自留地。",
   "lang": "zh-CN",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#121018",
-  "theme_color": "#121018",
+  "background_color": "#111117",
+  "theme_color": "#111117",
   "categories": [
     "productivity",
     "lifestyle"

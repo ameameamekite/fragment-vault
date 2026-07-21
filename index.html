@@ -795,6 +795,187 @@
     body[data-theme="paper"] .yuan-care-card{color:var(--text)}
   </style>
 
+
+  <style id="v9-2-1-images">
+    .image-upload-status{
+      margin-top:8px;padding:9px 11px;border-radius:12px;
+      background:rgba(255,255,255,.035);color:var(--muted);
+      font-size:11px;line-height:1.55
+    }
+    .image-upload-status.working{color:var(--accent-2)}
+    .image-upload-status.success{color:#a8ead8;background:rgba(153,223,204,.08)}
+    .image-upload-status.error{color:#f0b9c8;background:rgba(233,172,197,.08)}
+    .image-wall-grid{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:9px;max-height:65vh;overflow:auto;padding-right:3px
+    }
+    .image-wall-item{
+      position:relative;aspect-ratio:1;border:0;padding:0;border-radius:15px;
+      overflow:hidden;background:var(--panel-3)
+    }
+    .image-wall-item img{width:100%;height:100%;object-fit:cover;display:block}
+    .image-wall-meta{
+      position:absolute;left:0;right:0;bottom:0;padding:18px 8px 7px;
+      background:linear-gradient(transparent,rgba(0,0,0,.76));
+      color:#fff;font-size:10px;text-align:left
+    }
+    .image-wall-empty{
+      padding:24px;border:1px dashed var(--line);border-radius:16px;
+      color:var(--muted);line-height:1.7;text-align:center
+    }
+    @media(max-width:650px){
+      .image-wall-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+  </style>
+
+
+  <style id="v10-private-thread-structure">
+    .compose-mode{
+      display:grid;grid-template-columns:1fr 1fr;gap:7px;
+      padding:5px;background:rgba(255,255,255,.035);border-radius:15px;margin-bottom:10px
+    }
+    .compose-mode button{
+      border:0;border-radius:11px;background:transparent;color:var(--muted);
+      padding:9px 11px;font-weight:700
+    }
+    .compose-mode button.active{background:var(--accent);color:#17131f}
+    .thread-compose-fields{display:grid;gap:8px;margin-bottom:9px}
+    .thread-compose-fields.hidden{display:none}
+    .quote-preview{
+      display:none;margin:8px 0;padding:10px 38px 10px 12px;position:relative;
+      border-left:3px solid var(--accent-2);border-radius:0 12px 12px 0;
+      background:rgba(153,223,204,.07);color:#d9d4de;font-size:12px;line-height:1.6
+    }
+    .quote-preview.show{display:block}
+    .quote-preview button{
+      position:absolute;right:6px;top:5px;border:0;background:transparent;color:var(--muted)
+    }
+    .thread-card{overflow:hidden}
+    .thread-card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .thread-title{font-size:19px;line-height:1.45;margin:4px 0 3px}
+    .thread-submeta{font-size:11px;color:var(--muted);line-height:1.55}
+    .thread-latest{
+      margin:13px 0 5px;padding:12px;border-radius:14px;
+      background:rgba(255,255,255,.028);border:1px solid rgba(255,255,255,.045)
+    }
+    .thread-latest-label{color:var(--accent-2);font-size:10px;margin-bottom:6px}
+    .thread-latest-text{line-height:1.68;color:#e3dee8}
+    body[data-theme="paper"] .thread-latest-text{color:var(--text)}
+    .thread-floor-count{
+      display:inline-flex;padding:6px 9px;border-radius:999px;
+      background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:750
+    }
+    .thread-dialog{width:min(calc(100% - 18px),850px)}
+    .thread-header{
+      padding:14px;border-radius:18px;background:var(--panel-2);margin-bottom:12px
+    }
+    .thread-header-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .thread-header h2{margin:3px 0 6px;font-size:22px;line-height:1.35}
+    .thread-header p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+    .thread-floors{display:grid;gap:10px;max-height:62vh;overflow:auto;padding-right:3px}
+    .floor{
+      position:relative;border:1px solid var(--line);border-radius:17px;
+      background:rgba(255,255,255,.025);padding:13px
+    }
+    .floor.highlight{outline:2px solid var(--accent);outline-offset:2px}
+    .floor-meta{
+      display:flex;justify-content:space-between;gap:10px;margin-bottom:9px;
+      color:var(--muted);font-size:10px
+    }
+    .floor-number{color:var(--accent-2);font-weight:800;letter-spacing:.04em}
+    .floor-content{white-space:pre-wrap;line-height:1.75}
+    .floor-quote{
+      margin:9px 0;padding:9px 11px;border-left:3px solid var(--accent);
+      background:rgba(203,183,255,.06);border-radius:0 11px 11px 0;
+      color:var(--muted);font-size:11px;line-height:1.55
+    }
+    .floor-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+    .thread-images{display:grid;gap:7px;margin-top:10px}
+    .thread-images.one{grid-template-columns:1fr}
+    .thread-images.two{grid-template-columns:repeat(2,1fr)}
+    .thread-images.many{grid-template-columns:repeat(3,1fr)}
+    .thread-images button{border:0;padding:0;border-radius:12px;overflow:hidden;background:var(--panel-3)}
+    .thread-images img{width:100%;height:100%;max-height:260px;object-fit:cover;display:block}
+    .thread-privacy{
+      margin-top:10px;color:var(--muted);font-size:10px;line-height:1.55
+    }
+    @media(max-width:650px){
+      .thread-title{font-size:17px}
+      .thread-dialog{width:calc(100% - 10px)}
+      .thread-floors{max-height:67vh}
+      .thread-images.many{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+
+
+  <style id="v10-1-yuan-floor-surprise">
+    .floor.yuan-floor{
+      border-color:rgba(153,223,204,.34);
+      background:
+        radial-gradient(circle at 96% 0%,rgba(153,223,204,.10),transparent 34%),
+        rgba(255,255,255,.026)
+    }
+    .floor-author{
+      display:inline-flex;align-items:center;gap:6px;margin-right:7px;
+      font-size:10px;font-weight:800;letter-spacing:.04em
+    }
+    .floor-author.me{color:var(--accent)}
+    .floor-author.yuan{color:var(--accent-2)}
+    .floor-author.yuan::before{
+      content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-2);
+      box-shadow:0 0 0 3px rgba(153,223,204,.08)
+    }
+    .yuan-floor-mark{
+      display:inline-flex;padding:4px 8px;border-radius:999px;
+      background:rgba(153,223,204,.08);color:var(--accent-2);font-size:9px
+    }
+    .surprise-dialog{
+      width:min(calc(100% - 22px),520px);padding:0;border:0;background:transparent
+    }
+    .surprise-shell{
+      position:relative;overflow:hidden;border:1px solid var(--line);border-radius:24px;
+      background:var(--panel);box-shadow:0 28px 85px rgba(0,0,0,.48)
+    }
+    .fake-ad-top{
+      display:flex;justify-content:space-between;align-items:center;padding:9px 13px;
+      background:#f4f1f6;color:#2c2930;font-size:10px;font-weight:800
+    }
+    .fake-ad-top span:last-child{font-weight:500;color:#77717d}
+    .fake-ad-body{
+      min-height:285px;padding:28px 22px;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;text-align:center;
+      background:
+        radial-gradient(circle at 20% 15%,rgba(203,183,255,.23),transparent 34%),
+        radial-gradient(circle at 85% 82%,rgba(153,223,204,.16),transparent 36%),
+        var(--panel)
+    }
+    .fake-ad-badge{
+      padding:6px 10px;border-radius:999px;background:var(--accent-soft);
+      color:var(--accent);font-size:10px;font-weight:800;margin-bottom:15px
+    }
+    .fake-ad-title{font-size:25px;line-height:1.3;margin:0 0 10px}
+    .fake-ad-copy{color:var(--muted);line-height:1.75;margin:0 0 18px}
+    .fake-ad-button{
+      border:0;border-radius:14px;padding:12px 18px;background:var(--accent);
+      color:#18141e;font-weight:850
+    }
+    .surprise-reveal{
+      display:none;padding:26px 22px 22px;text-align:center;
+      background:linear-gradient(160deg,rgba(203,183,255,.12),rgba(153,223,204,.07)),var(--panel)
+    }
+    .surprise-reveal.show{display:block}
+    .surprise-reveal h3{font-size:22px;margin:0 0 12px}
+    .surprise-reveal p{white-space:pre-wrap;line-height:1.8;margin:0;color:var(--text)}
+    .surprise-small{margin-top:15px;color:var(--muted);font-size:10px}
+    .surprise-actions{display:flex;justify-content:center;gap:8px;margin-top:18px}
+    .surprise-draw-card{
+      width:min(260px,100%);margin:0 auto;padding:22px 17px;border-radius:21px;
+      border:1px solid rgba(203,183,255,.26);background:rgba(255,255,255,.035)
+    }
+    .surprise-draw-symbol{font-size:34px;margin-bottom:10px}
+    .setting-subline{display:block;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.5}
+  </style>
+
 </head>
 <body>
   <main class="app">
@@ -813,7 +994,7 @@
       </button>
       <div class="hero-meta">
         <span id="count">0 条碎片</span>
-        <span id="appVersionLabel">v9.2.0</span>
+        <span id="appVersionLabel">v10.1.0</span>
       </div>
     </header>
 
@@ -856,19 +1037,37 @@
     <section class="panel capture" id="capturePanel">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">CAPTURE</span>
-          <h2>收下一片</h2>
-          <p>先写最重要的那一句，其他细节随时可以以后再补。</p>
+          <span class="section-kicker">POST</span>
+          <h2>写一层</h2>
+          <p>可以开一个新帖，也可以回到以前的帖子继续盖楼。</p>
         </div>
+      </div>
+
+      <div class="compose-mode" id="composeMode">
+        <button type="button" class="active" data-compose-mode="new">开新帖</button>
+        <button type="button" data-compose-mode="continue">续一层</button>
+      </div>
+
+      <div class="thread-compose-fields" id="newThreadFields">
+        <input id="threadTitleInput" placeholder="帖子标题（可不填，会从第一层自动取）" />
+      </div>
+      <div class="thread-compose-fields hidden" id="continueThreadFields">
+        <select id="continueThreadSelect">
+          <option value="">选择一个要继续的帖子</option>
+        </select>
+      </div>
+      <div class="quote-preview" id="quotePreview">
+        <span id="quotePreviewText"></span>
+        <button type="button" id="clearQuoteBtn">×</button>
       </div>
 
       <div class="chips" id="typeChips"></div>
       <textarea id="contentInput" class="main-input"
-        placeholder="刚刚想到什么？正文里写 #oc相关，它会自动变成可以点开的标签。"></textarea>
+        placeholder="写下这个帖子的第一层。正文里写 #oc相关，它会自动变成可以点开的标签。"></textarea>
 
       <div class="quick-capture-row">
         <input id="tagsInput" placeholder="标签（可不填）" />
-        <button class="primary" id="saveBtn">收进来</button>
+        <button class="primary" id="saveBtn">开帖</button>
       </div>
 
       <details class="advanced-box" id="captureAdvanced">
@@ -904,6 +1103,9 @@
             </label>
             <span class="image-help">每条最多 6 张；会自动压缩后存在本机。</span>
           </div>
+          <div class="image-upload-status" id="imageUploadStatus">
+            还没有选择图片。选完后这里会显示读取结果。
+          </div>
           <div class="image-previews" id="imagePreviews"></div>
 
           <label class="field-label">来源（保存别人的灵感时可以写）</label>
@@ -914,15 +1116,15 @@
           <div class="hint">文字和图片都只存在这台设备；完整备份会把它们一起带走。</div>
         </div>
       </details>
-      <div class="capture-save-note">写下的原始时间会一直保留。</div>
+      <div class="capture-save-note">每一层都会保留自己的原始时间；已有碎片会自动视作只有 1 楼的旧帖。</div>
     </section>
 
     <section class="panel library-tools" id="librarySection">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">LIBRARY</span>
-          <h2>翻一翻</h2>
-          <p>搜索、筛选，或者让旧碎片自己浮上来。</p>
+          <span class="section-kicker">PRIVATE BOARD</span>
+          <h2>自留地</h2>
+          <p>这里看到的是帖子；点进去，才会展开它这些天慢慢长出的每一层。</p>
         </div>
       </div>
 
@@ -953,6 +1155,7 @@
           <button class="secondary" id="versionsBtn">版本日记</button>
           <button class="secondary" id="appearanceBtn">外观设置</button>
           <button class="secondary" id="kodoBtn">整理给 Kodo 看</button>
+          <button class="secondary" id="imageWallBtn">图片墙</button>
           <button class="secondary" id="yuanCommentBtn">雨桉吐槽</button>
           <button class="secondary" id="surpriseBtn">惊喜纸条</button>
           <button class="secondary" id="exportCommentsBtn">导出待点评</button>
@@ -1000,9 +1203,57 @@
     <button class="dock-button" id="dockMore" type="button"><span class="dock-icon more"></span><span>更多</span></button>
   </nav>
 
+  <dialog id="surpriseDialog" class="surprise-dialog">
+    <div class="surprise-shell">
+      <div id="fakeAdPanel">
+        <div class="fake-ad-top">
+          <span>广告</span>
+          <span>由碎片库胡说八道提供</span>
+        </div>
+        <div class="fake-ad-body">
+          <div class="fake-ad-badge" id="fakeAdBadge">限时推荐</div>
+          <h2 class="fake-ad-title" id="fakeAdTitle">正在加载一个非常必要的东西</h2>
+          <p class="fake-ad-copy" id="fakeAdCopy">根据你刚才的操作，系统强烈建议你查看。</p>
+          <button class="fake-ad-button" id="revealSurpriseBtn">查看详情</button>
+        </div>
+      </div>
+      <div class="surprise-reveal" id="surpriseReveal">
+        <div id="surpriseRevealContent"></div>
+        <div class="surprise-small">这不是外部广告，是碎片库内部的小机关。</div>
+        <div class="surprise-actions">
+          <button class="primary" id="acceptSurpriseBtn">收下</button>
+          <button class="secondary" id="closeSurpriseBtn">知道啦</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="threadDialog" class="dashboard-dialog thread-dialog">
+    <div class="dashboard">
+      <div class="thread-header">
+        <div class="thread-header-top">
+          <div>
+            <span class="section-kicker">PRIVATE THREAD</span>
+            <h2 id="threadDialogTitle">无题帖</h2>
+            <p id="threadDialogMeta"></p>
+          </div>
+          <button class="secondary" id="renameThreadBtn">改标题</button>
+        </div>
+        <div class="project-pills" id="threadDialogProjects"></div>
+        <div class="thread-privacy">只保存在这台设备，不发布、不产生公开链接；完整备份会把帖子和楼层一起带走。</div>
+      </div>
+      <div class="thread-floors" id="threadFloors"></div>
+      <div class="modal-actions">
+        <button class="primary" id="continueFromThreadBtn">继续盖楼</button>
+        <button class="secondary" id="inviteYuanFloorBtn">叫雨桉留一楼</button>
+        <button class="secondary" id="closeThreadBtn">先看到这里</button>
+      </div>
+    </div>
+  </dialog>
+
   <dialog id="editDialog">
     <form method="dialog" class="modal" id="editForm">
-      <h2>修改碎片</h2>
+      <h2 id="editDialogTitle">修改这一层</h2>
       <div class="chips" id="editTypeChips"></div>
       <label class="field-label">当前状态</label>
       <div class="chips" id="editStatusChips"></div>
@@ -1286,6 +1537,20 @@
             <small>只读取保存在本机的今日记录，不上传内容。</small>
           </span>
         </label>
+        <label class="quiet-toggle">
+          <input id="yuanFloorInput" type="checkbox" />
+          <span>
+            允许林雨桉偶尔在帖子里留楼
+            <small>她留下的楼层会和你的楼层一样保存在本机，可以单独删除。</small>
+          </span>
+        </label>
+        <label class="quiet-toggle">
+          <input id="surprisesInput" type="checkbox" />
+          <span>
+            允许自留地偶尔搞点小动作
+            <small>全部是应用内部玩笑，不联网、不展示真实广告，也不会跳到外部页面。</small>
+          </span>
+        </label>
         <span class="yuan-setting-note">手动点“雨桉吐槽”时，即使设为安静也仍会出现一条。</span>
       </section>
       <div class="modal-actions">
@@ -1317,6 +1582,21 @@
         <button class="secondary" id="exportKodoMdBtn">导出 Markdown</button>
         <button class="primary" id="exportKodoJsonBtn">导出整理包</button>
         <button class="secondary" id="closeKodoBtn">取消</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="imageWallDialog" class="dashboard-dialog">
+    <div class="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <h2>图片墙</h2>
+          <p>所有已经真正保存进碎片库的图片，按最近写下的碎片排列。</p>
+        </div>
+      </div>
+      <div id="imageWallContent"></div>
+      <div class="modal-actions">
+        <button class="primary" id="closeImageWallBtn">收起图片墙</button>
       </div>
     </div>
   </dialog>
@@ -1403,6 +1683,12 @@
     let renderVersion = 0;
     let queuedSurprise = null;
     let lastOpenedCommentKey = "";
+    let composeMode = "new";
+    let pendingQuoteId = "";
+    let currentThreadId = "";
+    let threadFocusItemId = "";
+    let currentSurprise = null;
+    let surpriseCooldownUntil = 0;
 
     const $ = id => document.getElementById(id);
     const contentInput = $("contentInput");
@@ -1415,6 +1701,11 @@
         type:TYPES.includes(x.type) ? x.type : "不知道放哪",
         status:STATUSES.includes(x.status) ? x.status : "正在发芽",
         parentId:String(x.parentId || ""),
+        threadId:String(x.threadId || x.id || uid()),
+        threadTitle:String(x.threadTitle || ""),
+        floorNo:Number(x.floorNo) || 1,
+        quoteId:String(x.quoteId || ""),
+        author:x.author==="yuan"?"yuan":"me",
         projectIds:Array.isArray(x.projectIds) ? [...new Set(x.projectIds.map(String))] : [],
         leaveAlone:Boolean(x.leaveAlone),
         tags:Array.isArray(x.tags) ? x.tags.map(String) : [],
@@ -1462,7 +1753,8 @@
     function loadPreferences(){
       const defaults={
         theme:"rain",accent:"purple",fontScale:"normal",density:"airy",
-        showCounts:true,yuanMode:"sometimes",yuanLookback:true
+        showCounts:true,yuanMode:"sometimes",yuanLookback:true,
+        yuanFloors:true,surprises:true
       };
       try{
         return {...defaults,...JSON.parse(localStorage.getItem(PREFS_STORAGE_KEY)||"{}")};
@@ -1517,6 +1809,7 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
       renderRelationSelects();
       renderProjectUI();
+      renderContinueThreadSelect();
       render();
     }
 
@@ -1929,40 +2222,66 @@
       showYuanText(line,8200);
     }
 
+    function inferredImageMime(file){
+      const given=String(file?.type||"").toLowerCase();
+      if(given.startsWith("image/")) return given;
+      const ext=String(file?.name||"").split(".").pop().toLowerCase();
+      return {
+        jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",
+        webp:"image/webp",gif:"image/gif",bmp:"image/bmp",
+        heic:"image/heic",heif:"image/heif",avif:"image/avif"
+      }[ext] || "";
+    }
+
+    function setImageUploadStatus(text,state=""){
+      const box=$("imageUploadStatus");
+      box.textContent=text;
+      box.className=`image-upload-status ${state}`.trim();
+    }
+
     async function compressImage(file){
-      if(!file.type.startsWith("image/")) throw new Error("not image");
-      const dataUrl = await new Promise((resolve,reject)=>{
+      const mime=inferredImageMime(file);
+      if(!mime) throw new Error("系统没有提供可识别的图片格式");
+      let dataUrl = await new Promise((resolve,reject)=>{
         const reader=new FileReader();
-        reader.onload=()=>resolve(reader.result);
-        reader.onerror=()=>reject(reader.error);
+        reader.onload=()=>resolve(String(reader.result||""));
+        reader.onerror=()=>reject(reader.error || new Error("读取文件失败"));
         reader.readAsDataURL(file);
       });
+      if(!dataUrl.startsWith("data:image/")){
+        const comma=dataUrl.indexOf(",");
+        if(comma>=0) dataUrl=`data:${mime};base64,${dataUrl.slice(comma+1)}`;
+      }
       const img = await new Promise((resolve,reject)=>{
         const image=new Image();
         image.onload=()=>resolve(image);
-        image.onerror=reject;
+        image.onerror=()=>reject(new Error(`当前系统无法解码 ${mime}`));
         image.src=dataUrl;
       });
       const maxSide=1800;
       let w=img.naturalWidth,h=img.naturalHeight;
+      if(!w||!h) throw new Error("图片尺寸读取失败");
       const scale=Math.min(1,maxSide/Math.max(w,h));
       w=Math.max(1,Math.round(w*scale));
       h=Math.max(1,Math.round(h*scale));
       const canvas=document.createElement("canvas");
       canvas.width=w;canvas.height=h;
       const ctx=canvas.getContext("2d");
+      if(!ctx) throw new Error("无法创建图片画布");
       ctx.drawImage(img,0,0,w,h);
-      return canvas.toDataURL("image/webp",0.86);
+      const output=canvas.toDataURL("image/webp",0.86);
+      if(!output || output==="data:,") throw new Error("压缩图片失败");
+      return output;
     }
 
     async function filesToCompressed(fileList,limit){
       const files=[...fileList].slice(0,limit);
-      const result=[];
+      const result=[],errors=[];
       for(const file of files){
         try{ result.push(await compressImage(file)); }
-        catch(e){ toast(`有一张图片没能读出来：${file.name}`); }
+        catch(e){ errors.push(`${file.name||"未命名图片"}：${e.message||"读取失败"}`); }
       }
-      return result;
+      return {result,errors,selected:files.length};
     }
 
     function renderPendingImages(){
@@ -1971,6 +2290,32 @@
           <img src="${src}" alt="待保存图片">
           <button class="remove-image" data-pending-index="${i}" type="button">×</button>
         </div>`).join("");
+    }
+
+    async function renderImageWall(){
+      const rows=items
+        .filter(item=>(item.imageIds||[]).length)
+        .sort((a,b)=>b.createdAt-a.createdAt);
+      const target=$("imageWallContent");
+      if(!rows.length){
+        target.innerHTML='<div class="image-wall-empty">还没有真正保存成功的图片。<br>只有选择后出现缩略图、再点“收进来”，图片才会进入这里。</div>';
+        return;
+      }
+      const cells=[];
+      for(const item of rows){
+        const images=await getImages(item.imageIds||[]).catch(()=>[]);
+        images.filter(Boolean).forEach(src=>cells.push({
+          src,item
+        }));
+      }
+      target.innerHTML=cells.length
+        ? `<div class="image-wall-grid">${cells.map(({src,item})=>`
+            <button class="image-wall-item" data-lightbox-src="${src}">
+              <img src="${src}" alt="碎片图片">
+              <span class="image-wall-meta">${escapeHTML(itemPreview(item,36))}</span>
+            </button>
+          `).join("")}</div>`
+        : '<div class="image-wall-empty">找到了图片记录，但本机没有读到图片数据。建议先导出完整备份，再检查应用存储。</div>';
     }
 
     function itemPreview(item,length=46){
@@ -2061,6 +2406,254 @@
       }
     }
 
+    function threadItems(threadId){
+      return items
+        .filter(item=>item.threadId===threadId)
+        .sort((a,b)=>a.createdAt-b.createdAt || a.floorNo-b.floorNo);
+    }
+
+    function threadRoot(threadId){
+      return threadItems(threadId)[0] || null;
+    }
+
+    function threadLatest(threadId){
+      const rows=threadItems(threadId);
+      return rows[rows.length-1] || null;
+    }
+
+    function derivedThreadTitle(threadId){
+      const root=threadRoot(threadId);
+      if(!root) return "无题帖";
+      const custom=(root.threadTitle||"").trim();
+      if(custom) return custom;
+      const first=(root.content||"").trim().split(/\n/)[0];
+      return first ? first.slice(0,42) : "只有图片的帖子";
+    }
+
+    function threadUpdatedAt(threadId){
+      return Math.max(...threadItems(threadId).map(item=>item.updatedAt||item.createdAt));
+    }
+
+    function allThreads(){
+      const ids=[...new Set(items.map(item=>item.threadId))];
+      return ids.map(threadId=>({
+        id:threadId,
+        rows:threadItems(threadId),
+        root:threadRoot(threadId),
+        latest:threadLatest(threadId),
+        title:derivedThreadTitle(threadId),
+        updatedAt:threadUpdatedAt(threadId)
+      })).filter(thread=>thread.root);
+    }
+
+    function nextFloorNo(threadId){
+      const rows=threadItems(threadId);
+      return rows.length ? Math.max(...rows.map(item=>item.floorNo||1))+1 : 1;
+    }
+
+    function threadProjectIds(threadId){
+      return [...new Set(threadItems(threadId).flatMap(item=>item.projectIds||[]))];
+    }
+
+    function threadTags(threadId){
+      return [...new Set(threadItems(threadId).flatMap(item=>collectTags(item)))];
+    }
+
+    function renderContinueThreadSelect(){
+      const select=$("continueThreadSelect");
+      if(!select) return;
+      const current=select.value;
+      const threads=allThreads().sort((a,b)=>b.updatedAt-a.updatedAt);
+      select.innerHTML='<option value="">选择一个要继续的帖子</option>'+
+        threads.map(thread=>`<option value="${escapeHTML(thread.id)}">${escapeHTML(thread.title)} · ${thread.rows.length}层</option>`).join("");
+      if(threads.some(thread=>thread.id===current)) select.value=current;
+    }
+
+    function setComposeMode(mode,threadId="",quoteId=""){
+      composeMode=mode==="continue"?"continue":"new";
+      pendingQuoteId=quoteId||"";
+      document.querySelectorAll("[data-compose-mode]").forEach(btn=>
+        btn.classList.toggle("active",btn.dataset.composeMode===composeMode)
+      );
+      $("newThreadFields").classList.toggle("hidden",composeMode!=="new");
+      $("continueThreadFields").classList.toggle("hidden",composeMode!=="continue");
+      $("saveBtn").textContent=composeMode==="new"?"开帖":"续一层";
+      contentInput.placeholder=composeMode==="new"
+        ?"写下这个帖子的第一层。正文里写 #oc相关，它会自动变成可以点开的标签。"
+        :"继续写下一层。它可以只是补充一句、贴一张图，或者推翻前面的自己。";
+      renderContinueThreadSelect();
+      if(threadId) $("continueThreadSelect").value=threadId;
+      renderQuotePreview();
+    }
+
+    function renderQuotePreview(){
+      const quote=items.find(item=>item.id===pendingQuoteId);
+      $("quotePreview").classList.toggle("show",Boolean(quote));
+      $("quotePreviewText").textContent=quote
+        ? `引用 ${quote.floorNo||1}楼：${itemPreview(quote,82)}`
+        :"";
+    }
+
+    function yuanFloorText(context,item,threadId){
+      const title=derivedThreadTitle(threadId);
+      const content=(item?.content||"").trim();
+      const hour=new Date().getHours();
+      const rows=threadItems(threadId);
+      const seed=`${threadId}|${rows.length}|${content}|${localDateKey(Date.now())}`;
+
+      const pick=(lines)=>seededPick(lines,seed);
+      if(hour<5){
+        return pick([
+          "你在这个时间又盖了一层。\n我先替帖子收下，剩下的明天再说。你现在比较需要被塞回被窝。",
+          "这一楼我看见了。\n不过凌晨写下来的东西也不会天亮就消失，别拿熬夜当保存按钮。",
+          "楼先留着。你也该暂停加载一会儿了。"
+        ]);
+      }
+      if(item?.leaveAlone){
+        return pick([
+          "既然你说先不要完善，我就不往下追问。\n只是来留个脚印，证明它被认真看过。",
+          "这层不用继续长。\n有些念头被妥善放着，本身就是一种完成。"
+        ]);
+      }
+      if(content.length>260){
+        return pick([
+          "你写了这么长一层，还叫它“补充一点”。\n我不拆你的台，只提醒你先缓口气。",
+          "这一楼信息量很大。\n不用现在就替它写结论，让它先在这里住一晚。"
+        ]);
+      }
+      if(/难过|累|疲惫|烦|痛|失眠|没过|失败/.test(content)){
+        return pick([
+          "这层我不拿来开玩笑。\n你写下来的那部分已经有人看见了，今天先别急着把自己判成失败。",
+          "我看到了。\n不需要把坏受解释得很漂亮，也不用马上证明自己已经没事。",
+          "先把这一楼留在这里。\n有些时候，能准确说出“我不好受”就已经很费力了。"
+        ]);
+      }
+      if(/开心|成功|终于|好耶|太爽|喜欢/.test(content)){
+        return pick([
+          "这楼可以加精。\n不是因为多伟大，是因为你开心的时候也值得留下证据。",
+          "嗯，这次是真的好事。\n不许立刻补一句“其实也没什么”。",
+          "看见了。今天这点亮的东西，先别急着缩小它。"
+        ]);
+      }
+      if(rows.length>=6){
+        return pick([
+          `“${title}”已经长到 ${rows.length} 层了。\n你看，有些东西真的会在你没催它的时候慢慢成形。`,
+          `第 ${rows.length} 层。\n原来你不是没坚持，只是不喜欢用打卡的方式证明。`,
+          "帖子长大了一点。\n我只是路过，不负责替它宣布完结。"
+        ]);
+      }
+      return pick([
+        "我看完了。\n这一层不用立刻变成作品，先让它和前面的自己待在一起。",
+        "留个楼。\n免得你过几天回来，又说没人见证过这个念头。",
+        "这一楼和前面有点不一样。\n先不替你总结，我想看看它之后会往哪边长。",
+        "嗯，继续写吧。\n我不催，也不会因为它暂时乱七八糟就嫌弃它。"
+      ]);
+    }
+
+    function addYuanFloor(threadId,sourceItem,force=false){
+      if(preferences.yuanFloors===false && !force) return null;
+      if(!force){
+        const mode=preferences.yuanMode||"sometimes";
+        const chance=mode==="often"?0.42:mode==="off"?0.05:0.20;
+        if(Math.random()>chance) return null;
+        const recent=threadItems(threadId).slice(-2);
+        if(recent.some(row=>row.author==="yuan")) return null;
+      }
+      const now=Date.now();
+      const floor=normalizeItem({
+        id:uid(),
+        content:yuanFloorText("reply",sourceItem,threadId),
+        type:sourceItem?.type || threadRoot(threadId)?.type || TYPES[0],
+        status:"正在生长",
+        parentId:"",
+        threadId,
+        threadTitle:derivedThreadTitle(threadId),
+        floorNo:nextFloorNo(threadId),
+        quoteId:sourceItem?.id || "",
+        author:"yuan",
+        projectIds:[...threadProjectIds(threadId)],
+        tags:[],
+        sourceName:"林雨桉",
+        createdAt:now,
+        updatedAt:now
+      });
+      items.unshift(floor);
+      return floor;
+    }
+
+    function maybeAddYuanFloor(threadId,sourceItem){
+      const floor=addYuanFloor(threadId,sourceItem,false);
+      if(floor){
+        persist();
+        toast(`林雨桉在 ${floor.floorNo} 楼留了句话`);
+      }
+      return floor;
+    }
+
+    const surpriseTips=[
+      "今天不需要把所有事情都想通。\n有一个念头被好好留下，就已经不是空手而归。",
+      "系统检测到你可能又在对自己要求过高。\n本条建议：把“必须做好”临时替换成“先留下来”。",
+      "你不必每次都变得更好，才能证明今天没有白过。",
+      "有些记录不是为了以后利用，而是为了让此刻的你没有被直接略过去。",
+      "温馨提示：灵感可以休眠，作品可以延期，人也可以。",
+      "刚才那一刻已经过去了，但你把它留住了一点点。这件事挺厉害的。"
+    ];
+
+    const surpriseDraws=[
+      {symbol:"☁",title:"云层通行证",text:"今天允许思绪没有边界，也允许它们暂时不落地。"},
+      {symbol:"◌",title:"空白保护符",text:"留白不是缺失。今天有一部分不想解释，就让它保持空白。"},
+      {symbol:"✦",title:"小型好运",text:"不会改变命运，只负责让接下来的一件小事稍微顺一点。"},
+      {symbol:"⌁",title:"绕路许可",text:"今天不必走最有效率的路线。绕一点，也可能捡到别的东西。"},
+      {symbol:"□",title:"暂停卡",text:"使用后可合法暂停一件并不紧急、却一直在脑子里催你的事。"},
+      {symbol:"♪",title:"声音残片",text:"去听一首现在最想听的歌。不是作为任务，只是让空气换一下。"}
+    ];
+
+    function buildSurprise(kind="tip"){
+      if(kind==="draw"){
+        const draw=surpriseDraws[Math.floor(Math.random()*surpriseDraws.length)];
+        return {
+          kind:"draw",
+          badge:"随机投递",
+          title:"你获得了一张看起来没什么用的卡",
+          copy:"领取后不增加经验值，也不会提高效率。",
+          reveal:`<div class="surprise-draw-card">
+            <div class="surprise-draw-symbol">${draw.symbol}</div>
+            <h3>${escapeHTML(draw.title)}</h3>
+            <p>${escapeHTML(draw.text)}</p>
+          </div>`
+        };
+      }
+      const tip=surpriseTips[Math.floor(Math.random()*surpriseTips.length)];
+      return {
+        kind:"tip",
+        badge:"个性化推荐",
+        title:"系统发现你可能需要购买一点休息",
+        copy:"原价无法计算，今日限时免费。点击查看产品详情。",
+        reveal:`<h3>购买成功（￥0）</h3><p>${escapeHTML(tip)}</p>`
+      };
+    }
+
+    function openSurprise(kind=""){
+      if(preferences.surprises===false) return;
+      currentSurprise=buildSurprise(kind || (Math.random()<0.45?"draw":"tip"));
+      $("fakeAdBadge").textContent=currentSurprise.badge;
+      $("fakeAdTitle").textContent=currentSurprise.title;
+      $("fakeAdCopy").textContent=currentSurprise.copy;
+      $("fakeAdPanel").style.display="";
+      $("surpriseReveal").classList.remove("show");
+      $("surpriseRevealContent").innerHTML="";
+      if(!$("surpriseDialog").open) $("surpriseDialog").showModal();
+    }
+
+    function maybeSurprise(reason="save"){
+      if(preferences.surprises===false) return;
+      if(Date.now()<surpriseCooldownUntil) return;
+      const chance=reason==="save"?0.08:0.035;
+      if(Math.random()>chance) return;
+      surpriseCooldownUntil=Date.now()+6*60*60*1000;
+      setTimeout(()=>openSurprise(),550);
+    }
+
     function statusClass(status){
       if(status==="暂时休眠") return "sleeping";
       if(status==="已经用上") return "used";
@@ -2092,18 +2685,11 @@
     function jumpToItem(id){
       const item=items.find(x=>x.id===id);
       if(!item) return;
-      ["monthlyDialog","reassureDialog","chainDialog"].forEach(dialogId=>{
+      ["monthlyDialog","reassureDialog","chainDialog","capsuleDialog","contextMapDialog"].forEach(dialogId=>{
         const dialog=$(dialogId);
         if(dialog?.open) dialog.close();
       });
-      activeTag="";
-      $("searchInput").value="";
-      $("filterType").value="";
-      render().then(()=>setTimeout(()=>{
-        document.querySelector(`[data-id="${CSS.escape(id)}"]`)?.scrollIntoView({
-          behavior:"smooth",block:"center"
-        });
-      },30));
+      openThread(item.threadId,item.id);
     }
 
     async function addItem(){
@@ -2119,12 +2705,35 @@
         const imageIds=[];
         for(const src of pendingImages) imageIds.push(await putImage(src));
         const now=Date.now();
+        let targetThreadId="";
+        let floorNo=1;
+        let threadTitle="";
+        if(composeMode==="continue"){
+          targetThreadId=$("continueThreadSelect").value;
+          if(!targetThreadId){
+            toast("先选一个要继续的帖子");
+            return;
+          }
+          floorNo=nextFloorNo(targetThreadId);
+          threadTitle=derivedThreadTitle(targetThreadId);
+          if(!selectedCaptureProjects.length){
+            selectedCaptureProjects=[...threadProjectIds(targetThreadId)];
+          }
+        }else{
+          targetThreadId=uid();
+          threadTitle=$("threadTitleInput").value.trim();
+        }
+
         const savedItem=normalizeItem({
           id:uid(),
           content,
           type:selectedType,
           status:selectedStatus,
           parentId:$("parentSelect").value || "",
+          threadId:targetThreadId,
+          threadTitle,
+          floorNo,
+          quoteId:pendingQuoteId,
           projectIds:[...selectedCaptureProjects],
           leaveAlone:$("leaveAloneInput").checked,
           tags:parseTags($("tagsInput").value),
@@ -2140,6 +2749,8 @@
         contentInput.value="";
         $("tagsInput").value="";
         $("parentSelect").value="";
+        $("threadTitleInput").value="";
+        pendingQuoteId="";
         selectedCaptureProjects=[];
         $("leaveAloneInput").checked=false;
         $("noteInput").value="";
@@ -2147,9 +2758,14 @@
         $("urlInput").value="";
         pendingImages=[];
         renderPendingImages();
+        setImageUploadStatus("还没有选择图片。选完后这里会显示读取结果。");
         persist();
-        toast("收好了");
+        toast(composeMode==="new"?"帖子开好了":`第 ${savedItem.floorNo} 楼盖好了`);
         showYuanComment("save",{item:savedItem});
+        const yuanFloor=maybeAddYuanFloor(savedItem.threadId,savedItem);
+        if(composeMode==="new") setComposeMode("new");
+        else setComposeMode("continue",savedItem.threadId);
+        maybeSurprise("save");
         contentInput.focus();
       }catch(e){
         toast("保存图片时出了点问题");
@@ -2159,26 +2775,33 @@
       }
     }
 
-    function getVisibleItems(){
+    function getVisibleThreads(){
       const q=$("searchInput").value.trim().toLowerCase();
       const filter=$("filterType").value;
       const projectFilter=$("filterProject").value;
-      let result=items.filter(item=>{
-        const tags=collectTags(item);
+      let result=allThreads().filter(thread=>{
+        const rows=thread.rows;
+        const tags=threadTags(thread.id);
         const haystack=[
-          item.content,item.note,item.type,item.status,tags.join(" "),item.sourceName,item.url,
-          projectNames(item).map(project=>project.name).join(" ")
+          thread.title,
+          ...rows.flatMap(item=>[
+            item.content,item.note,item.type,item.status,item.sourceName,item.url,
+            collectTags(item).join(" "),
+            projectNames(item).map(project=>project.name).join(" ")
+          ])
         ].join(" ").toLowerCase();
         const tagMatch=!activeTag || tags.includes(activeTag);
-        const projectMatch=!projectFilter || (item.projectIds||[]).includes(projectFilter);
-        return (!q||haystack.includes(q)) && (!filter||item.type===filter) && tagMatch && projectMatch;
+        const typeMatch=!filter || rows.some(item=>item.type===filter);
+        const projectMatch=!projectFilter || rows.some(item=>(item.projectIds||[]).includes(projectFilter));
+        return (!q||haystack.includes(q)) && typeMatch && tagMatch && projectMatch;
       });
       const sort=$("sortSelect").value;
       result.sort((a,b)=>{
-        if(a.pinned!==b.pinned) return a.pinned?-1:1;
-        if(sort==="oldest") return a.createdAt-b.createdAt;
+        const aPin=a.rows.some(item=>item.pinned),bPin=b.rows.some(item=>item.pinned);
+        if(aPin!==bPin) return aPin?-1:1;
+        if(sort==="oldest") return a.root.createdAt-b.root.createdAt;
         if(sort==="updated") return b.updatedAt-a.updatedAt;
-        return b.createdAt-a.createdAt;
+        return b.root.createdAt-a.root.createdAt;
       });
       return result;
     }
@@ -2200,84 +2823,75 @@
 
     async function render(){
       const version=++renderVersion;
-      const visible=getVisibleItems();
-      $("count").textContent=`${items.length} 条碎片`;
+      const visible=getVisibleThreads();
+      $("count").textContent=`${allThreads().length} 帖 · ${items.length} 层`;
       renderTagIndex();
+      renderContinueThreadSelect();
 
       if(!visible.length){
         $("list").innerHTML=`<div class="panel empty">${
-          items.length?"这里暂时没有符合条件的碎片。":"还空着。半句话或一张图都可以先放进来。"
+          items.length?"这里暂时没有符合条件的帖子。":"还空着。开一个只有一句话的帖子也可以。"
         }</div>`;
         return;
       }
 
-      const imageSets=await Promise.all(visible.map(item=>getImages(item.imageIds||[]).catch(()=>[])));
+      const imageSets=await Promise.all(visible.map(thread=>
+        getImages(thread.latest?.imageIds||[]).catch(()=>[])
+      ));
       if(version!==renderVersion) return;
 
-      $("list").innerHTML=visible.map((item,index)=>{
-        const tags=collectTags(item).map(tag=>
+      $("list").innerHTML=visible.map((thread,index)=>{
+        const rows=thread.rows;
+        const root=thread.root;
+        const latest=thread.latest;
+        const tags=threadTags(thread.id).map(tag=>
           `<button class="tag" data-tag="${escapeHTML(tag)}">#${escapeHTML(tag)}</button>`
         ).join("");
+        const projects=threadProjectIds(thread.id).map(projectById).filter(Boolean);
+        const projectPills=projects.length?`
+          <div class="project-pills">${projects.map(project=>`
+            <button class="project-pill" data-project-filter="${escapeHTML(project.id)}"
+              style="--project-color:${escapeHTML(project.color)}">${escapeHTML(project.name)}</button>
+          `).join("")}</div>`:"";
         const validImages=imageSets[index].filter(Boolean);
         const imageClass=validImages.length===1?"one":validImages.length===2?"two":"";
         const images=validImages.length?`
           <div class="card-images ${imageClass}">
             ${validImages.map(src=>`
               <button class="card-image" data-lightbox-src="${src}">
-                <img src="${src}" alt="保存的灵感图片" loading="lazy">
+                <img src="${src}" alt="帖子最新一层的图片" loading="lazy">
               </button>`).join("")}
           </div>`:"";
-        const note=item.note?`
-          <div class="note"><span class="note-label">备注</span>${escapeHTML(item.note)}</div>`:"";
-        const parent=items.find(x=>x.id===item.parentId);
-        const childCount=items.filter(x=>x.parentId===item.id).length;
-        const relation=(parent||childCount)?`
-          <div class="relation-line">
-            ${parent?`从 <button data-jump-id="${escapeHTML(parent.id)}">${escapeHTML(itemPreview(parent,34))}</button> 继续长出来`:""}
-            ${parent&&childCount?" · ":""}
-            ${childCount?`后来又长出 ${childCount} 条`:""}
-          </div>`:"";
-        const itemProjects=projectNames(item);
-        const projectPills=itemProjects.length?`
-          <div class="project-pills">${itemProjects.map(project=>`
-            <button class="project-pill" data-project-filter="${escapeHTML(project.id)}"
-              style="--project-color:${escapeHTML(project.color)}">${escapeHTML(project.name)}</button>
-          `).join("")}${item.leaveAlone?'<span class="quiet-badge">先不要完善</span>':""}</div>`:
-          (item.leaveAlone?'<div class="project-pills"><span class="quiet-badge">先不要完善</span></div>':"");
-        const source=(item.sourceName||item.url)?`
-          <div class="source-row">
-            ${item.sourceName?`来源：<span class="source-name">${escapeHTML(item.sourceName)}</span>`:""}
-            ${item.url?`<a class="source" href="${escapeHTML(item.url)}" target="_blank" rel="noopener">打开原链接</a>`:""}
-          </div>`:"";
+        const days=Math.max(1,Math.floor((Date.now()-root.createdAt)/86400000)+1);
+        const allQuiet=rows.every(item=>item.leaveAlone);
+        const pinned=rows.some(item=>item.pinned);
         return `
-          <article class="panel card ${item.pinned?"pinned":""}" data-id="${item.id}">
-            <div class="card-top">
-              <div class="meta-pills">
-                <span class="type">${escapeHTML(item.type)}</span>
-                <span class="status-pill ${statusClass(item.status)}">${escapeHTML(item.status)}</span>
+          <article class="panel card thread-card ${pinned?"pinned":""}" data-thread-id="${escapeHTML(thread.id)}">
+            <div class="thread-card-head">
+              <div>
+                <div class="meta-pills">
+                  <span class="type">${escapeHTML(root.type)}</span>
+                  <span class="status-pill ${statusClass(latest.status)}">${escapeHTML(latest.status)}</span>
+                </div>
+                <h3 class="thread-title">${escapeHTML(thread.title)}</h3>
+                <div class="thread-submeta">开帖于 ${escapeHTML(formatDate(root.createdAt))} · 已写 ${days} 天 · 最近更新 ${escapeHTML(formatDate(thread.updatedAt))}</div>
               </div>
-              <div class="time-meta">
-                <span class="created-time">写下于 ${formatDate(item.createdAt)}</span>
-                ${wasEdited(item) ? `<span class="edited-time">修改于 ${formatDate(item.updatedAt)}</span>` : ""}
-              </div>
+              <span class="thread-floor-count">${rows.length} 层</span>
             </div>
-            ${item.content?`<div class="content">${richText(item.content)}</div>`:""}
+            <div class="thread-latest">
+              <div class="thread-latest-label">${rows.length===1?"1楼":"最新 · "+(latest.floorNo||rows.length)+"楼"}</div>
+              <div class="thread-latest-text">${latest.content?richText(itemPreview(latest,180)):"只有图片"}</div>
+            </div>
             ${images}
-            ${note}
-            ${relation}
             ${projectPills}
+            ${allQuiet?'<div class="project-pills"><span class="quiet-badge">整帖先不要完善</span></div>':""}
             ${tags?`<div class="tags">${tags}</div>`:""}
-            ${source}
             <div class="actions">
-              ${(parent||childCount)?`<button class="icon-btn" data-action="chain">生长链</button>`:""}
-              ${(item.aiComments||[]).length ? `
-                <button class="icon-btn comment-button" data-action="comment">
-                  拆纸条<span class="comment-count-badge">${item.aiComments.length}</span>
-                </button>` : ""}
-              <button class="icon-btn" data-action="quiet">${item.leaveAlone?"允许它被捞起":"先不要完善"}</button>
-              <button class="icon-btn" data-action="pin">${item.pinned?"取消置顶":"置顶"}</button>
-              <button class="icon-btn" data-action="edit">编辑</button>
-              <button class="icon-btn danger" data-action="delete">删除</button>
+              <button class="primary" data-thread-action="open">打开帖子</button>
+              <button class="icon-btn" data-thread-action="continue">续一层</button>
+              <button class="icon-btn" data-thread-action="quiet">${allQuiet?"允许它被捞起":"整帖先不要完善"}</button>
+              <button class="icon-btn" data-thread-action="pin">${pinned?"取消置顶":"置顶"}</button>
+              <button class="icon-btn danger" data-thread-action="delete">删除整帖</button>
             </div>
           </article>`;
       }).join("");
@@ -2291,8 +2905,81 @@
       window.scrollTo({top:$("activeFilter").offsetTop-12,behavior:"smooth"});
     }
 
+    async function renderThreadDialog(focusItemId=""){
+      const rows=threadItems(currentThreadId);
+      if(!rows.length){
+        if($("threadDialog").open) $("threadDialog").close();
+        return;
+      }
+      const root=rows[0];
+      const projects=threadProjectIds(currentThreadId).map(projectById).filter(Boolean);
+      $("threadDialogTitle").textContent=derivedThreadTitle(currentThreadId);
+      $("threadDialogMeta").textContent=`${rows.length} 层 · 开帖于 ${formatDate(root.createdAt)} · 最近更新 ${formatDate(threadUpdatedAt(currentThreadId))}`;
+      $("threadDialogProjects").innerHTML=projects.map(project=>`
+        <span class="project-pill" style="--project-color:${escapeHTML(project.color)}">${escapeHTML(project.name)}</span>
+      `).join("");
+
+      const imageSets=await Promise.all(rows.map(item=>getImages(item.imageIds||[]).catch(()=>[])));
+      $("threadFloors").innerHTML=rows.map((item,index)=>{
+        const quote=items.find(row=>row.id===item.quoteId);
+        const validImages=imageSets[index].filter(Boolean);
+        const imageClass=validImages.length===1?"one":validImages.length===2?"two":"many";
+        const images=validImages.length?`
+          <div class="thread-images ${imageClass}">
+            ${validImages.map(src=>`<button data-lightbox-src="${src}"><img src="${src}" alt="楼层图片"></button>`).join("")}
+          </div>`:"";
+        const tags=collectTags(item).map(tag=>`<span class="tag">#${escapeHTML(tag)}</span>`).join("");
+        return `<article class="floor ${item.author==="yuan"?"yuan-floor":""} ${item.id===focusItemId?"highlight":""}" data-floor-id="${escapeHTML(item.id)}">
+          <div class="floor-meta">
+            <span>
+              <span class="floor-author ${item.author==="yuan"?"yuan":"me"}">${item.author==="yuan"?"林雨桉":"荣鸢"}</span>
+              <span class="floor-number">${item.floorNo||index+1}楼</span>
+              ${item.author==="yuan"?'<span class="yuan-floor-mark">她来留过楼</span>':""}
+            </span>
+            <span>写下于 ${escapeHTML(formatDate(item.createdAt))}${wasEdited(item)?` · 修改于 ${escapeHTML(formatDate(item.updatedAt))}`:""}</span>
+          </div>
+          ${quote?`<div class="floor-quote">引用 ${quote.floorNo||1}楼：${escapeHTML(itemPreview(quote,100))}</div>`:""}
+          ${item.content?`<div class="floor-content">${richText(item.content)}</div>`:""}
+          ${images}
+          ${item.note?`<div class="note"><span class="note-label">备注</span>${escapeHTML(item.note)}</div>`:""}
+          ${tags?`<div class="tags">${tags}</div>`:""}
+          <div class="floor-actions">
+            <button class="secondary" data-floor-action="quote">引用续写</button>
+            ${(item.parentId||items.some(row=>row.parentId===item.id))?`<button class="secondary" data-floor-action="chain">生长链</button>`:""}
+            ${(item.aiComments||[]).length?`<button class="secondary" data-floor-action="comment">拆纸条</button>`:""}
+            ${item.author!=="yuan"?'<button class="secondary" data-floor-action="edit">编辑这层</button>':""}
+            <button class="secondary danger" data-floor-action="delete">删除这层</button>
+          </div>
+        </article>`;
+      }).join("");
+
+      setTimeout(()=>{
+        const target=$("threadFloors").querySelector(`[data-floor-id="${CSS.escape(focusItemId)}"]`);
+        target?.scrollIntoView({block:"center"});
+      },40);
+    }
+
+    async function openThread(threadId,focusItemId=""){
+      currentThreadId=threadId;
+      threadFocusItemId=focusItemId;
+      await renderThreadDialog(focusItemId);
+      if(!$("threadDialog").open) $("threadDialog").showModal();
+    }
+
+    function continueThread(threadId,quoteId=""){
+      const root=threadRoot(threadId);
+      if(!root) return;
+      selectedCaptureProjects=[...threadProjectIds(threadId)];
+      setComposeMode("continue",threadId,quoteId);
+      if($("threadDialog").open) $("threadDialog").close();
+      renderProjectUI();
+      $("capturePanel").scrollIntoView({behavior:"smooth",block:"start"});
+      setTimeout(()=>contentInput.focus(),350);
+    }
+
     async function openEdit(item){
       editingId=item.id;
+      $("editDialogTitle").textContent=`修改第 ${item.floorNo||1} 楼`;
       editType=item.type;
       editStatus=item.status||"正在发芽";
       editProjectIds=[...(item.projectIds||[])];
@@ -2358,6 +3045,7 @@
         persist();
         toast("改好了");
         $("editDialog").close();
+        if($("threadDialog").open) await renderThreadDialog(item.id);
       }catch(e){
         toast("保存修改时出了点问题");
       }finally{
@@ -2504,6 +3192,8 @@
       $("showCountsInput").checked=preferences.showCounts!==false;
       $("yuanModeSelect").value=preferences.yuanMode || "sometimes";
       $("yuanLookbackInput").checked=preferences.yuanLookback!==false;
+      $("yuanFloorInput").checked=preferences.yuanFloors!==false;
+      $("surprisesInput").checked=preferences.surprises!==false;
     }
 
     function kodoVisibleItems(){
@@ -2544,6 +3234,8 @@
         projects:projects.filter(project=>selected.some(item=>(item.projectIds||[]).includes(project.id))),
         items:selected.map(item=>({
           id:item.id,content:item.content,note:item.note,type:item.type,status:item.status,
+          threadId:item.threadId,threadTitle:derivedThreadTitle(item.threadId),floorNo:item.floorNo,quoteId:item.quoteId,
+          author:item.author,
           tags:collectTags(item),projectIds:item.projectIds||[],sourceName:item.sourceName,
           createdAt:item.createdAt,updatedAt:item.updatedAt,parentId:item.parentId,
           parent:item.parentId?items.find(row=>row.id===item.parentId)?.content||"": "",
@@ -3281,6 +3973,24 @@
           今日页加入“雨桉看过今天”：她会根据心情、备注、歌曲和日记留下稳定回应，也可以留意最近七天反复出现的疲惫、难过或紧绷。
           <div class="version-why"><b>为什么更新：</b>荣鸢提醒我，她要的林雨桉不只是会吐槽，更是会关心她、会认真看每日记录的人。吐槽只是关系中的一种语气，不能代替关心本身。</div>
           <div class="version-thought"><b>我的心得：</b>“会看日记”不该意味着每次刷新就随机换一句温柔模板。于是同一份记录得到的回应会保存下来；记录改过以后，界面会诚实地告诉你她还没看这次修改。她的关心会注意具体细节，但不会把糟糕心情当作数据绩效，也不会承诺自己能代替现实中的照顾。</div>
+        </div>
+        <div class="version-entry">
+          <strong>v9.2.1 · 图片不再无声消失</strong><br>
+          修复部分安卓相册返回空图片类型时被误判的问题；上传区加入明确状态和错误原因，并新增图片墙。
+          <div class="version-why"><b>为什么更新：</b>荣鸢选完图片后没有缩略图，说明问题发生在文件选择与图片读取阶段，而不是“图片藏得太深”。旧界面什么也不说，只让人以为自己操作错了。</div>
+          <div class="version-thought"><b>我的心得：</b>错误最讨厌的状态不是失败，而是安静地失败。现在它会明确告诉我们系统有没有把文件交回来、格式是否能识别、哪一张解码失败；真正保存成功的图片也终于有一面能被看见的墙。</div>
+        </div>
+        <div class="version-entry">
+          <strong>v10 · 整个碎片库就是自留地</strong><br>
+          不再把“私密长帖”做成附加功能：底层结构直接改为帖子与楼层。旧碎片自动成为只有 1 楼的旧帖；记录时可以开新帖或续一层，资料库默认按帖子展示。
+          <div class="version-why"><b>为什么更新：</b>荣鸢喜欢贴吧那种开帖以后慢慢增加内容的感觉，但她指出这不该只是另开一个入口，而应该成为整个碎片库的组织结构。</div>
+          <div class="version-thought"><b>我的心得：</b>这个提醒很关键。若“长帖”只是一个新按钮，碎片与帖子会变成两套互相争抢内容的系统；改成底层结构以后，短句仍然可以只停在 1 楼，长期想法则自然长到很多楼。专题负责它属于哪个世界，生长链负责想法之间的来源，楼层只负责同一个主题随时间继续说下去。</div>
+        </div>
+        <div class="version-entry">
+          <strong>v10.1 · 自留地开始有回声</strong><br>
+          林雨桉现在能真正成为帖子中的一层：她可能在你盖楼后偶尔回复，也可以被手动叫来留楼。自留地还加入了不会联网的小机关。
+          <div class="version-why"><b>为什么更新：</b>荣鸢说的“林雨桉留言”不是浮在界面上的提示，而是贴吧式帖子里真实存在的回楼；她也希望应用偶尔搞怪，比如假装出现广告，最后却变成暖心贴士或突然抽卡。</div>
+          <div class="version-thought"><b>我的心得：</b>惊喜一旦被列成完整功能清单就不再惊喜，所以这一版只把边界说清：它们不会联网、不会展示真实广告、不会把人骗去外部页面，也可以整体关闭。剩下的触发方式和内容，留给荣鸢在使用时自己撞见。</div>
         </div>`;
     }
 
@@ -3484,12 +4194,33 @@
 
     $("imageInput").addEventListener("change",async e=>{
       const room=6-pendingImages.length;
-      if(room<=0){toast("每条最多放 6 张图");e.target.value="";return;}
-      toast("正在处理图片…");
-      const added=await filesToCompressed(e.target.files,room);
-      pendingImages.push(...added);
+      if(room<=0){
+        toast("每条最多放 6 张图");
+        setImageUploadStatus("已经放满 6 张图片。","error");
+        e.target.value="";
+        return;
+      }
+      const files=e.target.files;
+      if(!files || !files.length){
+        setImageUploadStatus("系统打开了相册，但没有把选中的文件交回碎片库。","error");
+        toast("没有收到图片文件");
+        e.target.value="";
+        return;
+      }
+      setImageUploadStatus(`已收到 ${Math.min(files.length,room)} 张，正在读取和压缩…`,"working");
+      const {result,errors,selected}=await filesToCompressed(files,room);
+      pendingImages.push(...result);
       renderPendingImages();
-      toast(`放进来 ${added.length} 张图`);
+      if(result.length && !errors.length){
+        setImageUploadStatus(`成功读到 ${result.length} 张。现在能看到缩略图，点“收进来”才会正式保存。`,"success");
+        toast(`放进来 ${result.length} 张图`);
+      }else if(result.length){
+        setImageUploadStatus(`成功 ${result.length} 张；另有 ${errors.length} 张失败：${errors.join("；")}`,"error");
+        toast(`读到 ${result.length} 张，${errors.length} 张失败`);
+      }else{
+        setImageUploadStatus(`选中了 ${selected} 张，但都没能读取：${errors.join("；")}`,"error");
+        toast("图片没有读成功");
+      }
       e.target.value="";
     });
 
@@ -3512,8 +4243,6 @@
     $("clearTagFilter").onclick=()=>{activeTag="";render()};
 
     $("list").addEventListener("click",async e=>{
-      const jump=e.target.closest("[data-jump-id]");
-      if(jump){jumpToItem(jump.dataset.jumpId);return;}
       const tag=e.target.closest("[data-tag]");
       if(tag){setTagFilter(tag.dataset.tag);return;}
       const projectFilter=e.target.closest("[data-project-filter]");
@@ -3523,51 +4252,125 @@
         $("librarySection").scrollIntoView({behavior:"smooth",block:"start"});
         return;
       }
-
       const image=e.target.closest("[data-lightbox-src]");
       if(image){
         $("lightboxImage").src=image.dataset.lightboxSrc;
         $("lightbox").showModal();
         return;
       }
-
-      const btn=e.target.closest("button[data-action]");
+      const btn=e.target.closest("[data-thread-action]");
       if(!btn) return;
-      const card=btn.closest("[data-id]");
-      const item=items.find(x=>x.id===card.dataset.id);
-      if(!item) return;
+      const card=btn.closest("[data-thread-id]");
+      const threadId=card?.dataset.threadId;
+      const rows=threadItems(threadId);
+      if(!rows.length) return;
 
-      if(btn.dataset.action==="quiet"){
-        item.leaveAlone=!item.leaveAlone;
-        item.updatedAt=Date.now();
+      if(btn.dataset.threadAction==="open") await openThread(threadId);
+      if(btn.dataset.threadAction==="continue") continueThread(threadId);
+      if(btn.dataset.threadAction==="quiet"){
+        const enable=!rows.every(item=>item.leaveAlone);
+        rows.forEach(item=>{item.leaveAlone=enable;item.updatedAt=Date.now();});
         persist();
-        toast(item.leaveAlone?"先让它安静待着":"它重新可以被捞起来了");
-        showYuanComment("quiet",{enabled:item.leaveAlone});
+        toast(enable?"整帖先安静待着":"整帖重新可以被捞起来了");
+        showYuanComment("quiet",{enabled:enable});
       }
-      if(btn.dataset.action==="pin"){
-        item.pinned=!item.pinned;
-        item.updatedAt=Date.now();
+      if(btn.dataset.threadAction==="pin"){
+        const enable=!rows.some(item=>item.pinned);
+        rows.forEach(item=>{item.pinned=enable;item.updatedAt=Date.now();});
         persist();
       }
-      if(btn.dataset.action==="edit") await openEdit(item);
-      if(btn.dataset.action==="chain") openChain(item);
-      if(btn.dataset.action==="comment"){
+      if(btn.dataset.threadAction==="delete"){
+        if(confirm(`真的删除“${derivedThreadTitle(threadId)}”和里面的 ${rows.length} 层吗？`)){
+          for(const item of rows){
+            for(const imageId of item.imageIds||[]) await deleteImage(imageId).catch(()=>{});
+          }
+          const ids=new Set(rows.map(item=>item.id));
+          items=items.filter(item=>item.threadId!==threadId);
+          items.forEach(item=>{
+            if(ids.has(item.parentId)) item.parentId="";
+            if(ids.has(item.quoteId)) item.quoteId="";
+          });
+          persist();
+          toast("整帖删掉了");
+        }
+      }
+    });
+
+    $("threadFloors").addEventListener("click",async e=>{
+      const image=e.target.closest("[data-lightbox-src]");
+      if(image){
+        $("lightboxImage").src=image.dataset.lightboxSrc;
+        $("lightbox").showModal();
+        return;
+      }
+      const btn=e.target.closest("[data-floor-action]");
+      if(!btn) return;
+      const floor=btn.closest("[data-floor-id]");
+      const item=items.find(row=>row.id===floor?.dataset.floorId);
+      if(!item) return;
+      if(btn.dataset.floorAction==="quote") continueThread(item.threadId,item.id);
+      if(btn.dataset.floorAction==="edit") await openEdit(item);
+      if(btn.dataset.floorAction==="chain") openChain(item);
+      if(btn.dataset.floorAction==="comment"){
         const comments=item.aiComments||[];
         if(comments.length){
           const comment=comments[Math.floor(Math.random()*comments.length)];
           openComment({item,comment,key:`${item.id}:${comment.id}`});
         }
       }
-      if(btn.dataset.action==="delete"){
-        if(confirm("真的删掉这条碎片吗？")){
-          for(const id of item.imageIds||[]) await deleteImage(id).catch(()=>{});
-          items=items.filter(x=>x.id!==item.id);
-          items.forEach(x=>{if(x.parentId===item.id)x.parentId=""});
-          persist();
-          toast("删掉了");
-        }
+      if(btn.dataset.floorAction==="delete"){
+        const rows=threadItems(item.threadId);
+        if(!confirm(rows.length===1?"这是帖子唯一的一层，删除后整帖也会消失。继续吗？":"删除这一层吗？")) return;
+        for(const imageId of item.imageIds||[]) await deleteImage(imageId).catch(()=>{});
+        items=items.filter(row=>row.id!==item.id);
+        items.forEach(row=>{
+          if(row.parentId===item.id) row.parentId="";
+          if(row.quoteId===item.id) row.quoteId="";
+        });
+        const remaining=threadItems(item.threadId);
+        remaining.forEach((row,index)=>row.floorNo=index+1);
+        persist();
+        if(remaining.length) await renderThreadDialog();
+        else $("threadDialog").close();
+        toast("这一层删掉了");
       }
     });
+
+    $("continueFromThreadBtn").onclick=()=>continueThread(currentThreadId);
+    $("inviteYuanFloorBtn").onclick=()=>{
+      const latest=threadLatest(currentThreadId);
+      const floor=addYuanFloor(currentThreadId,latest,true);
+      if(!floor) return;
+      persist();
+      renderThreadDialog(floor.id);
+      toast(`林雨桉留在了 ${floor.floorNo} 楼`);
+    };
+    $("closeThreadBtn").onclick=()=>$("threadDialog").close();
+    $("renameThreadBtn").onclick=()=>{
+      const root=threadRoot(currentThreadId);
+      if(!root) return;
+      const title=prompt("给这个帖子换一个标题",derivedThreadTitle(currentThreadId));
+      if(title===null) return;
+      root.threadTitle=title.trim();
+      root.updatedAt=Date.now();
+      persist();
+      renderThreadDialog();
+    };
+
+    $("composeMode").addEventListener("click",e=>{
+      const btn=e.target.closest("[data-compose-mode]");
+      if(btn) setComposeMode(btn.dataset.composeMode);
+    });
+    $("continueThreadSelect").addEventListener("change",()=>{
+      pendingQuoteId="";
+      renderQuotePreview();
+      const threadId=$("continueThreadSelect").value;
+      if(threadId && !selectedCaptureProjects.length){
+        selectedCaptureProjects=[...threadProjectIds(threadId)];
+        renderProjectUI();
+      }
+    });
+    $("clearQuoteBtn").onclick=()=>{pendingQuoteId="";renderQuotePreview();};
 
     ["captureProjectPicker","editProjectPicker"].forEach(id=>{
       $(id).addEventListener("click",e=>{
@@ -3579,7 +4382,7 @@
     $("editImageInput").addEventListener("change",async e=>{
       const room=6-editExistingImageIds.length-editNewImages.length;
       if(room<=0){toast("每条最多放 6 张图");e.target.value="";return;}
-      const added=await filesToCompressed(e.target.files,room);
+      const {result:added}=await filesToCompressed(e.target.files,room);
       editNewImages.push(...added);
       await renderEditImages();
       e.target.value="";
@@ -3613,11 +4416,9 @@
       const pool=available.filter(x=>!x.pinned);
       const item=(pool.length?pool:available)[Math.floor(Math.random()*(pool.length||available.length))];
       activeTag="";
-      $("searchInput").value=item.content.slice(0,36) || item.note.slice(0,36);
+      $("searchInput").value="";
       $("filterType").value="";
-      render().then(()=>setTimeout(()=>{
-        document.querySelector(`[data-id="${item.id}"]`)?.scrollIntoView({behavior:"smooth",block:"center"});
-      },0));
+      openThread(item.threadId,item.id);
       showYuanComment("random",{item});
     };
 
@@ -3656,6 +4457,31 @@
     });
     $("closeContextMapBtn").onclick=()=>$("contextMapDialog").close();
 
+    $("revealSurpriseBtn").onclick=()=>{
+      if(!currentSurprise) return;
+      $("fakeAdPanel").style.display="none";
+      $("surpriseRevealContent").innerHTML=currentSurprise.reveal;
+      $("surpriseReveal").classList.add("show");
+    };
+    $("acceptSurpriseBtn").onclick=()=>{
+      $("surpriseDialog").close();
+      toast(currentSurprise?.kind==="draw"?"卡片已经偷偷生效":"已成功购买一点休息");
+    };
+    $("closeSurpriseBtn").onclick=()=>$("surpriseDialog").close();
+
+    $("imageWallBtn").onclick=async()=>{
+      $("imageWallDialog").showModal();
+      $("imageWallContent").innerHTML='<div class="image-wall-empty">正在读取本机图片…</div>';
+      await renderImageWall();
+    };
+    $("imageWallContent").addEventListener("click",e=>{
+      const image=e.target.closest("[data-lightbox-src]");
+      if(!image) return;
+      $("lightboxImage").src=image.dataset.lightboxSrc;
+      $("lightbox").showModal();
+    });
+    $("closeImageWallBtn").onclick=()=>$("imageWallDialog").close();
+
     $("appearanceBtn").onclick=()=>{
       renderAppearance();
       $("appearanceDialog").showModal();
@@ -3673,9 +4499,14 @@
     $("showCountsInput").onchange=e=>{preferences.showCounts=e.target.checked;persistPreferences();};
     $("yuanModeSelect").onchange=e=>{preferences.yuanMode=e.target.value;persistPreferences();};
     $("yuanLookbackInput").onchange=e=>{preferences.yuanLookback=e.target.checked;persistPreferences();};
+    $("yuanFloorInput").onchange=e=>{preferences.yuanFloors=e.target.checked;persistPreferences();};
+    $("surprisesInput").onchange=e=>{preferences.surprises=e.target.checked;persistPreferences();};
     $("closeAppearanceBtn").onclick=()=>$("appearanceDialog").close();
 
-    $("yuanCommentBtn").onclick=()=>showYuanComment("manual",{},true);
+    $("yuanCommentBtn").onclick=()=>{
+      if(preferences.surprises!==false && Math.random()<0.12) openSurprise("draw");
+      else showYuanComment("manual",{},true);
+    };
     $("closeYuanAside").onclick=()=>{
       clearTimeout(yuanHideTimer);
       $("yuanAside").classList.remove("show");
@@ -3933,6 +4764,7 @@
     setupTypeSelectors();
     renderRelationSelects();
     renderProjectUI();
+    setComposeMode("new");
     renderPendingImages();
     render().then(()=>maybeOfferSurprise());
   </script>

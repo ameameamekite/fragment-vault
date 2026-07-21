@@ -1,4 +1,4 @@
-const CACHE_NAME = "fragment-vault-v9.2.0";
+const CACHE_NAME = "fragment-vault-v10.1.0";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -17,10 +17,6 @@ self.addEventListener("install", event => {
   })());
 });
 
-self.addEventListener("message", event => {
-  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
-});
-
 self.addEventListener("activate", event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
@@ -29,24 +25,38 @@ self.addEventListener("activate", event => {
   })());
 });
 
-function freshFirst(request){
-  return fetch(request,{cache:"no-store"}).then(response=>{
-    const copy=response.clone();
-    caches.open(CACHE_NAME).then(cache=>cache.put(request,copy));
-    return response;
-  }).catch(()=>caches.match(request).then(hit=>hit||caches.match("./index.html")));
+self.addEventListener("message", event => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+});
+
+function networkFirst(request) {
+  return fetch(request, { cache: "no-store" })
+    .then(response => {
+      const copy = response.clone();
+      caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+      return response;
+    })
+    .catch(() => caches.match(request).then(hit => hit || caches.match("./index.html")));
 }
 
 self.addEventListener("fetch", event => {
-  if(event.request.method!=="GET") return;
-  const url=new URL(event.request.url);
-  const fresh=event.request.mode==="navigate" || url.pathname.endsWith("/index.html") || url.pathname.endsWith("/version.json");
-  if(fresh){event.respondWith(freshFirst(event.request));return;}
-  event.respondWith(caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{
-    if(response && response.status===200){
-      const copy=response.clone();
-      caches.open(CACHE_NAME).then(cache=>cache.put(event.request,copy));
-    }
-    return response;
-  })));
+  if (event.request.method !== "GET") return;
+  const url = new URL(event.request.url);
+  if (
+    event.request.mode === "navigate" ||
+    url.pathname.endsWith("/index.html") ||
+    url.pathname.endsWith("/version.json")
+  ) {
+    event.respondWith(networkFirst(event.request));
+    return;
+  }
+  event.respondWith(
+    caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+      if (response && response.status === 200) {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+      }
+      return response;
+    }))
+  );
 });
